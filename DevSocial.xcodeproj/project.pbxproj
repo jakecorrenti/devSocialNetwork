@@ -10,7 +10,6 @@
 		3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E1242FE06B00164981 /* AppDelegate.swift */; };
 		3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E3242FE06B00164981 /* SceneDelegate.swift */; };
 		3E3D84E6242FE06B00164981 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E5242FE06B00164981 /* ViewController.swift */; };
-		3E3D84E9242FE06B00164981 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84E7242FE06B00164981 /* Main.storyboard */; };
 		3E3D84EB242FE06C00164981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EA242FE06C00164981 /* Assets.xcassets */; };
 		3E3D84EE242FE06C00164981 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EC242FE06C00164981 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -20,7 +19,6 @@
 		3E3D84E1242FE06B00164981 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E3D84E3242FE06B00164981 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3E3D84E5242FE06B00164981 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3E3D84E8242FE06B00164981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E3D84EA242FE06C00164981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E3D84ED242FE06C00164981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E3D84EF242FE06C00164981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,7 +57,6 @@
 				3E3D84E1242FE06B00164981 /* AppDelegate.swift */,
 				3E3D84E3242FE06B00164981 /* SceneDelegate.swift */,
 				3E3D84E5242FE06B00164981 /* ViewController.swift */,
-				3E3D84E7242FE06B00164981 /* Main.storyboard */,
 				3E3D84EA242FE06C00164981 /* Assets.xcassets */,
 				3E3D84EC242FE06C00164981 /* LaunchScreen.storyboard */,
 				3E3D84EF242FE06C00164981 /* Info.plist */,
@@ -127,7 +124,6 @@
 			files = (
 				3E3D84EE242FE06C00164981 /* LaunchScreen.storyboard in Resources */,
 				3E3D84EB242FE06C00164981 /* Assets.xcassets in Resources */,
-				3E3D84E9242FE06B00164981 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,14 +143,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3E3D84E7242FE06B00164981 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3E3D84E8242FE06B00164981 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3E3D84EC242FE06C00164981 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -287,6 +275,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B6XP6DNN6W;
 				INFOPLIST_FILE = DevSocial/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -294,7 +283,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jakecorrenti.DevSocial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,6 +294,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B6XP6DNN6W;
 				INFOPLIST_FILE = DevSocial/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,7 +302,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jakecorrenti.DevSocial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
