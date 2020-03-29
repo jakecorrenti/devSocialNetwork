@@ -58,6 +58,8 @@ class PagingVC: UIViewController {
         signup.title = "Sign up"
         
         pagingController = PagingViewController(viewControllers: [login, signup])
+        pagingController.textColor = .systemGray
+        pagingController.borderColor = .systemGray5
         pagingController.backgroundColor = UIColor(named: ColorNames.background)!
         pagingController.selectedBackgroundColor = UIColor(named: ColorNames.background)!
         pagingController.selectedTextColor = UIColor(named: ColorNames.mainColor)!

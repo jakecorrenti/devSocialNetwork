@@ -8,5 +8,6 @@ target 'DevSocial' do
   # Pods for DevSocial
 pod 'Firebase/Analytics'
 pod 'Parchment'
-
+pod 'FirebaseAuth'
+pod 'GoogleSignIn'
 end

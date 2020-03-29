@@ -13,6 +13,9 @@
 		3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDCC2430237300C8DE64 /* PagingVC.swift */; };
 		3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDCE243023EE00C8DE64 /* LoginVC.swift */; };
 		3E33CDD12430241B00C8DE64 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDD02430241B00C8DE64 /* SignupVC.swift */; };
+		3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDD32430471800C8DE64 /* CustomTextField.swift */; };
+		3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */; };
+		3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDD8243055A700C8DE64 /* SigninWithGoogleView.swift */; };
 		3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E1242FE06B00164981 /* AppDelegate.swift */; };
 		3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E3242FE06B00164981 /* SceneDelegate.swift */; };
 		3E3D84EB242FE06C00164981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EA242FE06C00164981 /* Assets.xcassets */; };
@@ -28,6 +31,9 @@
 		3E33CDCC2430237300C8DE64 /* PagingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingVC.swift; sourceTree = "<group>"; };
 		3E33CDCE243023EE00C8DE64 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		3E33CDD02430241B00C8DE64 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
+		3E33CDD32430471800C8DE64 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStack.swift; sourceTree = "<group>"; };
+		3E33CDD8243055A700C8DE64 /* SigninWithGoogleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninWithGoogleView.swift; sourceTree = "<group>"; };
 		3E3D84DE242FE06B00164981 /* DevSocial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevSocial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E3D84E1242FE06B00164981 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E3D84E3242FE06B00164981 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,7 +69,8 @@
 		3E33CDC1242FFFF700C8DE64 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
+				3E33CDD22430470500C8DE64 /* General */,
+				3E33CDD72430555C00C8DE64 /* Auth */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -94,6 +101,24 @@
 				3E33CDCC2430237300C8DE64 /* PagingVC.swift */,
 				3E33CDCE243023EE00C8DE64 /* LoginVC.swift */,
 				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		3E33CDD22430470500C8DE64 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
+				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
+				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		3E33CDD72430555C00C8DE64 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDD8243055A700C8DE64 /* SigninWithGoogleView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -158,6 +183,7 @@
 				3E3D84DB242FE06B00164981 /* Frameworks */,
 				3E3D84DC242FE06B00164981 /* Resources */,
 				123965F26809612C1340C720 /* [CP] Embed Pods Frameworks */,
+				F10053CF845F59B97BF90BC7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -254,6 +280,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F10053CF845F59B97BF90BC7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevSocial/Pods-DevSocial-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevSocial/Pods-DevSocial-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DevSocial/Pods-DevSocial-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -265,10 +308,13 @@
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
+				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
 				3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */,
 				3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */,
+				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
+				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B6XP6DNN6W;
 				INFOPLIST_FILE = DevSocial/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
