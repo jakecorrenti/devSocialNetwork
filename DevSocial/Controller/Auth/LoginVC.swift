@@ -23,9 +23,10 @@ class LoginVC: UIViewController {
 
     lazy var tfStack: TextFieldStack = {
         let view = TextFieldStack()
-        view.configure(placeholders: ["Email", "Password"],
-                       keyboardType: [.emailAddress, .default],
-                       isSecure: [false, true])
+        view.configure(
+            placeholders: ["Email", "Password"],
+            keyboardType: [.emailAddress, .default],
+            isSecure: [false, true])
         view.isUserInteractionEnabled = true
         return view
     }()
