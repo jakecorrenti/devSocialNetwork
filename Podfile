@@ -7,5 +7,6 @@ target 'DevSocial' do
 
   # Pods for DevSocial
 pod 'Firebase/Analytics'
+pod 'Parchment'
 
 end
