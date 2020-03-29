@@ -29,7 +29,7 @@ class GreenCapsuleButton: UIButton {
     // -----------------------------------------
     // MARK: Setup UI
     // -----------------------------------------
-    
+     
     private func setupUI() {
         setTitleColor(.white, for: .normal)
         layer.cornerRadius = 25 // assuming that the button height is set to 50

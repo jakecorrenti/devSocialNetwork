@@ -14,5 +14,5 @@ enum ColorNames {
 }
 
 enum Images {
-    static let welcomeImage = "welcomeImage"
+    static let welcomeImage = "WelcomeImage"
 }

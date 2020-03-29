@@ -10,4 +10,6 @@ pod 'Firebase/Analytics'
 pod 'Parchment'
 pod 'FirebaseAuth'
 pod 'GoogleSignIn'
+pod 'Firebase/Firestore'
+pod 'FirebaseFirestoreSwift'
 end

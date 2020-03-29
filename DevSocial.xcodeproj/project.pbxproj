@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E04243120EE00F92618 /* AuthManager.swift */; };
+		3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */; };
+		3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E092431239A00F92618 /* StorageContext.swift */; };
+		3E0B0E0D243123C900F92618 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E0C243123C900F92618 /* User.swift */; };
 		3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDC52430002200C8DE64 /* WelcomeVC.swift */; };
 		3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDC7243001DF00C8DE64 /* Constants.swift */; };
 		3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */; };
@@ -25,6 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E0B0E04243120EE00F92618 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageContext.swift; sourceTree = "<group>"; };
+		3E0B0E092431239A00F92618 /* StorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageContext.swift; sourceTree = "<group>"; };
+		3E0B0E0C243123C900F92618 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3E33CDC52430002200C8DE64 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		3E33CDC7243001DF00C8DE64 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCapsuleButton.swift; sourceTree = "<group>"; };
@@ -58,6 +66,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E0B0E03243120DA00F92618 /* AuthManager */ = {
+			isa = PBXGroup;
+			children = (
+				3E0B0E04243120EE00F92618 /* AuthManager.swift */,
+			);
+			path = AuthManager;
+			sourceTree = "<group>";
+		};
+		3E0B0E062431235A00F92618 /* DBManager */ = {
+			isa = PBXGroup;
+			children = (
+				3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */,
+				3E0B0E092431239A00F92618 /* StorageContext.swift */,
+			);
+			path = DBManager;
+			sourceTree = "<group>";
+		};
+		3E0B0E0B243123C000F92618 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				3E0B0E0C243123C900F92618 /* User.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		3E33CDC0242FFFEF00C8DE64 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				3E33CDC7243001DF00C8DE64 /* Constants.swift */,
+				3E0B0E0B243123C000F92618 /* Auth */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -146,6 +180,8 @@
 			children = (
 				3E3D84EF242FE06C00164981 /* Info.plist */,
 				AE382E25242FF27700EED32C /* GoogleService-Info.plist */,
+				3E0B0E03243120DA00F92618 /* AuthManager */,
+				3E0B0E062431235A00F92618 /* DBManager */,
 				3E33CDC32430000000C8DE64 /* Misc */,
 				3E33CDC2242FFFFC00C8DE64 /* Model */,
 				3E33CDC1242FFFF700C8DE64 /* View */,
@@ -305,10 +341,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E33CDD12430241B00C8DE64 /* SignupVC.swift in Sources */,
+				3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */,
+				3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */,
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
+				3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */,
+				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
 				3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */,
 				3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */,
