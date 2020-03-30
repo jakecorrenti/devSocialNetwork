@@ -10,6 +10,7 @@ import UIKit
 import AuthenticationServices
 import Firebase
 import CryptoKit
+import FirebaseFirestore
 
 extension LoginVC {
     
