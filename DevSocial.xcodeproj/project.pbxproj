@@ -28,6 +28,7 @@
 		3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E3242FE06B00164981 /* SceneDelegate.swift */; };
 		3E3D84EB242FE06C00164981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EA242FE06C00164981 /* Assets.xcassets */; };
 		3E3D84EE242FE06C00164981 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EC242FE06C00164981 /* LaunchScreen.storyboard */; };
+		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
 		F11685015C0579825B3B7BA7 /* Pods_DevSocial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,8 @@
 		3E3D84EA242FE06C00164981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E3D84ED242FE06C00164981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E3D84EF242FE06C00164981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3EE6D7FA2431C25D003A5BFA /* DevSocial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevSocial.entitlements; sourceTree = "<group>"; };
+		3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC Extension + Apple Sign in.swift"; sourceTree = "<group>"; };
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
 		87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSocial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE382E25242FF27700EED32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -158,10 +161,10 @@
 		3E33CDC42430001900C8DE64 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				3E33CDC52430002200C8DE64 /* WelcomeVC.swift */,
+				3EE6D7FD2431C6C9003A5BFA /* Login */,
 				3E33CDCC2430237300C8DE64 /* PagingVC.swift */,
-				3E33CDCE243023EE00C8DE64 /* LoginVC.swift */,
 				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
+				3E33CDC52430002200C8DE64 /* WelcomeVC.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 		3E3D84E0242FE06B00164981 /* DevSocial */ = {
 			isa = PBXGroup;
 			children = (
+				3EE6D7FA2431C25D003A5BFA /* DevSocial.entitlements */,
 				3E3D84EF242FE06C00164981 /* Info.plist */,
 				AE382E25242FF27700EED32C /* GoogleService-Info.plist */,
 				3E0B0E15243151E400F92618 /* Extensions */,
@@ -216,6 +220,15 @@
 				3E33CDC0242FFFEF00C8DE64 /* Controller */,
 			);
 			path = DevSocial;
+			sourceTree = "<group>";
+		};
+		3EE6D7FD2431C6C9003A5BFA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDCE243023EE00C8DE64 /* LoginVC.swift */,
+				3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		DFFC860B8BD449767CB316A6 /* Frameworks */ = {
@@ -374,6 +387,7 @@
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
+				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E0B0E1424314A3E00F92618 /* HomeVC.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
@@ -523,6 +537,7 @@
 			baseConfigurationReference = CE2F60A8E635AD031D4BBEFE /* Pods-DevSocial.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DevSocial/DevSocial.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B6XP6DNN6W;
 				INFOPLIST_FILE = DevSocial/Info.plist;
@@ -543,6 +558,7 @@
 			baseConfigurationReference = 4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DevSocial/DevSocial.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B6XP6DNN6W;
 				INFOPLIST_FILE = DevSocial/Info.plist;

@@ -9,8 +9,16 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import AuthenticationServices
+import CryptoKit
 
 class LoginVC: UIViewController {
+    
+    // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
+    
+    var currentNonce: String?
     
     // -----------------------------------------
     // MARK: Views
@@ -43,6 +51,7 @@ class LoginVC: UIViewController {
     
     let signInWithGoogleView = SigninWithGoogleView()
     let googleButton = GIDSignInButton()
+    let appleButton = ASAuthorizationAppleIDButton()
     
     lazy var loginButton: GreenCapsuleButton = {
         let view = GreenCapsuleButton(type: .system)
@@ -50,6 +59,7 @@ class LoginVC: UIViewController {
         view.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         return view
     }()
+    
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -63,28 +73,24 @@ class LoginVC: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-    }
-    
     // -----------------------------------------
     // MARK: Setup UI
     // -----------------------------------------
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     
     private func setupUI() {
-        [welcomeLabel, tfStack, forgotPasswordButton, signInWithGoogleView, googleButton, loginButton].forEach { view.addSubview($0) }
+        [welcomeLabel, tfStack, forgotPasswordButton, signInWithGoogleView, googleButton, loginButton, appleButton].forEach { view.addSubview($0) }
         
         constrainWelcomeLabel()
         constrainTFStack()
         constrainForgotPasswordButton()
         constrainSignInWithGoogleView()
         constrainGoogleButton()
+        constrainAppleButton()
         constrainLoginButton()
     }
     
@@ -142,6 +148,17 @@ class LoginVC: UIViewController {
         ])
     }
     
+    private func constrainAppleButton() {
+        appleButton.addTarget(self, action: #selector(appleLoginButtonPressed), for: .touchUpInside)
+        appleButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            appleButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 16),
+            appleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            appleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            appleButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+
     @objc func loginButtonPressed() {
         var populatedCount = 0
         var textFields = [CustomTextField]()

@@ -22,11 +22,6 @@ final class AuthManager {
         }
     }
     
-    /// sign a user in using their google account 
-    func signInWithGoogle() {
-        
-    }
-    
     /// create a user in Firebase using a username, email, and password
     func createUserWithFirebase(username: String, email: String, password: String, onError: @escaping (_ error: Error?) -> Void) {
         auth.createUser(withEmail: email, password: password) { (result, error) in
