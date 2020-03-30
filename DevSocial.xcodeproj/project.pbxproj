@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */; };
 		3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E04243120EE00F92618 /* AuthManager.swift */; };
 		3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */; };
 		3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E092431239A00F92618 /* StorageContext.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		3E0B0E04243120EE00F92618 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageContext.swift; sourceTree = "<group>"; };
 		3E0B0E092431239A00F92618 /* StorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageContext.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			children = (
 				3E33CDCE243023EE00C8DE64 /* LoginVC.swift */,
 				3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */,
+				3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
 				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E0B0E1424314A3E00F92618 /* HomeVC.swift in Sources */,
+				3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
 				3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */,

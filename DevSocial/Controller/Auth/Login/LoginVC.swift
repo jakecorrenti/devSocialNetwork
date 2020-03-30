@@ -46,12 +46,13 @@ class LoginVC: UIViewController {
         view.setTitle("Forget password?", for: .normal)
         view.titleLabel?.font = .boldSystemFont(ofSize: 15)
         view.setTitleColor(UIColor(named: ColorNames.mainColor), for: .normal)
+        view.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)
         return view
     }()
     
     let signInWithGoogleView = SigninWithGoogleView()
     let googleButton = GIDSignInButton()
-    let appleButton = ASAuthorizationAppleIDButton()
+    let appleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .whiteOutline)
     
     lazy var loginButton: GreenCapsuleButton = {
         let view = GreenCapsuleButton(type: .system)
@@ -157,6 +158,11 @@ class LoginVC: UIViewController {
             appleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             appleButton.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+    
+    @objc
+    func forgotPasswordButtonPressed() {
+        present(UINavigationController(rootViewController: ForgotPasswordVC()), animated: true, completion: nil)
     }
 
     @objc func loginButtonPressed() {
