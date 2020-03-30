@@ -39,6 +39,8 @@ class HomeVC: UIViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
+        navigationItem.rightBarButtonItem = messages
     }
     
     private func setupUI() {
@@ -60,6 +62,9 @@ class HomeVC: UIViewController {
         } catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
+    }
+    
+    @objc func messagesButtonPressed() {
         
     }
 }

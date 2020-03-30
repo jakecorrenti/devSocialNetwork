@@ -15,6 +15,7 @@ enum ColorNames {
 
 enum Images {
     static let welcomeImage = "WelcomeImage"
+    static let messages = "paperplane"
 }
 
 // TODO: Update icons
