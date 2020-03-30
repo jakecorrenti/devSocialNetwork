@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -21,9 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window                     = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene        = windowScene
-        window?.rootViewController = UINavigationController(rootViewController: WelcomeVC())
-        window?.makeKeyAndVisible()
         
+        // checks if the user is signed in or not, and adjusts the screen they see accordingly
+        let _ = Auth.auth().addStateDidChangeListener { (auth, user) in
+            if user != nil {
+                self.window?.rootViewController = TabController()
+            } else {
+                self.window?.rootViewController = UINavigationController(rootViewController: WelcomeVC())
+            }
+        }
+        window?.makeKeyAndVisible()
         window?.tintColor = UIColor(named: ColorNames.mainColor)
     }
 

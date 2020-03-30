@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 
 class LoginVC: UIViewController {
     
@@ -40,10 +42,12 @@ class LoginVC: UIViewController {
     }()
     
     let signInWithGoogleView = SigninWithGoogleView()
+    let googleButton = GIDSignInButton()
     
     lazy var loginButton: GreenCapsuleButton = {
         let view = GreenCapsuleButton(type: .system)
         view.configure(title: "Login")
+        view.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         return view
     }()
     
@@ -51,21 +55,18 @@ class LoginVC: UIViewController {
     // MARK: Lifecycle
     // -----------------------------------------
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavBar()
         setupUI()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     
     // -----------------------------------------
@@ -77,12 +78,13 @@ class LoginVC: UIViewController {
     }
     
     private func setupUI() {
-        [welcomeLabel, tfStack, forgotPasswordButton, signInWithGoogleView, loginButton].forEach { view.addSubview($0) }
+        [welcomeLabel, tfStack, forgotPasswordButton, signInWithGoogleView, googleButton, loginButton].forEach { view.addSubview($0) }
         
         constrainWelcomeLabel()
         constrainTFStack()
         constrainForgotPasswordButton()
         constrainSignInWithGoogleView()
+        constrainGoogleButton()
         constrainLoginButton()
     }
     
@@ -129,5 +131,59 @@ class LoginVC: UIViewController {
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    private func constrainGoogleButton() {
+        googleButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            googleButton.topAnchor.constraint(equalTo: signInWithGoogleView.orLabel.bottomAnchor, constant: 16),
+            googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+    }
+    
+    @objc func loginButtonPressed() {
+        var populatedCount = 0
+        var textFields = [CustomTextField]()
+        
+        /*
+         loops through each view in the stack view, and check if it is of type CustomTextField
+         if it is, it adds it to the array of text fields
+         checks if the textfield is populated and does not have a space as its text, and if it is not empty, the number of text fields populated is incremented
+         */
+        tfStack.stackView.arrangedSubviews.forEach { tf in
+            if tf.isKind(of: CustomTextField.self) {
+                let tf = tf as! CustomTextField
+                if tf.text!.isNotEmpty {
+                    populatedCount += 1
+                    textFields.append(tf)
+                }
+            }
+        }
+        
+        // if all the text fields are populated, retrieve the text from each, and then make the call to sign up the user
+        if populatedCount == 2 {
+            var password: String = ""
+            var email: String = ""
+            textFields.enumerated().forEach { (index, tf) in
+                switch index {
+                case 0:
+                    email = tf.text!
+                case 1:
+                    password = tf.text!
+                default:
+                    print("Index out of bounds")
+                }
+            }
+            
+            let authManager = AuthManager()
+            authManager.signInWithFirebase(email: email, password: password) { (error) in
+                if let error = error {
+                    Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+                }
+            }
+        } else {
+            Alert.showFillAllFieldsAlert(on: self)
+        }
     }
 }

@@ -8,17 +8,73 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
-        
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
+
         return true
     }
+    
+    
+    // Sign in with google delegate functions
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
+      -> Bool {
+      return GIDSignIn.sharedInstance().handle(url)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+      // ...
+      if let error = error {
+        // ...
+        Alert.showBasicAlert(on: LoginVC(), with: "Oh no!", message: error.localizedDescription)
+        return
+      }
+
+      guard let authentication = user.authentication else { return }
+      let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                        accessToken: authentication.accessToken)
+      // ...
+        
+        Auth.auth().signIn(with: credential) { (result, error) in
+            if let error = error {
+                Alert.showBasicAlert(on: LoginVC(), with: "Oh no!", message: error.localizedDescription)
+                return
+            } else {
+    
+                let fullName = user.profile.name
+                let email = user.profile.email
+                
+                let dbManager = FirebaseStorageContext()
+                
+                let user = User(
+                    username: fullName ?? "",
+                    email: email ?? "",
+                    dateCreated: Date(),
+                    id: Auth.auth().currentUser!.uid
+                )
+                
+                dbManager.saveUser(user: user) { (error) in
+                    Alert.showBasicAlert(on: LoginVC(), with: "Oh no!", message: error?.localizedDescription)
+                }
+            }
+        }
+    }
+
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
+    }
+    
+    
 
     // MARK: UISceneSession Lifecycle
 
@@ -34,6 +90,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
 }
-
