@@ -59,11 +59,13 @@ class PagingVC: UIViewController {
         
         pagingController = PagingViewController(viewControllers: [login, signup])
         pagingController.textColor = .systemGray
-        pagingController.borderColor = .systemGray5
         pagingController.backgroundColor = UIColor(named: ColorNames.background)!
         pagingController.selectedBackgroundColor = UIColor(named: ColorNames.background)!
         pagingController.selectedTextColor = UIColor(named: ColorNames.mainColor)!
-        pagingController.indicatorColor = UIColor(named: ColorNames.mainColor)!
+        pagingController.indicatorOptions = .hidden
+        pagingController.borderOptions = .hidden
+        pagingController.menuItemSize = .fixed(width: 100, height: 25)
+        pagingController.menuBackgroundColor = UIColor(named: ColorNames.background)!
     }
     
     private func setupUI() {

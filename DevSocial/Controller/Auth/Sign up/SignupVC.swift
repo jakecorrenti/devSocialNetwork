@@ -102,15 +102,69 @@ class SignupVC: UIViewController {
         ])
     }
     
+    func checkUnacceptedUsername( username: String, nonAccepted: [String] ) -> Bool {
+        for i in nonAccepted {
+            if username.contains(i) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func verifyUsername(username: String, verified: @escaping (Bool?) -> Void) {
+        
+        let characterset = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+        
+        if username.rangeOfCharacter(from: characterset.inverted) != nil {
+            Alert.showBasicAlert(on: self, with: "Error", message: "Usernames must only contain letters or numbers")
+            verified(false)
+        }
+        
+        let whitespace = NSCharacterSet.whitespaces
+        
+        let range = username.rangeOfCharacter(from: whitespace)
+        
+        if range != nil {
+            Alert.showBasicAlert(on: self, with: "Error", message: "Usernames cannot contain white space")
+            verified(false)
+        }
+        
+        let nonAccepted: [String] = ["fuck", "shit", "cunt", "fag", "faggot", "bitch", "retard", "queer", "queef", "nigger", "nigga"]
+        
+        if checkUnacceptedUsername(username: username, nonAccepted: nonAccepted) == true {
+            Alert.showBasicAlert(on: self, with: "Error", message: "Usernames cannot contain graphic / foul language")
+            verified(false)
+        }
+        
+        if username.count < 3 || username.count > 20 {
+            Alert.showBasicAlert(on: self, with: "Error", message: "Usernames have to be in between 3 and 20 characters")
+            verified(false)
+        }
+        
+        // Check if the username exists in the database, if it does then return false, if it does not then return true
+        let dbManager = FirebaseStorageContext()
+        dbManager.checkUsernameExists(username: username, onError: { (error) in
+            Alert.showBasicAlert(on: self, with: "Error", message: error?.localizedDescription)
+            verified(false)
+        }) { (exists) in
+            if exists! {
+                Alert.showBasicAlert(on: self, with: "Error", message: "Usernames is already taken")
+                verified(false)
+            } else {
+                verified(true)
+            }
+        }
+    }
+    
     @objc func signupButtonPressed() {
         var populatedCount = 0
         var textFields = [CustomTextField]()
         
         /*
-        loops through each view in the stack view, and check if it is of type CustomTextField
-        if it is, it adds it to the array of text fields
-        checks if the textfield is populated and does not have a space as its text, and if it is not empty, the number of text fields populated is incremented
-        */
+         loops through each view in the stack view, and check if it is of type CustomTextField
+         if it is, it adds it to the array of text fields
+         checks if the textfield is populated and does not have a space as its text, and if it is not empty, the number of text fields populated is incremented
+         */
         tfStack.stackView.arrangedSubviews.forEach { tf in
             if tf.isKind(of: CustomTextField.self) {
                 let tf = tf as! CustomTextField
@@ -139,12 +193,22 @@ class SignupVC: UIViewController {
                 }
             }
             
-            let authManager = AuthManager()
-            authManager.createUserWithFirebase(username: username, email: email, password: password) { (error) in
-                if let error = error {
-                    Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+            // Verify the username, if the function returns true then create user, if the function returns false then show error
+            verifyUsername(username: username) { (verified) in
+                if let ver = verified {
+                    if ver {
+                        let authManager = AuthManager()
+                        authManager.createUserWithFirebase(username: username, email: email, password: password) { (error) in
+                            if let error = error {
+                                Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+                            }
+                        }
+                    }
+                } else {
+                    Alert.showBasicAlert(on: self, with: "Error", message: "Could not unwrap verified")
                 }
             }
+            
         } else {
             Alert.showFillAllFieldsAlert(on: self)
         }

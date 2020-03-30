@@ -172,9 +172,9 @@
 		3E33CDC42430001900C8DE64 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				AE5E73D4243293370079393C /* Sign up */,
 				3EE6D7FD2431C6C9003A5BFA /* Login */,
 				3E33CDCC2430237300C8DE64 /* PagingVC.swift */,
-				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
 				3E33CDC52430002200C8DE64 /* WelcomeVC.swift */,
 			);
 			path = Auth;
@@ -241,6 +241,14 @@
 				3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		AE5E73D4243293370079393C /* Sign up */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
+			);
+			path = "Sign up";
 			sourceTree = "<group>";
 		};
 		AEB7267A243287E4006923CA /* Explore */ = {

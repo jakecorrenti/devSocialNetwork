@@ -73,6 +73,7 @@ class WelcomeVC: UIViewController {
         
         setupNavBar()
         setupUI()
+        
     }
     
     // -----------------------------------------
