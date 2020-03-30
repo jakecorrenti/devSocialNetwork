@@ -11,22 +11,29 @@ import FirebaseFirestore
 import Firebase
 
 class FirebaseStorageContext: StorageContext {
+    
     let db = Firestore.firestore()
     
-    func saveUser(user: User) throws {
+    /// save a user to Firestore
+    func saveUser(user: User, onError: @escaping (Error?) -> Void) {
         db.collection("users").document(user.id).setData([
-            "username" : user.username,
-            "email" : user.email,
+            "username"    : user.username,
+            "email"       : user.email,
             "dateCreated" : user.dateCreated,
-            "id" : user.id
+            "id"          : user.id
         ]) { (error) in
             if let error = error {
-                fatalError(error.localizedDescription)
+                onError(error)
             }
         }
     }
     
-    func deleteUser(user: User) throws {
-        // implement
+    /// delete a user's documents and collections from Firestore 
+    func deleteUser(user: User, onError: @escaping (Error?) -> Void) {
+        db.collection("users").document(user.id).delete { (error) in
+            if let error = error {
+                onError(error)
+            }
+        }
     }
 }

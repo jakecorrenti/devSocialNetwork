@@ -16,3 +16,7 @@ enum ColorNames {
 enum Images {
     static let welcomeImage = "WelcomeImage"
 }
+
+enum TabImages {
+    static let home = "house"
+}

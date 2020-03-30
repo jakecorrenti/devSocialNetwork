@@ -58,6 +58,7 @@ class TextFieldStack: UIView {
                    keyboardType: [UIKeyboardType] = [UIKeyboardType](),
                    isSecure: [Bool] = [Bool]() ) {
         
+        // for each placeholder in the array, a new textfield is added to the stack view 
         placeholders.enumerated().forEach { (index, textField) in
             let view = CustomTextField()
             view.configure(placeholder: textField)

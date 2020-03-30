@@ -9,9 +9,9 @@
 import Foundation
 
 protocol StorageContext {
+    // if a class conforms to this protocol, it must use these functions to access the database
+    func saveUser(user: User, onError: @escaping (_ error: Error?) -> Void)
     
-    func saveUser(user: User) throws
-    
-    func deleteUser(user: User) throws 
+    func deleteUser(user: User, onError: @escaping (_ error: Error?) -> Void)
     
 }

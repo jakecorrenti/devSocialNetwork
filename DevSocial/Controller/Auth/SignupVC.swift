@@ -33,6 +33,7 @@ class SignupVC: UIViewController {
     lazy var signupButton: GreenCapsuleButton = {
         let view = GreenCapsuleButton(type: .system)
         view.configure(title: "Sign up")
+        view.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return view
     }()
     
@@ -99,5 +100,53 @@ class SignupVC: UIViewController {
             signupButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             signupButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    @objc func signupButtonPressed() {
+        var populatedCount = 0
+        var textFields = [CustomTextField]()
+        
+        /*
+        loops through each view in the stack view, and check if it is of type CustomTextField
+        if it is, it adds it to the array of text fields
+        checks if the textfield is populated and does not have a space as its text, and if it is not empty, the number of text fields populated is incremented
+        */
+        tfStack.stackView.arrangedSubviews.forEach { tf in
+            if tf.isKind(of: CustomTextField.self) {
+                let tf = tf as! CustomTextField
+                if tf.text!.isNotEmpty {
+                    populatedCount += 1
+                    textFields.append(tf)
+                }
+            }
+        }
+        
+        // if all the text fields are populated, retrieve the text from each, and then make the call to sign up the user
+        if populatedCount == 3 {
+            var password: String = ""
+            var email: String = ""
+            var username: String = ""
+            textFields.enumerated().forEach { (index, tf) in
+                switch index {
+                case 0:
+                    username = tf.text!
+                case 1:
+                    email = tf.text!
+                case 2:
+                    password = tf.text!
+                default:
+                    print("Index out of bounds")
+                }
+            }
+            
+            let authManager = AuthManager()
+            authManager.createUserWithFirebase(username: username, email: email, password: password) { (error) in
+                if let error = error {
+                    Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+                }
+            }
+        } else {
+            Alert.showFillAllFieldsAlert(on: self)
+        }
     }
 }

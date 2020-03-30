@@ -36,7 +36,13 @@ class SigninWithGoogleView: UIView {
         return view
     }()
     
-    lazy var googleSigninButton = GIDSignInButton()
+    lazy var googleSigninButton: UIButton = {
+        let view = UIButton()
+        view.setTitle("Sign in with Google", for: .normal)
+        view.setTitleColor(.white, for: .normal)
+        view.backgroundColor = .systemGray
+        return view
+    }()
     
     // -----------------------------------------
     // MARK: Initialization
@@ -64,8 +70,6 @@ class SigninWithGoogleView: UIView {
         constrainOrLabel()
         constrainLeftBar()
         constrainRightBar()
-        constrainGoogleSignInButton()
-        
     }
     
     private func constrainOrLabel() {
@@ -95,15 +99,4 @@ class SigninWithGoogleView: UIView {
             rightBar.heightAnchor.constraint(equalToConstant: 2)
         ])
     }
-    
-    private func constrainGoogleSignInButton() {
-        googleSigninButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            googleSigninButton.topAnchor.constraint(equalTo: orLabel.bottomAnchor, constant: 16),
-            googleSigninButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            googleSigninButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            googleSigninButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-
 }
