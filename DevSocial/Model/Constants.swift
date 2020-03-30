@@ -17,6 +17,10 @@ enum Images {
     static let welcomeImage = "WelcomeImage"
 }
 
+// TODO: Update icons
 enum TabImages {
     static let home = "house"
+    static let explore = "house"
+    static let activity = "house"
+    static let profile = "house"
 }
