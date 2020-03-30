@@ -16,6 +16,12 @@ class TabController: UITabBarController {
         let home = HomeVC()
         home.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: TabImages.home), tag: 0)
         
-        viewControllers = [home]
+        let explore = ExploreVC()
+        
+        let activity = ActivityVC()
+        
+        let profile = ProfileVC()
+        
+        viewControllers = [home, explore, activity, profile]
     }
 }
