@@ -11,6 +11,7 @@ import Foundation
 enum ColorNames {
     static let background = "background"
     static let mainColor  = "mainColor"
+    static let accessory  = "accessory"
 }
 
 enum Images {
@@ -24,4 +25,8 @@ enum TabImages {
     static let explore = "house"
     static let activity = "house"
     static let profile = "house"
+}
+
+enum Cells {
+    static let defaultCell = "defaultCellID"
 }

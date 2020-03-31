@@ -36,4 +36,23 @@ class FirebaseStorageContext: StorageContext {
             }
         }
     }
+    
+    func getListOfAllUsers(onSuccess: @escaping (_ users: [User]) -> Void) {
+        db.collection("users").getDocuments { (snapshot, error) in
+            if let error = error {
+                Alert.showBasicAlert(on: MyMessagesVC(), with: error.localizedDescription)
+            } else {
+                var users = [User]()
+                for document in snapshot!.documents {
+                    users.append(User(
+                        username: document.data()["username"] as! String,
+                        email: document.data()["email"] as! String,
+                        dateCreated: Date(),
+                        id: document.data()["id"] as! String
+                    ))
+                }
+                onSuccess(users)
+            }
+        }
+    }
 }
