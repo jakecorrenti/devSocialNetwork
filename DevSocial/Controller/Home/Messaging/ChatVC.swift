@@ -103,7 +103,7 @@ class ChatVC: UICollectionViewController {
     }
     
     private func loadChat() {
-        let db = Firestore.firestore().collection("chats").whereField("users", arrayContains: currentUser.uid ?? "Not Found User 1")
+        let db = Firestore.firestore().collection("chats").whereField("users", arrayContains: currentUser.uid)
         
         db.getDocuments { (snapshot, error) in
             if let error = error {
