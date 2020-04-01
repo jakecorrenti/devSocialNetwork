@@ -11,11 +11,14 @@ import Foundation
 enum ColorNames {
     static let background = "background"
     static let mainColor  = "mainColor"
+    static let primaryTextColor = "primaryTextColor"
+    static let secondaryTextColor = "secondaryTextColor"
 }
 
 enum Images {
     static let welcomeImage = "WelcomeImage"
     static let messages = "paperplane"
+    static let emptyProfileImage = "emptyProfileImage"
 }
 
 // TODO: Update icons

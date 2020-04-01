@@ -9,18 +9,9 @@
 import UIKit
 import Firebase
 
+private let homeRequestCellID = "homeRequestCellID"
+
 class HomeVC: UITableViewController {
-    
-    // -----------------------------------------
-    // MARK: Views
-    // -----------------------------------------
-    
-//    lazy var tableview: UITableView = {
-//        let tb = UITableView()
-//        tb.delegate = self
-//        tb.dataSource = self
-//        return tb
-//    }()
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -56,29 +47,11 @@ class HomeVC: UITableViewController {
     }
     
     private func setupUI() {
-        // MARK: Removing sign up button
-//        let button = UIButton()
-//        button.setTitle("sign out", for: .normal)
-//        button.setTitleColor(.red, for: .normal)
-//        button.addTarget(self, action: #selector(signout), for: .touchUpInside)
-//
-//        view.addSubview(button)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive  = true
-//        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    
-//        constrainTableView()
+        tableView = UITableView(frame: self.tableView.frame, style: .grouped)
+        tableView.register(HomeRequestCell.self, forCellReuseIdentifier: homeRequestCellID)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
     }
-    
-//    private func constrainTableView() {
-//        tableview.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            tableview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-//            tableview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-//            tableview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-//            tableview.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
-//        ])
-//    }
     
     @objc func signout() {
         let firebaseAuth = Auth.auth()
@@ -100,10 +73,30 @@ extension HomeVC {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: homeRequestCellID) as! HomeRequestCell
+        
+        cell.title = "This is our title"
+        
+        cell.profileImage = UIImage(named: Images.emptyProfileImage)
+        cell.authorName = "Johnny Appleseed"
+        cell.authorHeadline = "Software Engineer at Google"
+        
+        cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
+        
+        cell.layoutSubviews()
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
