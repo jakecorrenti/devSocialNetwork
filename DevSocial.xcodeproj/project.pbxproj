@@ -37,6 +37,7 @@
 		3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */; };
 		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
+		AE9216D824341E49002D6971 /* HomeRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9216D724341E49002D6971 /* HomeRequestCell.swift */; };
 		AEB726792432878B006923CA /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB726782432878B006923CA /* ExploreVC.swift */; };
 		AEB7267E24328803006923CA /* ActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB7267D24328803006923CA /* ActivityVC.swift */; };
 		AEB7268024328814006923CA /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB7267F24328814006923CA /* ProfileVC.swift */; };
@@ -79,6 +80,7 @@
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
 		87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSocial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE382E25242FF27700EED32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AE9216D724341E49002D6971 /* HomeRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRequestCell.swift; sourceTree = "<group>"; };
 		AEB726782432878B006923CA /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
 		AEB7267D24328803006923CA /* ActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityVC.swift; sourceTree = "<group>"; };
 		AEB7267F24328814006923CA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				3E5EC9882433ADB300744959 /* Messaging */,
+				AE9216D624341C68002D6971 /* Home Cells */,
 				3E33CDD22430470500C8DE64 /* General */,
 				3E33CDD72430555C00C8DE64 /* Auth */,
 			);
@@ -187,9 +190,9 @@
 		3E33CDC42430001900C8DE64 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				AE5E73D4243293370079393C /* Sign up */,
 				3EE6D7FD2431C6C9003A5BFA /* Login */,
 				3E33CDCC2430237300C8DE64 /* PagingVC.swift */,
-				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
 				3E33CDC52430002200C8DE64 /* WelcomeVC.swift */,
 			);
 			path = Auth;
@@ -291,6 +294,22 @@
 				3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		AE5E73D4243293370079393C /* Sign up */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
+			);
+			path = "Sign up";
+			sourceTree = "<group>";
+		};
+		AE9216D624341C68002D6971 /* Home Cells */ = {
+			isa = PBXGroup;
+			children = (
+				AE9216D724341E49002D6971 /* HomeRequestCell.swift */,
+			);
+			path = "Home Cells";
 			sourceTree = "<group>";
 		};
 		AEB7267A243287E4006923CA /* Explore */ = {
@@ -481,6 +500,7 @@
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
 				AEB7267E24328803006923CA /* ActivityVC.swift in Sources */,
+				AE9216D824341E49002D6971 /* HomeRequestCell.swift in Sources */,
 				AEB7268024328814006923CA /* ProfileVC.swift in Sources */,
 				3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,

@@ -12,11 +12,14 @@ enum ColorNames {
     static let background = "background"
     static let mainColor  = "mainColor"
     static let accessory  = "accessory"
+    static let primaryTextColor = "primaryTextColor"
+    static let secondaryTextColor = "secondaryTextColor"
 }
 
 enum Images {
     static let welcomeImage = "WelcomeImage"
     static let messages = "paperplane"
+    static let emptyProfileImage = "emptyProfileImage"
 }
 
 // TODO: Update icons
@@ -29,4 +32,17 @@ enum TabImages {
 
 enum Cells {
     static let defaultCell = "defaultCellID"
+}
+
+enum SmileyImages {
+    static let s_1_unselected = "smiley_1_unselected"
+    static let s_1_selected = "smiley_1_selected"
+    static let s_2_unselected = "smiley_2_unselected"
+    static let s_2_selected = "smiley_2_selected"
+    static let s_3_unselected = "smiley_3_unselected"
+    static let s_3_selected = "smiley_3_selected"
+    static let s_4_unselected = "smiley_4_unselected"
+    static let s_4_selected = "smiley_4_selected"
+    static let s_5_unselected = "smiley_5_unselected"
+    static let s_5_selected = "smiley_5_selected"
 }

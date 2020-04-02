@@ -16,4 +16,9 @@ protocol StorageContext {
     func deleteUser(user: User, onError: @escaping (_ error: Error?) -> Void)
     
     func getListOfAllUsers(onSuccess: @escaping (_ users: [User]) -> Void)
+
+    func checkUsernameExists(username: String, onError: @escaping (Error?) -> Void, nameExists: @escaping (Bool?) -> Void)
+    
+    func addUsername(username: String, uid: String, onError: @escaping (Error?) -> Void)
+
 }

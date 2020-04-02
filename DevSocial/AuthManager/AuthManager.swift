@@ -49,6 +49,12 @@ final class AuthManager {
                                 onError(error)
                             }
                         }
+                        
+                        dbManager.addUsername(username: username, uid: user.id) { (error) in
+                            if let error = error {
+                                onError(error)
+                            }
+                        }
                     }
                 })
             }

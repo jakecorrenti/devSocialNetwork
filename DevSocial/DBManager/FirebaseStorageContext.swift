@@ -55,5 +55,27 @@ class FirebaseStorageContext: StorageContext {
                 onSuccess(users)
             }
         }
+    }           
+  
+    func checkUsernameExists(username: String, onError: @escaping (Error?) -> Void, nameExists: @escaping (Bool?) -> Void) {
+        db.collection("usernames").document(username.lowercased()).getDocument { (document, error) in
+            if let error = error {
+                onError(error)
+            }
+            
+            if let doc = document {
+                nameExists(doc.exists)
+            }
+        }
+    }
+    
+    func addUsername(username: String, uid: String, onError: @escaping (Error?) -> Void) {
+        db.collection("usernames").document(username.lowercased()).setData([
+            "id"          : uid
+        ]) { (error) in
+            if let error = error {
+                onError(error)
+            }
+        }
     }
 }
