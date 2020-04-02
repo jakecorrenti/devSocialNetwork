@@ -14,6 +14,7 @@ class MyMessagesVC: UIViewController {
     // MARK: Views
     // -----------------------------------------
     let dbManager = FirebaseStorageContext()
+    let messagesManager = MessagesManager()
     var numberOfUsers = 0
     var users = [User]()
     
@@ -48,7 +49,7 @@ class MyMessagesVC: UIViewController {
         setupNavBar()
         setupUI()
         
-        dbManager.getListOfAllUsers { (users) in
+        messagesManager.getListOfMessagedUsers { (users) in
             self.numberOfUsers = users.count
             self.users = users.sorted { $0.username < $1.username }
             self.tableView.reloadData()
@@ -98,7 +99,8 @@ extension MyMessagesVC : UITableViewDataSource {
 
 extension MyMessagesVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chat = ChatVC(collectionViewLayout: UICollectionViewFlowLayout())
+//        let chat = ChatVC(collectionViewLayout: UICollectionViewFlowLayout())
+        let chat = ChatVC()
         chat.selectedUser = users[indexPath.row]
         navigationController?.pushViewController(chat, animated: true)
     }

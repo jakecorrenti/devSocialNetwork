@@ -37,13 +37,14 @@ class FirebaseStorageContext: StorageContext {
         }
     }
     
+    /// get list of all users excluding the one that is logged in
     func getListOfAllUsers(onSuccess: @escaping (_ users: [User]) -> Void) {
         db.collection("users").getDocuments { (snapshot, error) in
             if let error = error {
                 Alert.showBasicAlert(on: MyMessagesVC(), with: error.localizedDescription)
             } else {
                 var users = [User]()
-                for document in snapshot!.documents {
+                for document in snapshot!.documents where document.data()["id"] as? String != Auth.auth().currentUser?.uid {
                     users.append(User(
                         username: document.data()["username"] as! String,
                         email: document.data()["email"] as! String,

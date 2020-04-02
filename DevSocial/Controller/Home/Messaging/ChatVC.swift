@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 import Firebase
 
-class ChatVC: UICollectionViewController {
+class ChatVC: UIViewController {
     
     // -----------------------------------------
     // MARK: Properties
@@ -20,12 +20,23 @@ class ChatVC: UICollectionViewController {
     private var docReference: DocumentReference?
     let currentUser = Auth.auth().currentUser!
     var messages = [Message]()
+    private var messagesManager = MessagesManager()
     
     // -----------------------------------------
     // MARK: Views
     // -----------------------------------------
     
     lazy var textInputView = InputView()
+    
+    lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.dataSource = self
+        view.tableFooterView = UIView()
+        view.keyboardDismissMode = .onDrag
+        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.register(UITableViewCell.self, forCellReuseIdentifier: Cells.defaultCell)
+        return view
+    }()
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -48,11 +59,8 @@ class ChatVC: UICollectionViewController {
         
         setupNavBar()
         setupUI()
-        
-        collectionView.keyboardDismissMode = .onDrag
-        
+                
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Cells.defaultCell)
         textInputView.sendButton.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
     }
     
@@ -67,13 +75,13 @@ class ChatVC: UICollectionViewController {
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = selectedUser.username
-        collectionView.backgroundColor = UIColor(named: ColorNames.background)
     }
     
     private func setupUI() {
-        [textInputView].forEach { view.addSubview($0) }
+        [textInputView, tableView].forEach { view.addSubview($0) }
         
         constrainTextInputView()
+        constrainTableView()
         loadChat()
     }
     
@@ -86,16 +94,20 @@ class ChatVC: UICollectionViewController {
         ])
     }
     
+    private func constrainTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: textInputView.separatorView.topAnchor)
+        ])
+    }
+    
     func createChat() {
-        let users = [self.currentUser.uid, selectedUser.id]
-        let data: [String: Any] = [
-            "users":users
-        ]
-        let db = Firestore.firestore().collection("chats")
-        db.addDocument(data: data) { (error) in
+        messagesManager.createChat(with: selectedUser.id) { (error) in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
-                return
             } else {
                 self.loadChat()
             }
@@ -103,71 +115,33 @@ class ChatVC: UICollectionViewController {
     }
     
     private func loadChat() {
-        let db = Firestore.firestore().collection("chats").whereField("users", arrayContains: currentUser.uid)
-        
-        db.getDocuments { (snapshot, error) in
+        messagesManager.loadChat(with: selectedUser, onError: { (error) in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
-            } else {
-                guard let queryCount = snapshot?.documents.count else { return }
-                
-                if queryCount == 0 { self.createChat() } else if queryCount == 1 {
-                    for doc in snapshot!.documents {
-                        let chat = Chat(dictionary: doc.data())
-                        
-                        if (chat?.users.contains(self.selectedUser.id))! {
-                            self.docReference = doc.reference
-                            
-                            doc.reference.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (threadQuery, error) in
-                                if let error = error {
-                                    Alert.showBasicAlert(on: self, with: error.localizedDescription)
-                                } else {
-                                    self.messages.removeAll()
-                                    for message in threadQuery!.documents {
-                                        let msg = Message(dictionary: message.data())
-                                        print(message.data())
-                                        print("MESSAGE!!!: \(msg)")
-                                        self.messages.append(msg!)
-                                        
-                                        print("Data: \(msg?.content ?? "NO MESSAGE FOUND")")
-                                    }
-                                    self.collectionView.reloadData()
-//                                    self.collectionView.scrollToItem(at: IndexPath(row: self.messages.count, section: 0), at: .bottom, animated: true)
-                                }
-                            }
-                        }
-                    }
-                }
-                    
             }
+        }) { (messages, docReference) in
+            self.messages = messages
+            self.docReference = docReference
+            self.tableView.reloadData()
+            self.tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
     private func insertNewMessage(_ message: Message) {
         //add the message to the messages array and reload it
         messages.append(message)
-        collectionView.reloadData()
+        tableView.reloadData()
         DispatchQueue.main.async {
-//            self.collectionView.scrollToItem(at: IndexPath(row: self.messages.count, section: 0), at: .bottom, animated: true)
+            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
+    
     private func save(_ message: Message) {
-        //Preparing the data as per our firestore collection
-        let data: [String: Any] = [
-            "content": message.content,
-            "created": message.created,
-            "id": message.id,
-            "senderID": message.senderID,
-            "senderName": message.senderName
-        ]
-        //Writing it to the thread using the saved document reference we saved in load chat function
-        docReference?.collection("thread").addDocument(data: data, completion: { (error) in
+        messagesManager.save(message: message, at: docReference) { (error) in
             if let error = error {
-                print("Error Sending message: \(error)")
-                return
+                Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
-//            self.collectionView.scrollToItem(at: IndexPath(row: self.messages.count, section: 0), at: .bottom, animated: true)
-        })
+        }
     }
     
     
@@ -180,25 +154,20 @@ class ChatVC: UICollectionViewController {
         save(message)
         //clearing input field
         textInputView.textField.text = ""
-        collectionView.reloadData()
-//        self.collectionView.scrollToItem(at: IndexPath(row: self.messages.count, section: 0), at: .bottom, animated: true)
-
+        tableView.reloadData()
+        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
     }
 }
 
-extension ChatVC {
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cells.defaultCell, for: indexPath)
-        cell.backgroundColor = .red
-        return cell
+extension ChatVC : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if messages.count == 0 {
-            print("There are no messages")
-            return 0
-        } else {
-            return messages.count
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.defaultCell, for: indexPath)
+        cell.textLabel?.text = messages[indexPath.row].content
+        return cell
     }
 }
+
