@@ -41,6 +41,7 @@ class HomeVC: UITableViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
         navigationItem.rightBarButtonItem = messages
         self.title = "Home"
@@ -63,7 +64,7 @@ class HomeVC: UITableViewController {
     }
     
     @objc func messagesButtonPressed() {
-        
+        navigationController?.pushViewController(MyMessagesVC(), animated: true)
     }
 }
 
