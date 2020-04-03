@@ -16,11 +16,17 @@ class ChatVC: UIViewController {
     // MARK: Properties
     // -----------------------------------------
     
+    var inputBottomAnchor: NSLayoutConstraint!
     var selectedUser: User!
     private var docReference: DocumentReference?
     let currentUser = Auth.auth().currentUser!
-    var messages = [Message]()
+    var messages = [[Message]]()
     private var messagesManager = MessagesManager()
+    var formater: DateFormatter {
+        let f = DateFormatter()
+        f.dateFormat = "M/d/yyyy"
+        return f
+    }
     
     // -----------------------------------------
     // MARK: Views
@@ -29,12 +35,17 @@ class ChatVC: UIViewController {
     lazy var textInputView = InputView()
     
     lazy var tableView: UITableView = {
-        let view = UITableView()
+        let view = UITableView(frame: .zero, style: .grouped)
         view.dataSource = self
+        view.delegate = self
+        view.sectionHeaderHeight = 50
         view.tableFooterView = UIView()
-        view.keyboardDismissMode = .onDrag
+        view.keyboardDismissMode = .interactive
+        view.estimatedRowHeight = 50
+        view.separatorStyle = .none
+        view.rowHeight = UITableView.automaticDimension
         view.backgroundColor = UIColor(named: ColorNames.background)
-        view.register(UITableViewCell.self, forCellReuseIdentifier: Cells.defaultCell)
+        view.register(MessageCell.self, forCellReuseIdentifier: Cells.messageCell)
         return view
     }()
     
@@ -59,14 +70,23 @@ class ChatVC: UIViewController {
         
         setupNavBar()
         setupUI()
-                
+        setupObservers()
+        
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
         textInputView.sendButton.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     // -----------------------------------------
     // MARK: Setup UI
     // -----------------------------------------
+    
+    
     
     @objc func tap() {
         view.endEditing(true)
@@ -85,10 +105,18 @@ class ChatVC: UIViewController {
         loadChat()
     }
     
+    private func setupObservers() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
     private func constrainTextInputView() {
+        inputBottomAnchor = textInputView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        
         textInputView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            textInputView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            inputBottomAnchor,
             textInputView.widthAnchor.constraint(equalTo: view.widthAnchor),
             textInputView.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -120,19 +148,20 @@ class ChatVC: UIViewController {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
         }) { (messages, docReference) in
+//            self.messages = messages
             self.messages = messages
             self.docReference = docReference
             self.tableView.reloadData()
-            self.tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
+//            self.tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
     private func insertNewMessage(_ message: Message) {
         //add the message to the messages array and reload it
-        messages.append(message)
+//        messages.append(message)
         tableView.reloadData()
         DispatchQueue.main.async {
-            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+//            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
@@ -148,26 +177,66 @@ class ChatVC: UIViewController {
     @objc
     private func sendButtonPressed() {
         //When use press send button this method is called.
-        let message = Message(id: UUID().uuidString, content: textInputView.textField.text!, created: "\(Date())", senderID: currentUser.uid, senderName: currentUser.displayName!)
+        let message = Message(id: UUID().uuidString, content: textInputView.textField.text!, created: Timestamp(), senderID: currentUser.uid, senderName: currentUser.displayName!)
         //calling function to insert and save message
         insertNewMessage(message)
         save(message)
         //clearing input field
         textInputView.textField.text = ""
         tableView.reloadData()
-        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+//        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+    }
+    
+    @objc
+    private func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            inputBottomAnchor.constant = .zero
+            tableView.contentInset = .zero
+        } else {
+            inputBottomAnchor.constant = -keyboardViewEndFrame.height + view.safeAreaInsets.bottom
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
+            
+            tableView.scrollIndicatorInsets = tableView.contentInset
+        }
     }
 }
 
 extension ChatVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return messages[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.defaultCell, for: indexPath)
-        cell.textLabel?.text = messages[indexPath.row].content
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messageCell, for: indexPath) as! MessageCell
+        cell.message = messages[indexPath.section][indexPath.row]
+        cell.backgroundColor = UIColor(named: ColorNames.background)
+        cell.selectionStyle = .none
         return cell
+    }
+}
+
+extension ChatVC: UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return messages.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        
+        let sectionDate = formater.string(from: messages[section][0].created.dateValue())
+        let currentDate = formater.string(from: Date())
+        
+        label.text = sectionDate == currentDate ? "Today" : sectionDate
+        
+        label.textAlignment = .center
+        label.backgroundColor = UIColor(named: ColorNames.background)
+        label.textColor = .systemGray3
+        return label
     }
 }
 

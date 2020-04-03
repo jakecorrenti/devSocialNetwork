@@ -1,28 +1,29 @@
 //
-//  MyMessagesVC.swift
+//  NewMessageVC.swift
 //  DevSocial
 //
-//  Created by Jake Correnti on 3/30/20.
+//  Created by Jake Correnti on 4/2/20.
 //  Copyright © 2020 Jake Correnti. All rights reserved.
 //
 
 import UIKit
+import Firebase
 
-class MyMessagesVC: UITableViewController {
+class NewMessageVC: UITableViewController {
     
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
+    
     let dbManager = FirebaseStorageContext()
     let messagesManager = MessagesManager()
-    var numberOfUsers = 0
     var users = [User]()
     var filteredUsers = [User]()
-    var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
+    var isSeachBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
     }
     var isFiltering: Bool {
-      return searchController.isActive && !isSearchBarEmpty
+        return searchController.isActive && !isSeachBarEmpty
     }
     
     // -----------------------------------------
@@ -33,7 +34,7 @@ class MyMessagesVC: UITableViewController {
         let view = UISearchController(searchResultsController: nil)
         view.searchResultsUpdater = self
         view.obscuresBackgroundDuringPresentation = false
-        view.searchBar.placeholder = "Search messages"
+        view.searchBar.placeholder = "Search users"
         return view
     }()
     
@@ -45,7 +46,6 @@ class MyMessagesVC: UITableViewController {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = true
-        getUsers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,8 +58,14 @@ class MyMessagesVC: UITableViewController {
         super.viewDidLoad()
         
         setupNavBar()
-        setupUI()
-        
+        getUsers()
+    }
+    
+    private func getUsers() {
+        dbManager.getListOfAllUsers { (users) in
+            self.users = users
+            self.tableView.reloadData()
+        }
     }
     
     // -----------------------------------------
@@ -68,29 +74,12 @@ class MyMessagesVC: UITableViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
-        navigationItem.title = "Messages"
+        navigationItem.title = "New message"
         
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        navigationItem.rightBarButtonItem = addButton
-    }
-    
-    private func setupUI() {
-        tableView.backgroundColor = UIColor(named: ColorNames.background)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.tableFooterView = UIView()
-        tableView.register(MessagedUserCell.self, forCellReuseIdentifier: Cells.messagedUserCell)
-    }
-    
-    private func getUsers() {
-        messagesManager.getListOfMessagedUsers { (users) in
-            self.numberOfUsers = users.count
-            self.users = users.sorted { $0.username < $1.username }
-            self.tableView.reloadData()
-        }
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Cells.defaultCell)
     }
     
     private func filterContentForSearchText(_ searchText: String) {
@@ -101,49 +90,41 @@ class MyMessagesVC: UITableViewController {
       tableView.reloadData()
     }
     
-    @objc func addButtonPressed() {
-        navigationController?.pushViewController(NewMessageVC(), animated: true)
-    }
 }
 
-extension MyMessagesVC {
+extension NewMessageVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if isFiltering {
             return filteredUsers.count
         }
         
-        return numberOfUsers
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messagedUserCell, for: indexPath) as! MessagedUserCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.defaultCell, for: indexPath)
         
         if isFiltering {
-            cell.selectedUser = filteredUsers[indexPath.row]
+            cell.textLabel?.text = filteredUsers[indexPath.row].username
         } else {
-            cell.selectedUser = users[indexPath.row]
+            cell.textLabel?.text = users[indexPath.row].username
         }
-
-        cell.accessoryType = .disclosureIndicator
-        cell.backgroundColor = UIColor(named: ColorNames.background)
+        
         return cell
     }
-}
-
-extension MyMessagesVC {
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chat = ChatVC()
-        chat.selectedUser = users[indexPath.row]
-        navigationController?.pushViewController(chat, animated: true)
-    }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        messagesManager.createChat(with: users[indexPath.row].id) { (error) in
+            if let error = error {
+                Alert.showBasicAlert(on: self, with: error.localizedDescription)
+            }
+        }
+        navigationController?.popViewController(animated: true)
     }
 }
 
-extension MyMessagesVC: UISearchResultsUpdating {
+extension NewMessageVC: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     // TODO
         let searchBar = searchController.searchBar

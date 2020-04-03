@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 struct Message {
     
     var id: String
     var content: String
-    var created: String
+    var created: Timestamp
     var senderID: String
     var senderName: String
     var dictionary: [String : Any] {
@@ -30,7 +31,7 @@ extension Message {
     init? (dictionary: [String : Any]) {
         guard let id = dictionary["id"] as? String,
             let content = dictionary["content"] as? String,
-            let created = dictionary["created"] as? String,
+            let created = dictionary["created"] as? Timestamp,
             let senderID = dictionary["senderID"] as? String,
             let senderName = dictionary["senderName"] as? String else { return nil }
         

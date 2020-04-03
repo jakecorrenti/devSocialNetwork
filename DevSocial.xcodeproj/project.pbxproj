@@ -34,7 +34,10 @@
 		3E5EC98A2433ADC100744959 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9892433ADC100744959 /* InputView.swift */; };
 		3E5EC98C2433D05A00744959 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98B2433D05A00744959 /* Chat.swift */; };
 		3E5EC98E2433D0FB00744959 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98D2433D0FB00744959 /* Message.swift */; };
+		3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530D243781C700A708F6 /* MessagedUserCell.swift */; };
 		3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */; };
+		3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED8CBA324364DA000044F7A /* NewMessageVC.swift */; };
+		3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC1E642435907000D014D8 /* MessageCell.swift */; };
 		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
 		AE9216D824341E49002D6971 /* HomeRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9216D724341E49002D6971 /* HomeRequestCell.swift */; };
@@ -74,7 +77,10 @@
 		3E5EC9892433ADC100744959 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		3E5EC98B2433D05A00744959 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		3E5EC98D2433D0FB00744959 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3EAE530D243781C700A708F6 /* MessagedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagedUserCell.swift; sourceTree = "<group>"; };
 		3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
+		3ED8CBA324364DA000044F7A /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
+		3EDC1E642435907000D014D8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		3EE6D7FA2431C25D003A5BFA /* DevSocial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevSocial.entitlements; sourceTree = "<group>"; };
 		3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC Extension + Apple Sign in.swift"; sourceTree = "<group>"; };
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
@@ -257,6 +263,7 @@
 			children = (
 				3E5EC97F243292FA00744959 /* MyMessagesVC.swift */,
 				3E5EC9812432C73B00744959 /* ChatVC.swift */,
+				3ED8CBA324364DA000044F7A /* NewMessageVC.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -274,6 +281,8 @@
 			isa = PBXGroup;
 			children = (
 				3E5EC9892433ADC100744959 /* InputView.swift */,
+				3EDC1E642435907000D014D8 /* MessageCell.swift */,
+				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -493,6 +502,7 @@
 				3E5EC98E2433D0FB00744959 /* Message.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
+				3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */,
 				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E0B0E1424314A3E00F92618 /* HomeVC.swift in Sources */,
 				3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */,
@@ -503,6 +513,7 @@
 				AE9216D824341E49002D6971 /* HomeRequestCell.swift in Sources */,
 				AEB7268024328814006923CA /* ProfileVC.swift in Sources */,
 				3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */,
+				3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
 				3E5EC98A2433ADC100744959 /* InputView.swift in Sources */,
 				3E0B0E1224314A1C00F92618 /* TabController.swift in Sources */,
@@ -513,6 +524,7 @@
 				3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */,
 				AEB726792432878B006923CA /* ExploreVC.swift in Sources */,
 				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
+				3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
 				3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,

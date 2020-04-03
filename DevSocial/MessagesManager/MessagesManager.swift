@@ -74,7 +74,7 @@ final class MessagesManager {
     }
     
     /// load the chat that has been logged between the current user and another user within the app
-    func loadChat(with user: User, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ messages: [Message], _ docReference: DocumentReference?) -> Void) {
+    func loadChat(with user: User, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ messages: [[Message]], _ docReference: DocumentReference?) -> Void) {
         // on success returna list of messages that were sent between the users
         var documentReference: DocumentReference?
         var messages = [Message]()
@@ -108,7 +108,10 @@ final class MessagesManager {
                                         messages.append(msg!)
                                     }
                                     
-                                    onSuccess(messages, documentReference)
+                                    self.getMessagesSeparatedByDate(messages: messages) { (messages) in
+                                        onSuccess(messages, documentReference)
+                                    }
+                                    
                                 }
                             }
                         }
@@ -117,5 +120,44 @@ final class MessagesManager {
             }
         }
     }
+
+    /// creates the proper array format for the messages to be separated by date
+    func getMessagesSeparatedByDate(messages: [Message], onSucces: @escaping (_ messages: [[Message]]) -> Void ) {
+        var formater: DateFormatter {
+            let f = DateFormatter()
+            f.dateFormat = "M/d/yyyy"
+            return f
+        }
+        var dates = [String]()
+        var groupedMessages = [[Message]]()
+        
+        for message in messages {
+            if !dates.contains(formater.string(from: message.created.dateValue())) {
+                dates.append(formater.string(from: message.created.dateValue()))
+            }
+        }
+        
+        // loop through the dates an compare it to the messages' create dates. then create a multi-dimensional array of messages sorted by their dates created
+        for date in dates {
+            var grouped = [Message]()
+            for message in messages {
+                if formater.string(from: message.created.dateValue()) == date {
+                    grouped.append(message)
+                }
+            }
+            groupedMessages.append(grouped)
+        }
+        onSucces(groupedMessages)
+    }
     
+    /// gets the last sent message in the chat between the two users
+    func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message) -> Void ) {
+        self.loadChat(with: user, onError: { (error) in
+            if let error = error {
+                print("There was an error: \(error.localizedDescription)")
+            }
+        }) { (messages, docReference) in
+            onSuccess(messages.last!.last!)
+        }
+    }
 }
