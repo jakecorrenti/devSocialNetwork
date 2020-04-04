@@ -34,7 +34,12 @@
 		3E5EC98A2433ADC100744959 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9892433ADC100744959 /* InputView.swift */; };
 		3E5EC98C2433D05A00744959 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98B2433D05A00744959 /* Chat.swift */; };
 		3E5EC98E2433D0FB00744959 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98D2433D0FB00744959 /* Message.swift */; };
+		3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530D243781C700A708F6 /* MessagedUserCell.swift */; };
+		3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530F2437D91500A708F6 /* NewMessageCell.swift */; };
+		3EAE53122438130000A708F6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE53112438130000A708F6 /* AvatarView.swift */; };
 		3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */; };
+		3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED8CBA324364DA000044F7A /* NewMessageVC.swift */; };
+		3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC1E642435907000D014D8 /* MessageCell.swift */; };
 		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
 		AE9216D824341E49002D6971 /* HomeRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9216D724341E49002D6971 /* HomeRequestCell.swift */; };
@@ -74,7 +79,12 @@
 		3E5EC9892433ADC100744959 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		3E5EC98B2433D05A00744959 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		3E5EC98D2433D0FB00744959 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3EAE530D243781C700A708F6 /* MessagedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagedUserCell.swift; sourceTree = "<group>"; };
+		3EAE530F2437D91500A708F6 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
+		3EAE53112438130000A708F6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
+		3ED8CBA324364DA000044F7A /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
+		3EDC1E642435907000D014D8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		3EE6D7FA2431C25D003A5BFA /* DevSocial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevSocial.entitlements; sourceTree = "<group>"; };
 		3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC Extension + Apple Sign in.swift"; sourceTree = "<group>"; };
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,7 +137,7 @@
 		3E0B0E1024314A0C00F92618 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				3E5EC97E24328DBB00744959 /* Messaging */,
+				3E0B0E1124314A1C00F92618 /* TabController.swift */,
 				3E0B0E1324314A3E00F92618 /* HomeVC.swift */,
 			);
 			path = Home;
@@ -144,7 +154,7 @@
 		3E33CDC0242FFFEF00C8DE64 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3E0B0E1124314A1C00F92618 /* TabController.swift */,
+				3E5EC97E24328DBB00744959 /* Messaging */,
 				3E0B0E1024314A0C00F92618 /* Home */,
 				AEB7267A243287E4006923CA /* Explore */,
 				AEB7267B243287F5006923CA /* Activity */,
@@ -168,8 +178,7 @@
 		3E33CDC2242FFFFC00C8DE64 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3E33CDC7243001DF00C8DE64 /* Constants.swift */,
-				3E0B0E18243159FF00F92618 /* Alert.swift */,
+				3EAE531324383A7500A708F6 /* General */,
 				3E0B0E0B243123C000F92618 /* Auth */,
 				3E5EC9832432C86500744959 /* Messaging */,
 			);
@@ -190,10 +199,10 @@
 		3E33CDC42430001900C8DE64 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				AE5E73D4243293370079393C /* Sign up */,
-				3EE6D7FD2431C6C9003A5BFA /* Login */,
 				3E33CDCC2430237300C8DE64 /* PagingVC.swift */,
 				3E33CDC52430002200C8DE64 /* WelcomeVC.swift */,
+				AE5E73D4243293370079393C /* Sign up */,
+				3EE6D7FD2431C6C9003A5BFA /* Login */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -204,6 +213,7 @@
 				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
 				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
 				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
+				3EAE53112438130000A708F6 /* AvatarView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -257,6 +267,7 @@
 			children = (
 				3E5EC97F243292FA00744959 /* MyMessagesVC.swift */,
 				3E5EC9812432C73B00744959 /* ChatVC.swift */,
+				3ED8CBA324364DA000044F7A /* NewMessageVC.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -274,8 +285,20 @@
 			isa = PBXGroup;
 			children = (
 				3E5EC9892433ADC100744959 /* InputView.swift */,
+				3EDC1E642435907000D014D8 /* MessageCell.swift */,
+				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
+				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 			);
 			path = Messaging;
+			sourceTree = "<group>";
+		};
+		3EAE531324383A7500A708F6 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDC7243001DF00C8DE64 /* Constants.swift */,
+				3E0B0E18243159FF00F92618 /* Alert.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 		3ECDD14E24352CBF00ED04E9 /* MessagesManager */ = {
@@ -493,6 +516,7 @@
 				3E5EC98E2433D0FB00744959 /* Message.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
+				3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */,
 				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E0B0E1424314A3E00F92618 /* HomeVC.swift in Sources */,
 				3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */,
@@ -503,18 +527,22 @@
 				AE9216D824341E49002D6971 /* HomeRequestCell.swift in Sources */,
 				AEB7268024328814006923CA /* ProfileVC.swift in Sources */,
 				3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */,
+				3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
 				3E5EC98A2433ADC100744959 /* InputView.swift in Sources */,
 				3E0B0E1224314A1C00F92618 /* TabController.swift in Sources */,
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
 				3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */,
 				3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */,
+				3EAE53122438130000A708F6 /* AvatarView.swift in Sources */,
 				3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */,
 				3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */,
 				AEB726792432878B006923CA /* ExploreVC.swift in Sources */,
 				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
+				3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
 				3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */,
+				3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 				3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */,
 			);

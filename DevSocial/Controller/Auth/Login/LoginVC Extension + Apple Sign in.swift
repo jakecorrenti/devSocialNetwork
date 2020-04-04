@@ -120,8 +120,7 @@ extension LoginVC: ASAuthorizationControllerDelegate {
                             Alert.showBasicAlert(on: self, with: error.localizedDescription)
                         } else {
                             if !snapshot!.exists {
-                                let dbManager = FirebaseStorageContext()
-                                dbManager.saveUser(user: user) { (error) in
+                                FirebaseStorageContext.shared.saveUser(user: user) { (error) in
                                     if let error = error {
                                         Alert.showBasicAlert(on: self, with: error.localizedDescription)
                                     }
