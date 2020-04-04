@@ -137,7 +137,7 @@
 		3E0B0E1024314A0C00F92618 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				3E5EC97E24328DBB00744959 /* Messaging */,
+				3E0B0E1124314A1C00F92618 /* TabController.swift */,
 				3E0B0E1324314A3E00F92618 /* HomeVC.swift */,
 			);
 			path = Home;
@@ -154,7 +154,7 @@
 		3E33CDC0242FFFEF00C8DE64 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3E0B0E1124314A1C00F92618 /* TabController.swift */,
+				3E5EC97E24328DBB00744959 /* Messaging */,
 				3E0B0E1024314A0C00F92618 /* Home */,
 				AEB7267A243287E4006923CA /* Explore */,
 				AEB7267B243287F5006923CA /* Activity */,
@@ -178,8 +178,7 @@
 		3E33CDC2242FFFFC00C8DE64 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3E33CDC7243001DF00C8DE64 /* Constants.swift */,
-				3E0B0E18243159FF00F92618 /* Alert.swift */,
+				3EAE531324383A7500A708F6 /* General */,
 				3E0B0E0B243123C000F92618 /* Auth */,
 				3E5EC9832432C86500744959 /* Messaging */,
 			);
@@ -200,10 +199,10 @@
 		3E33CDC42430001900C8DE64 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				AE5E73D4243293370079393C /* Sign up */,
-				3EE6D7FD2431C6C9003A5BFA /* Login */,
 				3E33CDCC2430237300C8DE64 /* PagingVC.swift */,
 				3E33CDC52430002200C8DE64 /* WelcomeVC.swift */,
+				AE5E73D4243293370079393C /* Sign up */,
+				3EE6D7FD2431C6C9003A5BFA /* Login */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -291,6 +290,15 @@
 				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 			);
 			path = Messaging;
+			sourceTree = "<group>";
+		};
+		3EAE531324383A7500A708F6 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				3E33CDC7243001DF00C8DE64 /* Constants.swift */,
+				3E0B0E18243159FF00F92618 /* Alert.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 		3ECDD14E24352CBF00ED04E9 /* MessagesManager */ = {
