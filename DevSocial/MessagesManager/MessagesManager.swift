@@ -151,13 +151,13 @@ final class MessagesManager {
     }
     
     /// gets the last sent message in the chat between the two users
-    func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message) -> Void ) {
+    func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message?) -> Void ) {
         self.loadChat(with: user, onError: { (error) in
             if let error = error {
                 print("There was an error: \(error.localizedDescription)")
             }
         }) { (messages, docReference) in
-            onSuccess(messages.last!.last!)
+            onSuccess(messages.last?.last)
         }
     }
 }

@@ -25,8 +25,13 @@ class MessagedUserCell: UITableViewCell {
             avatarView.user = selectedUser
             usernameLabel.text = selectedUser.username
             MessagesManager.shared.getLastSentChat(with: selectedUser) { (message) in
-                self.lastMessageLabel.text = message.content
-                self.recentMessageDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
+                if let message = message {
+                    self.lastMessageLabel.text = message.content
+                    self.recentMessageDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
+                } else {
+                    self.lastMessageLabel.text = ""
+                    self.recentMessageDateLabel.text = self.dateFormatter.string(from: Date())
+                }
             }
         }
     }
