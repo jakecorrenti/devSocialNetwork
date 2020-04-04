@@ -12,5 +12,4 @@ pod 'FirebaseAuth'
 pod 'GoogleSignIn'
 pod 'Firebase/Firestore'
 pod 'FirebaseFirestoreSwift'
-pod 'MessageKit'
 end
