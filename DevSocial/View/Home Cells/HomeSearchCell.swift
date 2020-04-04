@@ -1,22 +1,23 @@
 //
-//  HomeRequestCell.swift
+//  HomePostCell.swift
 //  DevSocial
 //
-//  Created by Mikhail Lozovyy on 3/31/20.
+//  Created by Mikhail Lozovyy on 4/3/20.
 //  Copyright © 2020 Jake Correnti. All rights reserved.
 //
 
 import UIKit
 
-class HomeRequestCell: UITableViewCell {
+class HomeSearchCell: UITableViewCell {
     
     var title: String?
     var profileImage: UIImage?
     var authorName: String?
     var authorHeadline: String?
+    var desc: String?
     var dateInfo: String?
     
-    var titleView : UILabel = {
+    var titleView: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Helvetica Neue", size: 18.0)
@@ -24,14 +25,14 @@ class HomeRequestCell: UITableViewCell {
         return label
     }()
     
-    var profileImageView : UIImageView = {
+    var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = UIColor(named: ColorNames.mainColor)
         return imageView
     }()
     
-    var authorNameView : UILabel = {
+    var authorNameView: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Helvetica Neue", size: 14.0)
@@ -39,7 +40,7 @@ class HomeRequestCell: UITableViewCell {
         return label
     }()
     
-    var authorHeadlineView : UILabel = {
+    var authorHeadlineView: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Helvetica Neue", size: 10.0)
@@ -47,14 +48,14 @@ class HomeRequestCell: UITableViewCell {
         return label
     }()
     
-    var authorStack : UIStackView = {
+    var authorStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
         return stack
     }()
     
-    var finalStack : UIStackView = {
+    var finalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
@@ -62,7 +63,18 @@ class HomeRequestCell: UITableViewCell {
         return stack
     }()
     
-    var dateView : UILabel = {
+    var descView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isEditable = false
+        textView.isSelectable = false
+        textView.font = UIFont(name: "Helvetica Neue", size: 12.0)
+        textView.textColor = UIColor(named: ColorNames.primaryTextColor)
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    var dateView: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Helvetica Neue", size: 12.0)
@@ -70,16 +82,21 @@ class HomeRequestCell: UITableViewCell {
         return label
     }()
     
+    var bottomSeparatorView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let margins = self.layoutMarginsGuide
-
-        [titleView, dateView].forEach { self.addSubview($0) }
-                
+        
+        [titleView, descView, dateView, bottomSeparatorView].forEach { self.addSubview($0) }
+        
         setTitleConstraints(margins: margins)
-        
         setupAuthorStack(margins: margins)
-        
+        setDescConstraints(margins: margins)
         setDateConstraints(margins: margins)
     }
     
@@ -104,6 +121,10 @@ class HomeRequestCell: UITableViewCell {
         
         if let authorHeadline = authorHeadline {
             authorHeadlineView.text = authorHeadline
+        }
+        
+        if let desc = desc {
+            descView.text = desc
         }
         
         if let dateInfo = dateInfo {
@@ -148,12 +169,20 @@ class HomeRequestCell: UITableViewCell {
         finalStack.topAnchor.constraint(equalTo: titleView.bottomAnchor).isActive = true
         finalStack.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
         finalStack.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
-        finalStack.bottomAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
+        finalStack.bottomAnchor.constraint(equalTo: descView.topAnchor).isActive = true
         finalStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 32.0).isActive = true
     }
     
+    private func setDescConstraints(margins: UILayoutGuide) {
+        descView.topAnchor.constraint(equalTo: finalStack.bottomAnchor).isActive = true
+        descView.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
+        descView.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
+        descView.bottomAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
+        descView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
+    }
+    
     private func setDateConstraints(margins: UILayoutGuide) {
-        dateView.topAnchor.constraint(equalTo: finalStack.bottomAnchor).isActive = true
+        dateView.topAnchor.constraint(equalTo: descView.bottomAnchor).isActive = true
         dateView.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
         dateView.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
         dateView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true

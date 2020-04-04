@@ -10,8 +10,15 @@ import UIKit
 import Firebase
 
 private let homeRequestCellID = "homeRequestCellID"
+private let homeSearchCellID = "homeSearchCellID"
 
 class HomeVC: UITableViewController {
+    
+    // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
+    
+    var posts = [Post]()
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -33,6 +40,12 @@ class HomeVC: UITableViewController {
         setupNavBar()
         setupUI()
         
+        posts.append(Post(name: "Requesting work", type: .request))
+        posts.append(Post(name: "Have PHP work", type: .search))
+        posts.append(Post(name: "Requesting iOS work", type: .request))
+        posts.append(Post(name: "Requesting Dev work", type: .request))
+        posts.append(Post(name: "Have iOS work", type: .search))
+
     }
     
     // -----------------------------------------
@@ -50,6 +63,7 @@ class HomeVC: UITableViewController {
     private func setupUI() {
         tableView = UITableView(frame: self.tableView.frame, style: .grouped)
         tableView.register(HomeRequestCell.self, forCellReuseIdentifier: homeRequestCellID)
+        tableView.register(HomeSearchCell.self, forCellReuseIdentifier: homeSearchCellID)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
     }
@@ -74,23 +88,48 @@ extension HomeVC {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return posts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: homeRequestCellID) as! HomeRequestCell
+        let item = posts[indexPath.row]
         
-        cell.title = "This is our title"
-        
-        cell.profileImage = UIImage(named: Images.emptyProfileImage)
-        cell.authorName = "Johnny Appleseed"
-        cell.authorHeadline = "Software Engineer at Google"
-        
-        cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
-        
-        cell.layoutSubviews()
-        
-        return cell
+        switch item.type {
+        case .search:
+            let cell = tableView.dequeueReusableCell(withIdentifier: homeSearchCellID) as! HomeSearchCell
+            
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            
+            cell.title = item.name
+            
+            cell.desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+            
+            cell.profileImage = UIImage(named: Images.emptyProfileImage)
+            cell.authorName = "Johnny Appleseed"
+            cell.authorHeadline = "Software Engineer at Google"
+            
+            cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
+            
+            cell.layoutSubviews()
+            
+            return cell
+        case .request:
+            let cell = tableView.dequeueReusableCell(withIdentifier: homeRequestCellID) as! HomeRequestCell
+            
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
+            cell.title = item.name
+            
+            cell.profileImage = UIImage(named: Images.emptyProfileImage)
+            cell.authorName = "Johnny Appleseed"
+            cell.authorHeadline = "Software Engineer at Google"
+            
+            cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
+            
+            cell.layoutSubviews()
+            
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
