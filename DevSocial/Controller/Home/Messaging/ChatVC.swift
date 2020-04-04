@@ -21,7 +21,6 @@ class ChatVC: UIViewController {
     private var docReference: DocumentReference?
     let currentUser = Auth.auth().currentUser!
     var messages = [[Message]]()
-    private var messagesManager = MessagesManager()
     var formater: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "M/d/yyyy"
@@ -133,7 +132,7 @@ class ChatVC: UIViewController {
     }
     
     func createChat() {
-        messagesManager.createChat(with: selectedUser.id) { (error) in
+        MessagesManager.shared.createChat(with: selectedUser.id) { (error) in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             } else {
@@ -143,7 +142,7 @@ class ChatVC: UIViewController {
     }
     
     private func loadChat() {
-        messagesManager.loadChat(with: selectedUser, onError: { (error) in
+        MessagesManager.shared.loadChat(with: selectedUser, onError: { (error) in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
@@ -166,7 +165,7 @@ class ChatVC: UIViewController {
     }
     
     private func save(_ message: Message) {
-        messagesManager.save(message: message, at: docReference) { (error) in
+        MessagesManager.shared.save(message: message, at: docReference) { (error) in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }

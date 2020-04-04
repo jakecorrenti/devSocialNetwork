@@ -35,6 +35,8 @@
 		3E5EC98C2433D05A00744959 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98B2433D05A00744959 /* Chat.swift */; };
 		3E5EC98E2433D0FB00744959 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98D2433D0FB00744959 /* Message.swift */; };
 		3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530D243781C700A708F6 /* MessagedUserCell.swift */; };
+		3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530F2437D91500A708F6 /* NewMessageCell.swift */; };
+		3EAE53122438130000A708F6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE53112438130000A708F6 /* AvatarView.swift */; };
 		3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */; };
 		3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED8CBA324364DA000044F7A /* NewMessageVC.swift */; };
 		3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC1E642435907000D014D8 /* MessageCell.swift */; };
@@ -78,6 +80,8 @@
 		3E5EC98B2433D05A00744959 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		3E5EC98D2433D0FB00744959 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3EAE530D243781C700A708F6 /* MessagedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagedUserCell.swift; sourceTree = "<group>"; };
+		3EAE530F2437D91500A708F6 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
+		3EAE53112438130000A708F6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		3ED8CBA324364DA000044F7A /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
 		3EDC1E642435907000D014D8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
 				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
 				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
+				3EAE53112438130000A708F6 /* AvatarView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				3E5EC9892433ADC100744959 /* InputView.swift */,
 				3EDC1E642435907000D014D8 /* MessageCell.swift */,
 				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
+				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -520,6 +526,7 @@
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
 				3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */,
 				3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */,
+				3EAE53122438130000A708F6 /* AvatarView.swift in Sources */,
 				3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */,
 				3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */,
 				AEB726792432878B006923CA /* ExploreVC.swift in Sources */,
@@ -527,6 +534,7 @@
 				3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
 				3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */,
+				3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 				3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */,
 			);

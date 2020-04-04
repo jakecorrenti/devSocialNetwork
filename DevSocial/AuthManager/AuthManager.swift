@@ -11,6 +11,7 @@ import Firebase
 import GoogleSignIn
 
 final class AuthManager {
+    static let shared = AuthManager()
     let auth = Auth.auth()
     
     /// sign a user into Firebase using their email and password
@@ -36,7 +37,6 @@ final class AuthManager {
                         onError(commitError)
                     } else {
                         // if all of the auth is valid, add the user to the databse
-                        let dbManager = FirebaseStorageContext()
                         let user      = User(
                             username   : username,
                             email      : email,
@@ -44,13 +44,13 @@ final class AuthManager {
                             id         : self.auth.currentUser!.uid
                         )
                         
-                        dbManager.saveUser(user: user) { (error) in
+                        FirebaseStorageContext.shared.saveUser(user: user) { (error) in
                             if let error = error {
                                 onError(error)
                             }
                         }
                         
-                        dbManager.addUsername(username: username, uid: user.id) { (error) in
+                        FirebaseStorageContext.shared.addUsername(username: username, uid: user.id) { (error) in
                             if let error = error {
                                 onError(error)
                             }

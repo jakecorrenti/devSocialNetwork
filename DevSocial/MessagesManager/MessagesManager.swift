@@ -11,7 +11,7 @@ import FirebaseFirestore
 import Firebase
 
 final class MessagesManager {
-    private let dbManager   = FirebaseStorageContext()
+    static let shared = MessagesManager()
     private let currentUser = Auth.auth().currentUser!
     private let db          = Firestore.firestore()
     
@@ -31,7 +31,7 @@ final class MessagesManager {
                     }
                 }
                 
-                self.dbManager.getListOfAllUsers { (users) in
+                FirebaseStorageContext.shared.getListOfAllUsers { (users) in
                     for id in messagedUsersIDS {
                         for user in users {
                             if id == user.id {

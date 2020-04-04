@@ -14,9 +14,6 @@ class NewMessageVC: UITableViewController {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
-    
-    let dbManager = FirebaseStorageContext()
-    let messagesManager = MessagesManager()
     var users = [User]()
     var filteredUsers = [User]()
     var isSeachBarEmpty: Bool {
@@ -62,7 +59,7 @@ class NewMessageVC: UITableViewController {
     }
     
     private func getUsers() {
-        dbManager.getListOfAllUsers { (users) in
+        FirebaseStorageContext.shared.getListOfAllUsers { (users) in
             self.users = users
             self.tableView.reloadData()
         }
@@ -75,11 +72,11 @@ class NewMessageVC: UITableViewController {
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = "New message"
-        
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Cells.defaultCell)
+        tableView.register(NewMessageCell.self, forCellReuseIdentifier: Cells.newMessageCell)
+        tableView.tableFooterView = UIView()
     }
     
     private func filterContentForSearchText(_ searchText: String) {
@@ -93,6 +90,11 @@ class NewMessageVC: UITableViewController {
 }
 
 extension NewMessageVC {
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if isFiltering {
@@ -103,24 +105,26 @@ extension NewMessageVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.defaultCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.newMessageCell, for: indexPath) as! NewMessageCell
         
+        cell.backgroundColor = UIColor(named: ColorNames.background)
         if isFiltering {
-            cell.textLabel?.text = filteredUsers[indexPath.row].username
+            cell.selectedUser = filteredUsers[indexPath.row]
         } else {
-            cell.textLabel?.text = users[indexPath.row].username
+            cell.selectedUser = users[indexPath.row]
         }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        messagesManager.createChat(with: users[indexPath.row].id) { (error) in
+        MessagesManager.shared.createChat(with: users[indexPath.row].id) { (error) in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
         }
         navigationController?.popViewController(animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -13,8 +13,6 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
-    let dbManager = FirebaseStorageContext()
-    let messagesManager = MessagesManager()
     var numberOfUsers = 0
     var users = [User]()
     var filteredUsers = [User]()
@@ -86,7 +84,7 @@ class MyMessagesVC: UITableViewController {
     }
     
     private func getUsers() {
-        messagesManager.getListOfMessagedUsers { (users) in
+        MessagesManager.shared.getListOfMessagedUsers { (users) in
             self.numberOfUsers = users.count
             self.users = users.sorted { $0.username < $1.username }
             self.tableView.reloadData()
@@ -136,6 +134,7 @@ extension MyMessagesVC {
         let chat = ChatVC()
         chat.selectedUser = users[indexPath.row]
         navigationController?.pushViewController(chat, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

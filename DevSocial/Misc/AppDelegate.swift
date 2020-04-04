@@ -53,8 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 let fullName = user.profile.name
                 let email = user.profile.email
                 
-                let dbManager = FirebaseStorageContext()
-                
                 let user = User(
                     username: fullName ?? "",
                     email: email ?? "",
@@ -62,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     id: Auth.auth().currentUser!.uid
                 )
                 
-                dbManager.saveUser(user: user) { (error) in
+                FirebaseStorageContext.shared.saveUser(user: user) { (error) in
                     Alert.showBasicAlert(on: LoginVC(), with: "Oh no!", message: error?.localizedDescription)
                 }
             }

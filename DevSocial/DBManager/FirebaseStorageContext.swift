@@ -11,7 +11,7 @@ import FirebaseFirestore
 import Firebase
 
 class FirebaseStorageContext: StorageContext {
-    
+    static let shared = FirebaseStorageContext()
     let db = Firestore.firestore()
     
     /// save a user to Firestore

@@ -199,8 +199,7 @@ class LoginVC: UIViewController {
                 }
             }
             
-            let authManager = AuthManager()
-            authManager.signInWithFirebase(email: email, password: password) { (error) in
+            AuthManager.shared.signInWithFirebase(email: email, password: password) { (error) in
                 if let error = error {
                     Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
                 }

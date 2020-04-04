@@ -142,8 +142,7 @@ class SignupVC: UIViewController {
         }
         
         // Check if the username exists in the database, if it does then return false, if it does not then return true
-        let dbManager = FirebaseStorageContext()
-        dbManager.checkUsernameExists(username: username, onError: { (error) in
+        FirebaseStorageContext.shared.checkUsernameExists(username: username, onError: { (error) in
             Alert.showBasicAlert(on: self, with: "Error", message: error?.localizedDescription)
             verified(false)
         }) { (exists) in
@@ -197,8 +196,7 @@ class SignupVC: UIViewController {
             verifyUsername(username: username) { (verified) in
                 if let ver = verified {
                     if ver {
-                        let authManager = AuthManager()
-                        authManager.createUserWithFirebase(username: username, email: email, password: password) { (error) in
+                        AuthManager.shared.createUserWithFirebase(username: username, email: email, password: password) { (error) in
                             if let error = error {
                                 Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
                             }

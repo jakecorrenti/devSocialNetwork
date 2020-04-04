@@ -13,7 +13,6 @@ class MessagedUserCell: UITableViewCell {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
-    let messageManager = MessagesManager()
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -23,8 +22,9 @@ class MessagedUserCell: UITableViewCell {
     
     var selectedUser: User!{
         didSet {
+            avatarView.user = selectedUser
             usernameLabel.text = selectedUser.username
-            messageManager.getLastSentChat(with: selectedUser) { (message) in
+            MessagesManager.shared.getLastSentChat(with: selectedUser) { (message) in
                 self.lastMessageLabel.text = message.content
                 self.recentMessageDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
             }
@@ -57,13 +57,7 @@ class MessagedUserCell: UITableViewCell {
         return view
     }()
     
-    lazy var avatarView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray3
-        view.layer.cornerRadius = 22.5
-        view.layer.masksToBounds = true
-        return view
-    }()
+    let avatarView = AvatarView()
     
     lazy var recentMessageDateLabel: UILabel = {
         let view = UILabel()
@@ -131,7 +125,7 @@ class MessagedUserCell: UITableViewCell {
             textStack.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
             textStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            textStack.trailingAnchor.constraint(equalTo: recentMessageDateLabel.leadingAnchor, constant: -8)
+            textStack.trailingAnchor.constraint(lessThanOrEqualTo: recentMessageDateLabel.leadingAnchor, constant: -8)
         ])
     }
     

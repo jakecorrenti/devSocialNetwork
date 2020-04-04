@@ -33,7 +33,8 @@ enum TabImages {
 enum Cells {
     static let defaultCell      = "defaultCellID"
     static let messageCell      = "messageCellID"
-    static let messagedUserCell = "messagedUserCell"
+    static let messagedUserCell = "messagedUserCellID"
+    static let newMessageCell   = "newMessageCellID"
 }
 
 enum SmileyImages {
