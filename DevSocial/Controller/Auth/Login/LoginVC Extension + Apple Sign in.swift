@@ -107,10 +107,17 @@ extension LoginVC: ASAuthorizationControllerDelegate {
                     Alert.showBasicAlert(on: self, with: error.localizedDescription)
                     return
                 } else {
+                    var fcmToken: String = ""
+                    AuthManager.shared.getFCMToken { (token) in
+                        fcmToken = token
+                    }
+                    
                     let user = User(
                         username: "\(appleIDCredential.fullName?.givenName ?? "") \(appleIDCredential.fullName?.familyName ?? "")",
                         email: appleIDCredential.email ?? "",
-                        dateCreated: Date(), id: Auth.auth().currentUser!.uid
+                        dateCreated: Date(),
+                        id: Auth.auth().currentUser!.uid,
+                        fcmToken: fcmToken
                     )
                     
                     let db = Firestore.firestore()

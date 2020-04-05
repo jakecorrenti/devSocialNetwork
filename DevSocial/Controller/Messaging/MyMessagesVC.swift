@@ -57,7 +57,6 @@ class MyMessagesVC: UITableViewController {
         
         setupNavBar()
         setupUI()
-        
     }
     
     // -----------------------------------------

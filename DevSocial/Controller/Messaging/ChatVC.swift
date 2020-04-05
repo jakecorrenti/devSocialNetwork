@@ -183,6 +183,17 @@ class ChatVC: UIViewController {
         //clearing input field
         textInputView.textField.text = ""
         tableView.reloadData()
+        
+        FirebaseStorageContext.shared.getFCMToken(for: selectedUser, onError: { (error) in
+            if let error = error {
+                Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+            }
+        }) { (token) in
+            if let token = token {
+                print(token)
+                NotificationManager.shared.sendPushNotification(to: token, title: message.senderName, body: message.content)
+            }
+        }
 //        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
     }
     
