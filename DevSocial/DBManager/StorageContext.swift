@@ -21,4 +21,7 @@ protocol StorageContext {
     
     func addUsername(username: String, uid: String, onError: @escaping (Error?) -> Void)
 
+    func updateFCMToken(onError: @escaping (_ error: Error?) -> Void)
+    
+    func getFCMToken(for user: User, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ token: String?) -> Void)
 }

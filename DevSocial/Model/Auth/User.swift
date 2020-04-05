@@ -13,5 +13,6 @@ struct User {
     let email: String
     let dateCreated: Date
     let id: String
+    let fcmToken: String?
 }
 

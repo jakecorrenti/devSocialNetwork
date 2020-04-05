@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class TabController: UITabBarController {
     
@@ -26,5 +27,15 @@ class TabController: UITabBarController {
         profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: TabImages.profile), tag: 3)
         
         viewControllers = [home, explore, activity, profile]
+        
+        updateFCMToken()
+    }
+    
+    private func updateFCMToken() {
+        FirebaseStorageContext.shared.updateFCMToken { (error) in
+            if let error = error {
+                Alert.showBasicAlert(on: self, with: "Oh no!", message: "please restart your app, there was an error")
+            }
+        }
     }
 }
