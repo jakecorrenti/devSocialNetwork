@@ -147,11 +147,10 @@ class ChatVC: UIViewController {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
         }) { (messages, docReference) in
-//            self.messages = messages
             self.messages = messages
             self.docReference = docReference
             self.tableView.reloadData()
-//            self.tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
+            self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
         }
     }
     
@@ -160,7 +159,7 @@ class ChatVC: UIViewController {
 //        messages.append(message)
         tableView.reloadData()
         DispatchQueue.main.async {
-//            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+            self.tableView.scrollToRow(at: IndexPath(row: self.messages.last!.count - 1, section: self.messages.count - 1), at: .bottom, animated: true)
         }
     }
     
@@ -190,11 +189,11 @@ class ChatVC: UIViewController {
             }
         }) { (token) in
             if let token = token {
-                print(token)
                 NotificationManager.shared.sendPushNotification(to: token, title: message.senderName, body: message.content)
             }
         }
-//        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+        self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
+        
     }
     
     @objc
@@ -213,6 +212,7 @@ class ChatVC: UIViewController {
             
             tableView.scrollIndicatorInsets = tableView.contentInset
         }
+        
     }
 }
 
