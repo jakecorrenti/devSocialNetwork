@@ -150,7 +150,7 @@ class ChatVC: UIViewController {
             self.messages = messages
             self.docReference = docReference
             self.tableView.reloadData()
-            self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
+//            self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
         }
     }
     
@@ -159,7 +159,7 @@ class ChatVC: UIViewController {
 //        messages.append(message)
         tableView.reloadData()
         DispatchQueue.main.async {
-            self.tableView.scrollToRow(at: IndexPath(row: self.messages.last!.count - 1, section: self.messages.count - 1), at: .bottom, animated: true)
+//            self.tableView.scrollToRow(at: IndexPath(row: self.messages.last!.count - 1, section: self.messages.count - 1), at: .bottom, animated: true)
         }
     }
     
@@ -192,7 +192,7 @@ class ChatVC: UIViewController {
                 NotificationManager.shared.sendPushNotification(to: token, title: message.senderName, body: message.content)
             }
         }
-        self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
+//        self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
         
     }
     
