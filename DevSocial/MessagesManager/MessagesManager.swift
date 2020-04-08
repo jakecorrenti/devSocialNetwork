@@ -81,17 +81,18 @@ final class MessagesManager {
         
         db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (snapshot, error) in
             if let error = error {
-                onError(error)
+                print("❌ An error has occurred: \(error.localizedDescription)")
             } else {
                 guard let queryCount = snapshot?.documents.count else { return }
                 
                 if queryCount == 0 {
+                    //MARK: - chat was already created when the user wants to create a new message with another user. is this causing probelems?????
                     self.createChat(with: user.id) { (error) in
                         if let error = error {
                             onError(error)
                         }
                     }
-                } else if queryCount == 1 {
+                } else if queryCount >= 1 {
                     for doc in snapshot!.documents {
                         let chat = Chat(dictionary: doc.data())
                         
