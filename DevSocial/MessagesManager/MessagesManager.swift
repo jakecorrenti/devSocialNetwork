@@ -161,4 +161,28 @@ final class MessagesManager {
             onSuccess(messages.last?.last)
         }
     }
+    
+    // compares the two users and their recent activity, and returns the proper boolean in order to sort properly
+    func compareUserActivity(users: [User], onSuccess: @escaping (_ sortedUsers: [User]) -> Void) {
+        /*
+         loop through the array of users
+         compare the current user to the next user's recent messages sent and their created dates
+         return the new sorted array of users
+         */
+        var messages = [User : Message]()
+        
+        for (index, user) in users.enumerated() {
+            getLastSentChat(with: user) { (message) in
+                if let message = message {
+                    messages[user] = message
+                }
+                
+                if index == users.count - 1 {
+                    // sorts the dictionary, and returns an array of the sorted Users (to turn into sorted values, change map to $0.1) (to change to a sorted array of Tuples, change the map to just $0)
+                    let sortedUsers = messages.sorted { $0.value.created.dateValue() > $1.value.created.dateValue() } .map { $0.0 }
+                    onSuccess(sortedUsers)
+                }
+            }
+        }
+    }
 }
