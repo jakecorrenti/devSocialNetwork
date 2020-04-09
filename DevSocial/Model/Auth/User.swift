@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct User {
+struct User: Hashable {
     let username: String
     let email: String
     let dateCreated: Date
