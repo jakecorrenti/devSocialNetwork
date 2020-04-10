@@ -9,10 +9,11 @@
 import Foundation
 import Firebase
 
-struct User {
+struct User: Hashable {
     let username: String
     let email: String
     let dateCreated: Timestamp
     let id: String
+    let fcmToken: String?
 }
 

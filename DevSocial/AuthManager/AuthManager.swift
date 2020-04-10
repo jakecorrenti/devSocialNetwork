@@ -38,11 +38,19 @@ final class AuthManager {
                         onError(commitError)
                     } else {
                         // if all of the auth is valid, add the user to the databse
+                        var fcmToken: String = ""
+                        
+                        self.getFCMToken { (token) in
+                            fcmToken = token
+                        }
+                        
                         let user      = User(
                             username   : username.lowercased(),
                             email      : email,
+
                             dateCreated: Timestamp(),
                             id         : self.auth.currentUser!.uid
+                            fcmToken   : fcmToken
                         )
                         
                         storageContext.saveUser(user: user) { (error) in
@@ -59,6 +67,18 @@ final class AuthManager {
                     }
                 })
             }
+        }
+    }
+    
+    func getFCMToken(onSuccess: @escaping (_ token: String) -> Void) {
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+          if let error = error {
+            print("Error fetching remote instance ID: \(error)")
+          } else if let result = result {
+            print("Remote instance ID token: \(result.token)")
+            onSuccess(result.token)
+          }
         }
     }
 }

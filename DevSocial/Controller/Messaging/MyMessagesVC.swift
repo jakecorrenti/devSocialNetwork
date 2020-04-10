@@ -57,7 +57,6 @@ class MyMessagesVC: UITableViewController {
         
         setupNavBar()
         setupUI()
-        
     }
     
     // -----------------------------------------
@@ -86,8 +85,15 @@ class MyMessagesVC: UITableViewController {
     private func getUsers() {
         MessagesManager.shared.getListOfMessagedUsers { (users) in
             self.numberOfUsers = users.count
-            self.users = users.sorted { $0.username < $1.username }
-            self.tableView.reloadData()
+            
+            // create a function that checks the two user's last chats sent and returns a boolean determining which one has most recent activity
+//            self.users = users.sorted { $0.username < $1.username }
+            MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
+                self.users = sortedUsers
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
     
