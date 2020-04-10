@@ -89,18 +89,20 @@ class HomeVC: UITableViewController {
     }
     
     @objc func addPostButtonPress() {
-        let manager = FirebaseStorageContext()
-        let user = User(username: currentUser.displayName!, email: currentUser.email!, dateCreated: Timestamp(), id: currentUser.uid)
-        let newPost = Post(title: "Looking for iOS dev", type: .request, desc: "", uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: [])
-        
-        manager.createPost(post: newPost, onError: { (error) in
-            if let error = error {
-                print(error.localizedDescription)
+        AuthManager.shared.getFCMToken { (token) in
+            let manager = FirebaseStorageContext()
+            let user = User(username: self.currentUser.displayName!, email: self.currentUser.email!, dateCreated: Timestamp(), id: self.currentUser.uid, fcmToken: token)
+            let newPost = Post(title: "Looking for iOS dev", type: .request, desc: "", uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: [])
+            
+            manager.createPost(post: newPost, onError: { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }) {
+                print("Should refresh")
+                self.posts.append(newPost)
+                self.tableView.reloadData()
             }
-        }) {
-            print("Should refresh")
-            self.posts.append(newPost)
-            self.tableView.reloadData()
         }
     }
 }

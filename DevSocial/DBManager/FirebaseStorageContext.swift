@@ -118,7 +118,8 @@ class FirebaseStorageContext: StorageContext {
                             username: user["username"] as? String ?? "",
                             email: user["email"] as? String ?? "",
                             dateCreated: user["dateCreated"] as! Timestamp,
-                            id: user["id"] as? String ?? ""),
+                            id: user["id"] as? String ?? "",
+                            fcmToken: user["fcmToken"] as? String ?? ""),
                         datePosted: results["datePosted"] as! Timestamp,
                         lastEdited: results["lastEdited"] as? Timestamp ?? nil,
                         keywords: results["keywords"] as! [String]))

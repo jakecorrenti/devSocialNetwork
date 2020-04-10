@@ -49,7 +49,7 @@ final class AuthManager {
                             email      : email,
 
                             dateCreated: Timestamp(),
-                            id         : self.auth.currentUser!.uid
+                            id         : self.auth.currentUser!.uid,
                             fcmToken   : fcmToken
                         )
                         
