@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import Firebase
 
 struct User: Hashable {
     let username: String
     let email: String
-    let dateCreated: Date
+    let dateCreated: Timestamp
     let id: String
     let fcmToken: String?
 }

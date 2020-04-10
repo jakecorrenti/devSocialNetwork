@@ -29,6 +29,7 @@ final class AuthManager {
             if let error = error {
                 onError(error)
             } else {
+                let storageContext = FirebaseStorageContext.shared
                 // if the user is created successfully, set up their username in Firebase
                 let profileChangeRequest          = self.auth.currentUser?.createProfileChangeRequest()
                 profileChangeRequest?.displayName = username
@@ -44,20 +45,21 @@ final class AuthManager {
                         }
                         
                         let user      = User(
-                            username   : username,
+                            username   : username.lowercased(),
                             email      : email,
-                            dateCreated: Date(),
-                            id         : self.auth.currentUser!.uid,
+
+                            dateCreated: Timestamp(),
+                            id         : self.auth.currentUser!.uid
                             fcmToken   : fcmToken
                         )
                         
-                        FirebaseStorageContext.shared.saveUser(user: user) { (error) in
+                        storageContext.saveUser(user: user) { (error) in
                             if let error = error {
                                 onError(error)
                             }
                         }
                         
-                        FirebaseStorageContext.shared.addUsername(username: username, uid: user.id) { (error) in
+                        storageContext.addUsername(username: username, uid: user.id) { (error) in
                             if let error = error {
                                 onError(error)
                             }

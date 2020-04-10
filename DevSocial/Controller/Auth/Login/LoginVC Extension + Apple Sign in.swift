@@ -115,7 +115,7 @@ extension LoginVC: ASAuthorizationControllerDelegate {
                     let user = User(
                         username: "\(appleIDCredential.fullName?.givenName ?? "") \(appleIDCredential.fullName?.familyName ?? "")",
                         email: appleIDCredential.email ?? "",
-                        dateCreated: Date(),
+                        dateCreated: Timestamp(),
                         id: Auth.auth().currentUser!.uid,
                         fcmToken: fcmToken
                     )
