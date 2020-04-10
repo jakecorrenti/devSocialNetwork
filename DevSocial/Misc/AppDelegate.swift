@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 let user = User(
                     username: fullName ?? "",
                     email: email ?? "",
-                    dateCreated: Date(),
+                    dateCreated: Timestamp(),
                     id: Auth.auth().currentUser!.uid
                 )
                 

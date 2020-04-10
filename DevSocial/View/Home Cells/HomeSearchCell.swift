@@ -68,6 +68,7 @@ class HomeSearchCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isEditable = false
         textView.isSelectable = false
+        textView.isScrollEnabled = false
         textView.font = UIFont(name: "Helvetica Neue", size: 12.0)
         textView.textColor = UIColor(named: ColorNames.primaryTextColor)
         textView.backgroundColor = .clear
@@ -85,6 +86,14 @@ class HomeSearchCell: UITableViewCell {
     var bottomSeparatorView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: ColorNames.secondaryTextColor)?.withAlphaComponent(0.5)
+        return view
+    }()
+    
+    var smileyStack: SmileyStack = {
+        let view = SmileyStack()
+        view.configure(smileyNames: ["smiley_1_unselected", "smiley_2_unselected", "smiley_3_unselected", "smiley_4_unselected", "smiley_5_unselected"])
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -92,12 +101,14 @@ class HomeSearchCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let margins = self.layoutMarginsGuide
         
-        [titleView, descView, dateView, bottomSeparatorView].forEach { self.addSubview($0) }
+        [titleView, descView, dateView, bottomSeparatorView, smileyStack].forEach { self.addSubview($0) }
         
         setTitleConstraints(margins: margins)
         setupAuthorStack(margins: margins)
         setDescConstraints(margins: margins)
         setDateConstraints(margins: margins)
+        setSeparatorConstraints()
+        setSmileyConstraints(margins: margins)
     }
     
     required init?(coder: NSCoder) {
@@ -177,7 +188,6 @@ class HomeSearchCell: UITableViewCell {
         descView.topAnchor.constraint(equalTo: finalStack.bottomAnchor).isActive = true
         descView.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
         descView.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
-        descView.bottomAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
         descView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
     }
     
@@ -185,7 +195,21 @@ class HomeSearchCell: UITableViewCell {
         dateView.topAnchor.constraint(equalTo: descView.bottomAnchor).isActive = true
         dateView.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
         dateView.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
-        dateView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
         dateView.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
+    }
+    
+    private func setSeparatorConstraints() {
+        bottomSeparatorView.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 5).isActive = true
+        bottomSeparatorView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        bottomSeparatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        bottomSeparatorView.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+    }
+    
+    private func setSmileyConstraints(margins: UILayoutGuide) {
+        smileyStack.topAnchor.constraint(equalTo: bottomSeparatorView.bottomAnchor, constant: 10).isActive = true
+        smileyStack.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        smileyStack.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        smileyStack.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        smileyStack.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
     }
 }

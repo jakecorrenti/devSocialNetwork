@@ -19,6 +19,7 @@ class HomeVC: UITableViewController {
     // -----------------------------------------
     
     var posts = [Post]()
+    let currentUser = Auth.auth().currentUser!
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -39,12 +40,7 @@ class HomeVC: UITableViewController {
         
         setupNavBar()
         setupUI()
-        
-        posts.append(Post(name: "Requesting work", type: .request))
-        posts.append(Post(name: "Have PHP work", type: .search))
-        posts.append(Post(name: "Requesting iOS work", type: .request))
-        posts.append(Post(name: "Requesting Dev work", type: .request))
-        posts.append(Post(name: "Have iOS work", type: .search))
+        loadData()
 
     }
     
@@ -58,6 +54,9 @@ class HomeVC: UITableViewController {
         let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
         navigationItem.rightBarButtonItem = messages
         self.title = "Home"
+        
+        let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPress))
+        navigationItem.leftBarButtonItem = newPost
     }
     
     private func setupUI() {
@@ -66,6 +65,14 @@ class HomeVC: UITableViewController {
         tableView.register(HomeSearchCell.self, forCellReuseIdentifier: homeSearchCellID)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+    }
+    
+    private func loadData() {
+        let manager = FirebaseStorageContext()
+        manager.getConnectionPosts { (posts) in
+            self.posts = posts
+            self.tableView.reloadData()
+        }
     }
     
     @objc func signout() {
@@ -79,6 +86,22 @@ class HomeVC: UITableViewController {
     
     @objc func messagesButtonPressed() {
         navigationController?.pushViewController(MyMessagesVC(), animated: true)
+    }
+    
+    @objc func addPostButtonPress() {
+        let manager = FirebaseStorageContext()
+        let user = User(username: currentUser.displayName!, email: currentUser.email!, dateCreated: Timestamp(), id: currentUser.uid)
+        let newPost = Post(title: "Looking for iOS dev", type: .request, desc: "", uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: [])
+        
+        manager.createPost(post: newPost, onError: { (error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }) {
+            print("Should refresh")
+            self.posts.append(newPost)
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -100,12 +123,12 @@ extension HomeVC {
             
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             
-            cell.title = item.name
+            cell.title = item.title
             
-            cell.desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+            cell.desc = item.desc
             
             cell.profileImage = UIImage(named: Images.emptyProfileImage)
-            cell.authorName = "Johnny Appleseed"
+            cell.authorName = item.profile.username
             cell.authorHeadline = "Software Engineer at Google"
             
             cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
@@ -118,10 +141,10 @@ extension HomeVC {
             
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
-            cell.title = item.name
+            cell.title = item.title
             
             cell.profileImage = UIImage(named: Images.emptyProfileImage)
-            cell.authorName = "Johnny Appleseed"
+            cell.authorName = item.profile.username
             cell.authorHeadline = "Software Engineer at Google"
             
             cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"

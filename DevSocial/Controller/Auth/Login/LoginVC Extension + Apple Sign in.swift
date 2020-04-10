@@ -110,7 +110,7 @@ extension LoginVC: ASAuthorizationControllerDelegate {
                     let user = User(
                         username: "\(appleIDCredential.fullName?.givenName ?? "") \(appleIDCredential.fullName?.familyName ?? "")",
                         email: appleIDCredential.email ?? "",
-                        dateCreated: Date(), id: Auth.auth().currentUser!.uid
+                        dateCreated: Timestamp(), id: Auth.auth().currentUser!.uid
                     )
                     
                     let db = Firestore.firestore()
