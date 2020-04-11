@@ -227,15 +227,15 @@ extension ChatVC : UITableViewDataSource {
         cell.backgroundColor = UIColor(named: ColorNames.background)
         cell.selectionStyle = .none
         
-//        if currentUser.uid != messages[indexPath.section][indexPath.row].senderID {
-//            MessagesManager.shared.updateWasReadState(message: messages[indexPath.section][indexPath.row], docReference: docReference!, osSuccess: { (error) in
-//                
-//            }) { (error) in
-//                if let error = error {
-//                    Alert.showBasicAlert(on: self, with: "An error occurred", message: error.localizedDescription)
-//                }
-//            }
-//        }
+        if currentUser.uid != messages[indexPath.section][indexPath.row].senderID {
+            MessagesManager.shared.updateWasReadState(message: messages[indexPath.section][indexPath.row], docReference: docReference!, osSuccess: { (error) in
+                
+            }) { (error) in
+                if let error = error {
+                    Alert.showBasicAlert(on: self, with: "An error occurred", message: error.localizedDescription)
+                }
+            }
+        }
         
         return cell
     }

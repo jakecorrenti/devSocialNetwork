@@ -189,12 +189,19 @@ final class MessagesManager {
     
     /// updates the wasRead state of the current message
     func updateWasReadState(message: Message, docReference: DocumentReference, osSuccess: @escaping (_ error: Error?) -> Void, onError: @escaping (_ error: Error?) -> Void) {
-        docReference.collection("thread").whereField("senderID", isEqualTo: message.senderID).order(by: "created", descending: false).getDocuments { (messagesQuery, error) in
+        
+        docReference.collection("thread").whereField("id", isEqualTo: message.id).getDocuments { (messageQuery, error) in
             if let error = error {
                 onError(error)
             } else {
-                for document in messagesQuery!.documents {
-                    print(Message(dictionary: document.data())!)
+                if messageQuery!.documents.count == 1 {
+                    let document = messageQuery!.documents[0].reference
+                    
+                    document.updateData(["wasRead" : true]) { (error) in
+                        if let error = error {
+                            onError(error)
+                        }
+                    }
                 }
             }
         }
