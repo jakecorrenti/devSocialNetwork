@@ -63,7 +63,8 @@ final class MessagesManager {
             "created"    : msg.created,
             "id"         : msg.id,
             "senderID"   : msg.senderID,
-            "senderName" : msg.senderName
+            "senderName" : msg.senderName,
+            "wasRead"    : msg.wasRead
         ]
         
         docReference?.collection("thread").addDocument(data: data) { (error) in
@@ -162,7 +163,7 @@ final class MessagesManager {
         }
     }
     
-    // compares the two users and their recent activity, and returns the proper boolean in order to sort properly
+    /// compares the two users and their recent activity, and returns the proper boolean in order to sort properly
     func compareUserActivity(users: [User], onSuccess: @escaping (_ sortedUsers: [User]) -> Void) {
         /*
          loop through the array of users
@@ -181,6 +182,19 @@ final class MessagesManager {
                     // sorts the dictionary, and returns an array of the sorted Users (to turn into sorted values, change map to $0.1) (to change to a sorted array of Tuples, change the map to just $0)
                     let sortedUsers = messages.sorted { $0.value.created.dateValue() > $1.value.created.dateValue() } .map { $0.0 }
                     onSuccess(sortedUsers)
+                }
+            }
+        }
+    }
+    
+    /// updates the wasRead state of the current message
+    func updateWasReadState(message: Message, docReference: DocumentReference, osSuccess: @escaping (_ error: Error?) -> Void, onError: @escaping (_ error: Error?) -> Void) {
+        docReference.collection("thread").whereField("senderID", isEqualTo: message.senderID).order(by: "created", descending: false).getDocuments { (messagesQuery, error) in
+            if let error = error {
+                onError(error)
+            } else {
+                for document in messagesQuery!.documents {
+                    print(Message(dictionary: document.data())!)
                 }
             }
         }
