@@ -75,6 +75,8 @@ class NewMessageVC: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        
         tableView.register(NewMessageCell.self, forCellReuseIdentifier: Cells.newMessageCell)
         tableView.tableFooterView = UIView()
     }
@@ -86,7 +88,6 @@ class NewMessageVC: UITableViewController {
       
       tableView.reloadData()
     }
-    
 }
 
 extension NewMessageVC {
@@ -123,8 +124,18 @@ extension NewMessageVC {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
         }
-        navigationController?.popViewController(animated: true)
-        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let user: User!
+        
+        if isFiltering {
+            user = filteredUsers[indexPath.row]
+        } else {
+            user = users[indexPath.row]
+        }
+        
+        let chat = ChatVC()
+        chat.selectedUser = user
+        navigationController?.pushViewController(chat, animated: true)
     }
 }
 
