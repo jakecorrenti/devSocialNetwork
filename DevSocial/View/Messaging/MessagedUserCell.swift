@@ -21,7 +21,7 @@ class MessagedUserCell: UITableViewCell {
         return formatter
     }
     
-    var selectedUser: User!{
+    var selectedUser: User! {
         didSet {
             avatarView.user = selectedUser
             usernameLabel.text = selectedUser.username
