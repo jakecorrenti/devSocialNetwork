@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MessagedUserCell: UITableViewCell {
     
@@ -20,7 +21,7 @@ class MessagedUserCell: UITableViewCell {
         return formatter
     }
     
-    var selectedUser: User!{
+    var selectedUser: User! {
         didSet {
             avatarView.user = selectedUser
             usernameLabel.text = selectedUser.username
@@ -28,6 +29,15 @@ class MessagedUserCell: UITableViewCell {
                 if let message = message {
                     self.lastMessageLabel.text = message.content
                     self.recentMessageDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
+                    
+                    if message.senderID == Auth.auth().currentUser?.uid {
+                        self.unreadIndicatorView.isHidden = true
+                    } else {
+                        if message.wasRead {
+                            self.unreadIndicatorView.isHidden = true
+                        }
+                    }
+                    
                 } else {
                     self.lastMessageLabel.text = ""
                     self.recentMessageDateLabel.text = self.dateFormatter.string(from: Date())

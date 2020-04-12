@@ -16,6 +16,7 @@ struct Message {
     var created: Timestamp
     var senderID: String
     var senderName: String
+    var wasRead: Bool
     var dictionary: [String : Any] {
         return [
             "id" : id,
@@ -33,8 +34,9 @@ extension Message {
             let content = dictionary["content"] as? String,
             let created = dictionary["created"] as? Timestamp,
             let senderID = dictionary["senderID"] as? String,
+            let wasRead = dictionary["wasRead"] as? Bool,
             let senderName = dictionary["senderName"] as? String else { return nil }
         
-        self.init(id: id, content: content, created: created, senderID: senderID, senderName: senderName)
+        self.init(id: id, content: content, created: created, senderID: senderID, senderName: senderName, wasRead: wasRead)
     }
 }

@@ -175,7 +175,7 @@ class ChatVC: UIViewController {
     @objc
     private func sendButtonPressed() {
         //When use press send button this method is called.
-        let message = Message(id: UUID().uuidString, content: textInputView.textField.text!, created: Timestamp(), senderID: currentUser.uid, senderName: currentUser.displayName!)
+        let message = Message(id: UUID().uuidString, content: textInputView.textField.text!, created: Timestamp(), senderID: currentUser.uid, senderName: currentUser.displayName!, wasRead: false)
         //calling function to insert and save message
         insertNewMessage(message)
         save(message)
@@ -226,6 +226,17 @@ extension ChatVC : UITableViewDataSource {
         cell.message = messages[indexPath.section][indexPath.row]
         cell.backgroundColor = UIColor(named: ColorNames.background)
         cell.selectionStyle = .none
+        
+        if currentUser.uid != messages[indexPath.section][indexPath.row].senderID {
+            MessagesManager.shared.updateWasReadState(message: messages[indexPath.section][indexPath.row], docReference: docReference!, osSuccess: { (error) in
+                
+            }) { (error) in
+                if let error = error {
+                    Alert.showBasicAlert(on: self, with: "An error occurred", message: error.localizedDescription)
+                }
+            }
+        }
+        
         return cell
     }
 }
