@@ -59,7 +59,11 @@ class NewMessageVC: UITableViewController {
     }
     
     private func getUsers() {
-        FirebaseStorageContext.shared.getListOfAllUsers { (users) in
+//        FirebaseStorageContext.shared.getListOfAllUsers { (users) in
+//            self.users = users
+//            self.tableView.reloadData()
+//        }
+        FirebaseStorageContext.shared.getListOfAllUnmessagedUsers { (users) in
             self.users = users
             self.tableView.reloadData()
         }
