@@ -22,6 +22,21 @@ class HomeVC: UITableViewController {
     let currentUser = Auth.auth().currentUser!
     
     // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
+    
+    lazy var addPostButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("T", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor(named: ColorNames.mainColor)
+        button.titleLabel!.font = UIFont(name: "Helvetica neue", size: 35)
+        button.addTarget(self, action: #selector(addPostButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    // -----------------------------------------
     // MARK: Lifecycle
     // -----------------------------------------
     
@@ -50,12 +65,14 @@ class HomeVC: UITableViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        self.title = "Home"
+
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        
         let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
         navigationItem.rightBarButtonItem = messages
-        self.title = "Home"
         
-        let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPress))
+        let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPressed))
         navigationItem.leftBarButtonItem = newPost
     }
     
@@ -65,6 +82,15 @@ class HomeVC: UITableViewController {
         tableView.register(HomeSearchCell.self, forCellReuseIdentifier: homeSearchCellID)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+        
+        self.view.addSubview(addPostButton)
+        
+        let margins = self.view.layoutMarginsGuide
+        addPostButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0).isActive = true
+        addPostButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20).isActive = true
+        addPostButton.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        addPostButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        addPostButton.layer.cornerRadius = 65/2
     }
     
     private func loadData() {
@@ -88,22 +114,28 @@ class HomeVC: UITableViewController {
         navigationController?.pushViewController(MyMessagesVC(), animated: true)
     }
     
-    @objc func addPostButtonPress() {
-        AuthManager.shared.getFCMToken { (token) in
-            let manager = FirebaseStorageContext()
-            let user = User(username: self.currentUser.displayName!, email: self.currentUser.email!, dateCreated: Timestamp(), id: self.currentUser.uid, fcmToken: token)
-            let newPost = Post(title: "Looking for iOS dev", type: .request, desc: "", uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: [])
-            
-            manager.createPost(post: newPost, onError: { (error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-            }) {
-                print("Should refresh")
-                self.posts.append(newPost)
-                self.tableView.reloadData()
-            }
-        }
+    @objc func addPostButtonPressed() {
+        let nav = UINavigationController(rootViewController: NewPostVC())
+        
+        nav.modalPresentationStyle = .overFullScreen
+        nav.modalTransitionStyle = .coverVertical
+        
+        self.present(nav, animated: true, completion: nil)
+//        AuthManager.shared.getFCMToken { (token) in
+//            let manager = FirebaseStorageContext()
+//            let user = User(username: self.currentUser.displayName!, email: self.currentUser.email!, dateCreated: Timestamp(), id: self.currentUser.uid, fcmToken: token)
+//            let newPost = Post(title: "Looking for iOS dev", type: .request, desc: "", uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: [])
+//
+//            manager.createPost(post: newPost, onError: { (error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                }
+//            }) {
+//                print("Should refresh")
+//                self.posts.append(newPost)
+//                self.tableView.reloadData()
+//            }
+//        }
     }
 }
 
