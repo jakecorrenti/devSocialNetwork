@@ -43,6 +43,7 @@ class NewMessageVC: UITableViewController {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = true
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

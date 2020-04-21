@@ -20,4 +20,14 @@ struct Alert {
     static func showFillAllFieldsAlert(on vc: UIViewController) {
         showBasicAlert(on: vc, with: "Incomplete Fields", message: "You must complete all fields int the form to continue")
     }
+
+    static func showDeleteConfirmation(on vc: UIViewController, onDeleteSelected: @escaping () -> Void ) {
+        let alertController = UIAlertController(title: "Are you sure you would like to delete this?", message: nil, preferredStyle: .actionSheet)
+        let deleteAction    = UIAlertAction(title: "Delete", style: .destructive) { action in 
+            onDeleteSelected()
+        }
+        let cancelAction    = UIAlertAction(title: "Cancel", style: .cancel)
+        [deleteAction, cancelAction].forEach { alertController.addAction($0) }
+        vc.present(alertController, animated: true)
+    }
 }

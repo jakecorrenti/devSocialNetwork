@@ -13,7 +13,6 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
-    var numberOfUsers = 0
     var users = [User]()
     var filteredUsers = [User]()
     var isSearchBarEmpty: Bool {
@@ -87,17 +86,10 @@ class MyMessagesVC: UITableViewController {
     private func getUsers() {
         MessagesManager.shared.getListOfMessagedUsers { (users) in
             MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
-                self.numberOfUsers = sortedUsers.count
                 self.users = sortedUsers
                 self.tableView.reloadData()
             }
         }
-        
-//        MessagesManager.shared.getListOfMessagedUsers { (users) in
-//            self.numberOfUsers = users.count
-//            self.users = users.sorted { $0.username < $1.username }
-//            self.tableView.reloadData()
-//        }
     }
     
     private func filterContentForSearchText(_ searchText: String) {
@@ -107,6 +99,23 @@ class MyMessagesVC: UITableViewController {
       
       tableView.reloadData()
     }
+
+    private func deleteChat(with user: User, at indexPath: IndexPath) {
+        Alert.showDeleteConfirmation(on: self) {
+            MessagesManager.shared.handleDeleteChatAction(user: user, onSuccess: {
+                DispatchQueue.main.async {
+                    self.users.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.reloadData()
+                }
+            }, onError: { error in
+                if let error = error {
+                    Alert.showBasicAlert(on: self, with: "An error occurred", message: error.localizedDescription)
+                }
+            })
+        }
+    }
+
     
     @objc func addButtonPressed() {
         navigationController?.pushViewController(NewMessageVC(), animated: true)
@@ -120,12 +129,12 @@ extension MyMessagesVC {
             return filteredUsers.count
         }
         
-        return numberOfUsers
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messagedUserCell, for: indexPath) as! MessagedUserCell
-        
+
         if isFiltering {
             cell.selectedUser = filteredUsers[indexPath.row]
         } else {
@@ -157,4 +166,18 @@ extension MyMessagesVC: UISearchResultsUpdating {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
   }
+
+    public override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    public override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if isFiltering {
+                deleteChat(with: filteredUsers[indexPath.row], at: indexPath)
+            } else {
+                deleteChat(with: users[indexPath.row], at: indexPath)
+            }
+        }
+    }
 }
