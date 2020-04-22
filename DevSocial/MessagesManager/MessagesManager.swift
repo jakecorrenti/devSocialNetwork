@@ -259,7 +259,7 @@ final class MessagesManager {
                 guard let chats = chatQuery?.documents else { return }
 
                 for document in chats {
-                    var userChat = Chat(dictionary: document.data())
+                    let userChat = Chat(dictionary: document.data())
                     if (userChat?.users.contains(user.id))! {
 
                         var hiddenUsers = userChat!.hidden
