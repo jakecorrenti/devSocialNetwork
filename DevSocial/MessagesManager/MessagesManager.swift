@@ -11,7 +11,8 @@ import FirebaseFirestore
 import Firebase
 
 final class MessagesManager {
-    static let shared = MessagesManager()
+	
+    static let shared 		= MessagesManager()
     private let currentUser = Auth.auth().currentUser!
     private let db          = Firestore.firestore()
     
@@ -208,11 +209,7 @@ final class MessagesManager {
     
     /// compares the two users and their recent activity, and returns the proper boolean in order to sort properly
     func compareUserActivity(users: [User], onSuccess: @escaping (_ sortedUsers: [User]) -> Void) {
-        /*
-         loop through the array of users
-         compare the current user to the next user's recent messages sent and their created dates
-         return the new sorted array of users
-         */
+
         var messages = [User : Message]()
         
         for (index, user) in users.enumerated() {
@@ -311,5 +308,61 @@ final class MessagesManager {
             }
         }
     }
+
+    /// determines the hidden state of the current user for the chat with the selected user
+	func determineCurrentHiddenStatus(with user: User, onSuccess: @escaping (_ isHidden: Bool, _ document: DocumentSnapshot?) -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let chats = chatQuery?.documents else { return }
+				
+				var escaped = false
+				for document in chats {
+					let chat = Chat(dictionary: document.data())
+					
+					if (chat?.hidden.contains(self.currentUser.uid))! {
+						escaped = true
+						onSuccess(true, document)
+					}
+				}
+				// this is still returning even when success is triggered
+				if !escaped {
+					onSuccess(false, nil)
+				}
+			}
+		}
+    }
+
+	/// unhides the current chat with the user selected or creates a new one if a chat hasn't already been created
+	func unhideChat(with user: User, at document: DocumentSnapshot?, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+		if document == nil {
+			// checks to see if a chat already exists with the current user, else, create a new one
+			var escaped = false
+			self.createChat(with: user.id) { (error) in
+				if let error = error {
+					escaped = true
+					onError(error)
+				}
+			}
+			if !escaped {
+				onSuccess()
+			}
+        } else {
+			guard let document = document else { return }
+			let chat = Chat(dictionary: document.data()!)
+			var currentHiddenUsers = chat?.hidden
+			
+			currentHiddenUsers?.removeAll(where: { (username) -> Bool in
+				return username == currentUser.uid
+			})
+			
+			updateHiddenStatus(for: currentHiddenUsers!, at: document, onSuccess: {
+				onSuccess()
+			}) { (error) in
+				if let error = error { onError(error) }
+			}
+		}
+	}
 
 }
