@@ -364,5 +364,26 @@ final class MessagesManager {
 			}
 		}
 	}
+	
+	func deleteMessage(message: Message, docReference: DocumentReference, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+		docReference.collection("thread").getDocuments { (threadQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let thread = threadQuery?.documents else { return }
+				for document in thread {
+					let msg = Message(dictionary: document.data())
+					if message.id == msg?.id {
+						document.reference.delete { (error) in
+							if let error = error { onError(error) } else {
+								onSuccess()
+							}
+						}
+						break
+					}
+				}
+			}
+		}
+	}
 
 }
