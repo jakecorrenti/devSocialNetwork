@@ -60,15 +60,17 @@ class FirebaseStorageContext: StorageContext {
     }
     
     /// gets the list of all users within the app that the user also hasn't created a chat with previously
-    func getListOfAllUnmessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void ) {
+	func getListOfAllUnmessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void, onError: @escaping (_ error: Error?) -> Void ) {
         var unmessagedUsers = [User]()
         getListOfAllUsers { (users) in
-            MessagesManager.shared.getListOfMessagedUsers { (messagedUsers) in
-                for user in users {
-                    if !messagedUsers.contains(where: { $0.id == user.id }) { unmessagedUsers.append(user) }
-                }
-                onSuccess(unmessagedUsers)
-            }
+			MessagesManager.shared.getMessagedUsers(onSuccess: { (messagedUsers) in
+				for user in users {
+					if !messagedUsers.contains(where: { $0.id == user.id }) { unmessagedUsers.append(user) }
+				}
+				onSuccess(unmessagedUsers)
+			}) { (error) in
+				if let error = error { onError(error) }
+			}
         }
     }
     

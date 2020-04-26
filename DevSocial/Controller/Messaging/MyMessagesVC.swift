@@ -84,12 +84,16 @@ class MyMessagesVC: UITableViewController {
     }
     
     private func getUsers() {
-        MessagesManager.shared.getListOfMessagedUsers { (users) in
-            MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
-                self.users = sortedUsers
-                self.tableView.reloadData()
-            }
-        }
+		MessagesManager.shared.getMessagedUsers(onSuccess: { (users) in
+			MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
+				self.users = sortedUsers
+				self.tableView.reloadData()
+			}
+		}) { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}
     }
     
     private func filterContentForSearchText(_ searchText: String) {
@@ -134,12 +138,9 @@ extension MyMessagesVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messagedUserCell, for: indexPath) as! MessagedUserCell
-
-        if isFiltering {
-            cell.selectedUser = filteredUsers[indexPath.row]
-        } else {
-            cell.selectedUser = users[indexPath.row]
-        }
+		
+		let user = isFiltering ? filteredUsers[indexPath.row] : users[indexPath.row]
+		cell.selectedUser = user
 
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = UIColor(named: ColorNames.background)

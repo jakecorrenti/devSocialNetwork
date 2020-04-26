@@ -60,11 +60,14 @@ class NewMessageVC: UITableViewController {
     }
     
     private func getUsers() {
-
-        FirebaseStorageContext.shared.getListOfAllUnmessagedUsers { (users) in
-            self.users = users
-            self.tableView.reloadData()
-        }
+		FirebaseStorageContext.shared.getListOfAllUnmessagedUsers(onSuccess: { (users) in
+			self.users = users
+			self.tableView.reloadData()
+		}) { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+			}
+		}
     }
     
     // -----------------------------------------
