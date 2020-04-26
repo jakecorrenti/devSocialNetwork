@@ -60,18 +60,10 @@ class FirebaseStorageContext: StorageContext {
     }
     
     func createPost(post: Post, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping () -> Void) {
-        
-        var type: String = ""
-        
-        if post.type == .request {
-            type = "request"
-        } else {
-            type = "search"
-        }
-        
+                
         db.collection("posts").document(post.uid).setData([
             "title"         : post.title,
-            "type"          : type,
+            "type"          : post.type.rawValue,
             "desc"          : post.desc ?? "",
             "uid"           : post.uid,
             "user"          : ["username":post.profile.username,
@@ -100,18 +92,10 @@ class FirebaseStorageContext: StorageContext {
                     
                     let results = document.data()
                     
-                    var type: PostType?
-                    
-                    if results["type"] as! String == ".request" {
-                        type = .request
-                    } else {
-                        type = .search
-                    }
-                    
                     if let user = results["user"] as? [String: Any] {
                         posts.append(Post(
                         title: results["title"] as! String,
-                        type: type!,
+                        type: PostType(results["type"] as! String) ?? .empty,
                         desc: results["desc"] as? String ?? "",
                         uid: results["uid"] as! String,
                         profile: User(

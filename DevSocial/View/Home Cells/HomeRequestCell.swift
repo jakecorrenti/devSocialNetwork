@@ -10,11 +10,53 @@ import UIKit
 
 class HomeRequestCell: UITableViewCell {
     
-    var title: String?
-    var profileImage: UIImage?
-    var authorName: String?
-    var authorHeadline: String?
-    var dateInfo: String?
+    // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
+    
+    var title: String? {
+        didSet {
+            if let title = title {
+                titleView.text = title
+            }
+        }
+    }
+    
+    var profileImage: UIImage? {
+        didSet {
+            if let img = profileImage {
+                profileImageView.image = img
+            }
+        }
+    }
+    
+    var authorName: String? {
+        didSet {
+            if let name = authorName {
+                authorNameView.text = name
+            }
+        }
+    }
+    
+    var authorHeadline: String? {
+        didSet {
+            if let headline = authorHeadline {
+                authorHeadlineView.text = headline
+            }
+        }
+    }
+    
+    var dateInfo: String? {
+        didSet {
+            if let info = dateInfo {
+                dateView.text = info
+            }
+        }
+    }
+    
+    // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
     
     var titleView : UILabel = {
         let label = UILabel()
@@ -27,7 +69,9 @@ class HomeRequestCell: UITableViewCell {
     var profileImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = UIColor(named: ColorNames.mainColor)
+        imageView.backgroundColor = .clear
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -70,48 +114,36 @@ class HomeRequestCell: UITableViewCell {
         return label
     }()
     
+    // -----------------------------------------
+    // MARK: Initialization
+    // -----------------------------------------
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        setupUI()
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUI()
+    }
+    
+    // -----------------------------------------
+    // MARK: Setup UI
+    // -----------------------------------------
+    
+    private func setupUI() {
         let margins = self.layoutMarginsGuide
-
+        
         [titleView, dateView].forEach { self.addSubview($0) }
-                
+        
         setTitleConstraints(margins: margins)
         
         setupAuthorStack(margins: margins)
         
         setDateConstraints(margins: margins)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if let title = title {
-            titleView.text = title
-        }
-        
-        if let profileImage = profileImage {
-            profileImageView.image = profileImage
-        }
-                
-        if let authorName = authorName {
-            authorNameView.text = authorName
-        }
-        
-        if let authorHeadline = authorHeadline {
-            authorHeadlineView.text = authorHeadline
-        }
-        
-        if let dateInfo = dateInfo {
-            dateView.text = dateInfo
-        }
-        
-        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        profileImageView.clipsToBounds = true
     }
     
     private func setTitleConstraints(margins: UILayoutGuide) {
@@ -124,20 +156,18 @@ class HomeRequestCell: UITableViewCell {
     private func setupAuthorStack(margins: UILayoutGuide) {
         // MARK: Setup of the author name and headline stack
         authorNameView.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-                
+        
         authorStack.addArrangedSubview(authorNameView)
         authorStack.addArrangedSubview(authorHeadlineView)
         
         authorStack.heightAnchor.constraint(equalToConstant: 35.0).isActive = true
-                
+        
         
         // MARK: Setup of the profile picture
         profileImageView.heightAnchor.constraint(equalToConstant: 35.0).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 35.0).isActive = true
         
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        profileImageView.clipsToBounds = true
-        
         
         // MARK: Setup of the entire middle stack
         finalStack.addArrangedSubview(profileImageView)

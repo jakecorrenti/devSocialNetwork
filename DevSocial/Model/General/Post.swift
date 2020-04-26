@@ -27,7 +27,17 @@ struct Post {
     // TODO: Need to add the smiley faces numbers (ex: joe liked it, jane loved it, johnny liked it = 2 liked, 1 loved)
 }
 
-enum PostType {
-    case request
-    case search
+enum PostType: String {
+    case request = "request"
+    case search = "search"
+    case empty = "empty"
+    
+    public init?(_ string: String) {
+        switch string {
+        case "request": self = .request
+        case "search": self = .search
+        case "empty": self = .empty
+        default: return nil
+        }
+    }
 }

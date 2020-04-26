@@ -24,6 +24,8 @@ extension NewPostVC: UITableViewDelegate, UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: nameCellID) as! TextFieldCell
             
+            cell.textField.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: keywordCellID)!
@@ -37,6 +39,28 @@ extension NewPostVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: descCellID) as! TextViewCell
             
             cell.placeholder = "Desc..."
+            
+            cell.callBack = {
+                textView in
+                // update data source
+//                self.desc = textView.text
+                // tell table view we're starting layout updates
+                tableView.beginUpdates()
+                // get current content offset
+                var scOffset = tableView.contentOffset
+                // get current text view height
+                let tvHeight = textView.frame.size.height
+                // telll text view to size itself
+                textView.sizeToFit()
+                // get the difference between previous height and new height (if word-wrap or newline change)
+                let yDiff = textView.frame.size.height - tvHeight
+                // adjust content offset
+                scOffset.y += yDiff
+                // update table content offset so edit caret is not covered by keyboard
+                tableView.contentOffset = scOffset
+                // tell table view to apply layout updates
+                tableView.endUpdates()
+            }
             
             return cell
         default:

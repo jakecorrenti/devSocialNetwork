@@ -10,12 +10,61 @@ import UIKit
 
 class HomeSearchCell: UITableViewCell {
     
-    var title: String?
-    var profileImage: UIImage?
-    var authorName: String?
-    var authorHeadline: String?
-    var desc: String?
-    var dateInfo: String?
+    // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
+    
+    var title: String? {
+        didSet {
+            if let title = title {
+                titleView.text = title
+            }
+        }
+    }
+    
+    var profileImage: UIImage? {
+        didSet {
+            if let img = profileImage {
+                profileImageView.image = img
+            }
+        }
+    }
+    
+    var authorName: String? {
+        didSet {
+            if let name = authorName {
+                authorNameView.text = name
+            }
+        }
+    }
+    
+    var authorHeadline: String? {
+        didSet {
+            if let headline = authorHeadline {
+                authorHeadlineView.text = headline
+            }
+        }
+    }
+    
+    var desc: String? {
+        didSet {
+            if let desc = desc {
+                descView.text = desc
+            }
+        }
+    }
+    
+    var dateInfo: String? {
+        didSet {
+            if let info = dateInfo {
+                dateView.text = info
+            }
+        }
+    }
+    
+    // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
     
     var titleView: UILabel = {
         let label = UILabel()
@@ -28,7 +77,9 @@ class HomeSearchCell: UITableViewCell {
     var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = UIColor(named: ColorNames.mainColor)
+        imageView.backgroundColor = .clear
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -97,8 +148,27 @@ class HomeSearchCell: UITableViewCell {
         return view
     }()
     
+    // -----------------------------------------
+    // MARK: Initialization
+    // -----------------------------------------
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        setupUI()
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUI()
+    }
+    
+    // -----------------------------------------
+    // MARK: Setup UI
+    // -----------------------------------------
+    
+    private func setupUI() {
         let margins = self.layoutMarginsGuide
         
         [titleView, descView, dateView, bottomSeparatorView, smileyStack].forEach { self.addSubview($0) }
@@ -109,41 +179,6 @@ class HomeSearchCell: UITableViewCell {
         setDateConstraints(margins: margins)
         setSeparatorConstraints()
         setSmileyConstraints(margins: margins)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if let title = title {
-            titleView.text = title
-        }
-        
-        if let profileImage = profileImage {
-            profileImageView.image = profileImage
-        }
-                
-        if let authorName = authorName {
-            authorNameView.text = authorName
-        }
-        
-        if let authorHeadline = authorHeadline {
-            authorHeadlineView.text = authorHeadline
-        }
-        
-        if let desc = desc {
-            descView.text = desc
-        }
-        
-        if let dateInfo = dateInfo {
-            dateView.text = dateInfo
-        }
-        
-        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        profileImageView.clipsToBounds = true
     }
     
     private func setTitleConstraints(margins: UILayoutGuide) {
@@ -188,7 +223,7 @@ class HomeSearchCell: UITableViewCell {
         descView.topAnchor.constraint(equalTo: finalStack.bottomAnchor).isActive = true
         descView.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
         descView.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
-        descView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
+        descView.heightAnchor.constraint(lessThanOrEqualToConstant: 75).isActive = true
     }
     
     private func setDateConstraints(margins: UILayoutGuide) {
@@ -210,6 +245,6 @@ class HomeSearchCell: UITableViewCell {
         smileyStack.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
         smileyStack.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
         smileyStack.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
-        smileyStack.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        smileyStack.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
     }
 }

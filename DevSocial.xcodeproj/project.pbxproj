@@ -52,6 +52,9 @@
 		AE15CF17244E54B000316ADF /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF16244E54B000316ADF /* TextFieldCell.swift */; };
 		AE15CF19244E57BF00316ADF /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF18244E57BF00316ADF /* TextViewCell.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
+		AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB22454FA240000F47F /* Extension + Date.swift */; };
+		AE713AB5245520220000F47F /* NewKeywordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB4245520220000F47F /* NewKeywordsVC.swift */; };
+		AE713AB7245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB6245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift */; };
 		AEB726792432878B006923CA /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB726782432878B006923CA /* ExploreVC.swift */; };
 		AEB7267E24328803006923CA /* ActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB7267D24328803006923CA /* ActivityVC.swift */; };
 		AEB7268024328814006923CA /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB7267F24328814006923CA /* ProfileVC.swift */; };
@@ -109,6 +112,9 @@
 		AE15CF16244E54B000316ADF /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		AE15CF18244E57BF00316ADF /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
 		AE382E25242FF27700EED32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AE713AB22454FA240000F47F /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
+		AE713AB4245520220000F47F /* NewKeywordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKeywordsVC.swift; sourceTree = "<group>"; };
+		AE713AB6245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewKeywordsVC Extension + UITableView.swift"; sourceTree = "<group>"; };
 		AEB726782432878B006923CA /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
 		AEB7267D24328803006923CA /* ActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityVC.swift; sourceTree = "<group>"; };
 		AEB7267F24328814006923CA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				3E0B0E16243151F400F92618 /* Extension + String.swift */,
+				AE713AB22454FA240000F47F /* Extension + Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -356,6 +363,8 @@
 			children = (
 				AE0CB7CC2444EFF20025FF2F /* NewPostVC.swift */,
 				AE15CF13244E4C6B00316ADF /* NewPostVC Extension + UITableView.swift */,
+				AE713AB4245520220000F47F /* NewKeywordsVC.swift */,
+				AE713AB6245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -561,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E33CDD12430241B00C8DE64 /* SignupVC.swift in Sources */,
+				AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */,
 				3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */,
 				3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */,
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
@@ -569,6 +579,7 @@
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
 				3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */,
 				3EA207A0243A8CDD00390B21 /* NotificationManager.swift in Sources */,
+				AE713AB7245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift in Sources */,
 				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */,
 				3E5EC98C2433D05A00744959 /* Chat.swift in Sources */,
@@ -586,6 +597,7 @@
 				3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
 				3E5EC98A2433ADC100744959 /* InputView.swift in Sources */,
+				AE713AB5245520220000F47F /* NewKeywordsVC.swift in Sources */,
 				3E0B0E1224314A1C00F92618 /* TabController.swift in Sources */,
 				AE15CF19244E57BF00316ADF /* TextViewCell.swift in Sources */,
 				AE00CBCD2438570400685F0C /* HomeSearchCell.swift in Sources */,
