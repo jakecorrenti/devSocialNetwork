@@ -19,7 +19,22 @@ class HomeVC: UITableViewController {
     // -----------------------------------------
     
     var posts = [Post]()
-    let currentUser = Auth.auth().currentUser!
+    let currentUser = Auth.auth().currentUser ?? nil
+    
+    // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
+    
+    lazy var addPostButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("T", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor(named: ColorNames.mainColor)
+        button.titleLabel!.font = UIFont(name: "Helvetica neue", size: 35)
+        button.addTarget(self, action: #selector(addPostButtonPressed), for: .touchUpInside)
+        return button
+    }()
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -28,6 +43,7 @@ class HomeVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,7 +56,6 @@ class HomeVC: UITableViewController {
         
         setupNavBar()
         setupUI()
-        loadData()
 
     }
     
@@ -50,12 +65,14 @@ class HomeVC: UITableViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        self.title = "Home"
+
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        
         let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
         navigationItem.rightBarButtonItem = messages
-        self.title = "Home"
         
-        let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPress))
+        let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPressed))
         navigationItem.leftBarButtonItem = newPost
     }
     
@@ -65,22 +82,24 @@ class HomeVC: UITableViewController {
         tableView.register(HomeSearchCell.self, forCellReuseIdentifier: homeSearchCellID)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+        tableView.sectionHeaderHeight = 10
+        tableView.sectionFooterHeight = 5
+        
+        self.view.addSubview(addPostButton)
+        
+        let margins = self.view.layoutMarginsGuide
+        addPostButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0).isActive = true
+        addPostButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20).isActive = true
+        addPostButton.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        addPostButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        addPostButton.layer.cornerRadius = 65/2
     }
     
     private func loadData() {
         let manager = FirebaseStorageContext()
         manager.getConnectionPosts { (posts) in
-            self.posts = posts
+            self.posts = posts.sorted(by: { $0.datePosted.dateValue() > $1.datePosted.dateValue() })
             self.tableView.reloadData()
-        }
-    }
-    
-    @objc func signout() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
         }
     }
     
@@ -88,36 +107,28 @@ class HomeVC: UITableViewController {
         navigationController?.pushViewController(MyMessagesVC(), animated: true)
     }
     
-    @objc func addPostButtonPress() {
-        AuthManager.shared.getFCMToken { (token) in
-            let manager = FirebaseStorageContext()
-            let user = User(username: self.currentUser.displayName!, email: self.currentUser.email!, dateCreated: Timestamp(), id: self.currentUser.uid, fcmToken: token)
-            let newPost = Post(title: "Looking for iOS dev", type: .request, desc: "", uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: [])
-            
-            manager.createPost(post: newPost, onError: { (error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-            }) {
-                print("Should refresh")
-                self.posts.append(newPost)
-                self.tableView.reloadData()
-            }
-        }
+    @objc func addPostButtonPressed() {
+        let nav = UINavigationController(rootViewController: NewPostVC())
+        
+        nav.modalPresentationStyle = .fullScreen
+        nav.modalTransitionStyle = .coverVertical
+        
+        self.present(nav, animated: true, completion: nil)
     }
 }
 
 extension HomeVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = posts[indexPath.row]
+        let item = posts[indexPath.section]
+        let formatter = DateFormatter()
         
         switch item.type {
         case .search:
@@ -133,10 +144,20 @@ extension HomeVC {
             cell.authorName = item.profile.username
             cell.authorHeadline = "Software Engineer at Google"
             
-            cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
+            let datePosted = item.datePosted.dateValue()
             
-            cell.layoutSubviews()
-            
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            let dateString = formatter.string(from: datePosted)
+            let days = Date().interval(ofComponent: .day, fromDate: datePosted)
+            if days == 0 {
+                cell.dateInfo = "Posted Today (\(dateString))"
+            } else if days == 1 {
+                cell.dateInfo = "Posted 1 Day ago (\(dateString))"
+            } else {
+                cell.dateInfo = "Posted \(days) Days ago (\(dateString))"
+            }
+                        
             return cell
         case .request:
             let cell = tableView.dequeueReusableCell(withIdentifier: homeRequestCellID) as! HomeRequestCell
@@ -149,16 +170,36 @@ extension HomeVC {
             cell.authorName = item.profile.username
             cell.authorHeadline = "Software Engineer at Google"
             
-            cell.dateInfo = "Posted 3 Days ago (March 25, 2020 at 4:00 PM)"
+            let datePosted = item.datePosted.dateValue()
             
-            cell.layoutSubviews()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            let dateString = formatter.string(from: datePosted)
+            let days = Date().interval(ofComponent: .day, fromDate: datePosted)
+            if days == 0 {
+                cell.dateInfo = "Posted Today (\(dateString))"
+            } else if days == 1 {
+                cell.dateInfo = "Posted 1 Day ago (\(dateString))"
+            } else {
+                cell.dateInfo = "Posted \(days) Days ago (\(dateString))"
+            }
             
             return cell
+        case .empty:
+            return UITableViewCell()
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

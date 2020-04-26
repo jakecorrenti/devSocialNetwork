@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfileVC : UIViewController {
     
@@ -38,9 +39,21 @@ class ProfileVC : UIViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        
+        let signOut = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signout))
+        navigationItem.rightBarButtonItem = signOut
     }
     
     // TODO: update later
     private func setupUI() {
+    }
+    
+    @objc func signout() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
     }
 }
