@@ -33,6 +33,8 @@
 		3E5EC98A2433ADC100744959 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9892433ADC100744959 /* InputView.swift */; };
 		3E5EC98C2433D05A00744959 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98B2433D05A00744959 /* Chat.swift */; };
 		3E5EC98E2433D0FB00744959 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98D2433D0FB00744959 /* Message.swift */; };
+		3E8614C22453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */; };
+		3E8614C4245377880053F9A1 /* Chat + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */; };
 		3EA207A0243A8CDD00390B21 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2079F243A8CDD00390B21 /* NotificationManager.swift */; };
 		3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530D243781C700A708F6 /* MessagedUserCell.swift */; };
 		3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530F2437D91500A708F6 /* NewMessageCell.swift */; };
@@ -90,6 +92,8 @@
 		3E5EC9892433ADC100744959 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		3E5EC98B2433D05A00744959 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		3E5EC98D2433D0FB00744959 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
+		3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
 		3EA2079F243A8CDD00390B21 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3EAE530D243781C700A708F6 /* MessagedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagedUserCell.swift; sourceTree = "<group>"; };
 		3EAE530F2437D91500A708F6 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		3E0B0E15243151E400F92618 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3E8614C0245376EF0053F9A1 /* Chat */,
 				3E0B0E16243151F400F92618 /* Extension + String.swift */,
 				AE713AB22454FA240000F47F /* Extension + Date.swift */,
 			);
@@ -320,6 +325,15 @@
 				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 			);
 			path = Messaging;
+			sourceTree = "<group>";
+		};
+		3E8614C0245376EF0053F9A1 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */,
+				3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		3EA2079E243A8CC500390B21 /* Notification Manager */ = {
@@ -571,6 +585,7 @@
 			files = (
 				3E33CDD12430241B00C8DE64 /* SignupVC.swift in Sources */,
 				AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */,
+				3E8614C22453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift in Sources */,
 				3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */,
 				3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */,
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
@@ -601,6 +616,7 @@
 				3E0B0E1224314A1C00F92618 /* TabController.swift in Sources */,
 				AE15CF19244E57BF00316ADF /* TextViewCell.swift in Sources */,
 				AE00CBCD2438570400685F0C /* HomeSearchCell.swift in Sources */,
+				3E8614C4245377880053F9A1 /* Chat + Extension - Table View Delegate.swift in Sources */,
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
 				3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */,
 				3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */,

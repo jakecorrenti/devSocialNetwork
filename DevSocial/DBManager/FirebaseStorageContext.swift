@@ -59,20 +59,34 @@ class FirebaseStorageContext: StorageContext {
         }
     }
     
+    /// gets the list of all users within the app that the user also hasn't created a chat with previously
+    func getListOfAllUnmessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void ) {
+        var unmessagedUsers = [User]()
+        getListOfAllUsers { (users) in
+            MessagesManager.shared.getListOfMessagedUsers { (messagedUsers) in
+                for user in users {
+                    if !messagedUsers.contains(where: { $0.id == user.id }) { unmessagedUsers.append(user) }
+                }
+                onSuccess(unmessagedUsers)
+            }
+        }
+    }
+    
     func createPost(post: Post, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping () -> Void) {
                 
         db.collection("posts").document(post.uid).setData([
-            "title"         : post.title,
-            "type"          : post.type.rawValue,
-            "desc"          : post.desc ?? "",
-            "uid"           : post.uid,
-            "user"          : ["username":post.profile.username,
-                               "email":post.profile.email,
-                               "dateCreated":post.profile.dateCreated,
-                               "id":post.profile.id],
-            "datePosted"    : post.datePosted,
-            "lastEdited"    : post.lastEdited ?? "",
-            "keywords"      : post.keywords
+            "title"       : post.title,
+            "type"        : post.type.rawValue,
+            "desc"        : post.desc ?? "",
+            "uid"         : post.uid,
+            "user"        : ["username"     :post.profile.username,
+                             "email"        :post.profile.email,
+                             "dateCreated"  :post.profile.dateCreated,
+                             "id"           :post.profile.id
+                            ],
+            "datePosted"  : post.datePosted,
+            "lastEdited"  : post.lastEdited ?? "",
+            "keywords"    : post.keywords
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -94,19 +108,20 @@ class FirebaseStorageContext: StorageContext {
                     
                     if let user = results["user"] as? [String: Any] {
                         posts.append(Post(
-                        title: results["title"] as! String,
-                        type: PostType(results["type"] as! String) ?? .empty,
-                        desc: results["desc"] as? String ?? "",
-                        uid: results["uid"] as! String,
+                        title         : results["title"] as! String,
+                        type          : PostType(results["type"] as! String) ?? .empty,
+                        desc          : results["desc"] as? String ?? "",
+                        uid           : results["uid"] as! String,
                         profile: User(
-                            username: user["username"] as? String ?? "",
-                            email: user["email"] as? String ?? "",
-                            dateCreated: user["dateCreated"] as! Timestamp,
-                            id: user["id"] as? String ?? "",
-                            fcmToken: user["fcmToken"] as? String ?? ""),
-                        datePosted: results["datePosted"] as! Timestamp,
-                        lastEdited: results["lastEdited"] as? Timestamp ?? nil,
-                        keywords: results["keywords"] as! [String]))
+                                    username        : user["username"] as? String ?? "",
+                                    email           : user["email"] as? String ?? "",
+                                    dateCreated     : user["dateCreated"] as! Timestamp,
+                                    id              : user["id"] as? String ?? "",
+                                    fcmToken        : user["fcmToken"] as? String ?? ""
+                                      ),
+                        datePosted    : results["datePosted"] as! Timestamp,
+                        lastEdited    : results["lastEdited"] as? Timestamp ?? nil,
+                        keywords      : results["keywords"] as! [String]))
                     }
                 }
                 onSuccess(posts)

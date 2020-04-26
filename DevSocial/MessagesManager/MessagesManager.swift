@@ -11,13 +11,15 @@ import FirebaseFirestore
 import Firebase
 
 final class MessagesManager {
-    static let shared = MessagesManager()
+	
+    static let shared 		= MessagesManager()
     private let currentUser = Auth.auth().currentUser!
     private let db          = Firestore.firestore()
     
     /// get list of all the users that the current user started a conversation with in messages
     func getListOfMessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void) {
-        db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+        // added a document listener to have a realtime update when a user receives a message on MyMessagesVC (replace with just .getDocuments() to remove this ability
+        db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener(includeMetadataChanges: true) { (chatQuery, error) in
             if let error = error {
                 print("ERROR: \(error.localizedDescription)")
             } else {
@@ -25,8 +27,22 @@ final class MessagesManager {
                 var messagedUsers    = [User]()
                 for document in chatQuery!.documents {
                     for user in document.data()["users"] as! [String] {
-                        if user != self.currentUser.uid {
-                            messagedUsersIDS.append(user)
+
+                        let hiddenUsers = document.data()["hidden"] as! [String]
+
+                        if hiddenUsers.count == 2 {
+                            self.deleteThread(at: document, onSuccess: {
+
+                            }, onError: { error in
+                                if let error = error {
+                                    print("❌ There was an error: \(error.localizedDescription)")
+                                }
+                            })
+                            continue
+                        } else if user != self.currentUser.uid {
+                            if !hiddenUsers.contains(self.currentUser.uid) {
+                                messagedUsersIDS.append(user)
+                            }
                         }
                     }
                 }
@@ -48,7 +64,10 @@ final class MessagesManager {
     /// create a new chat in the database
     func createChat(with userID: String, onError: @escaping (_ error: Error?) -> Void) {
         let users = [currentUser.uid, userID]
-        let data: [String : Any] = [ "users" : users ]
+        let data: [String : Any] = [
+            "users"  : users, 
+            "hidden" : [String]()
+        ]
         db.collection("chats").addDocument(data: data) { (error) in
             if let error = error {
                 onError(error)
@@ -76,7 +95,7 @@ final class MessagesManager {
     
     /// load the chat that has been logged between the current user and another user within the app
     func loadChat(with user: User, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ messages: [[Message]], _ docReference: DocumentReference?) -> Void) {
-        // on success returna list of messages that were sent between the users
+        // on success returns a list of messages that were sent between the users
         var documentReference: DocumentReference?
         var messages = [Message]()
         
@@ -87,7 +106,6 @@ final class MessagesManager {
                 guard let queryCount = snapshot?.documents.count else { return }
                 
                 if queryCount == 0 {
-                    //MARK: - chat was already created when the user wants to create a new message with another user. is this causing probelems?????
                     self.createChat(with: user.id) { (error) in
                         if let error = error {
                             onError(error)
@@ -153,23 +171,45 @@ final class MessagesManager {
     }
     
     /// gets the last sent message in the chat between the two users
-    func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message?) -> Void ) {
-        self.loadChat(with: user, onError: { (error) in
+    func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message?) -> Void) {
+        db.collection(_: "chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in 
             if let error = error {
-                print("There was an error: \(error.localizedDescription)")
+                print(" ❌ There was an error: \(error.localizedDescription)")
+            } else {
+                guard let chat = chatQuery?.documents else { return }
+
+                if chat.count > 0 {
+                    for document in chat {
+                        let userChat = Chat(dictionary: document.data())
+                        if (userChat?.users.contains(user.id))! {
+                            let docReference = document.reference
+
+                            docReference.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (threadQuery, error) in
+                                if let error = error {
+                                    print("❌ An Error Occurred: \(error.localizedDescription)")
+                                } else {
+                                    var messages = [Message]()
+                                    for message in threadQuery!.documents {
+                                        let msg = Message(dictionary: message.data())
+                                        messages.append(msg!)
+                                    }
+
+                                    self.getMessagesSeparatedByDate(messages: messages) { (messages) in
+                                        onSuccess(messages.last?.last)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }) { (messages, docReference) in
-            onSuccess(messages.last?.last)
         }
     }
+
     
     /// compares the two users and their recent activity, and returns the proper boolean in order to sort properly
     func compareUserActivity(users: [User], onSuccess: @escaping (_ sortedUsers: [User]) -> Void) {
-        /*
-         loop through the array of users
-         compare the current user to the next user's recent messages sent and their created dates
-         return the new sorted array of users
-         */
+
         var messages = [User : Message]()
         
         for (index, user) in users.enumerated() {
@@ -206,4 +246,144 @@ final class MessagesManager {
             }
         }
     }
+
+    /// this function decides how to handle the deletion of a chat based on database values
+    func handleDeleteChatAction(user: User, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void) {
+        db.collection(_: "chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in 
+            if let error = error {
+                onError(error)
+            } else {
+                guard let chats = chatQuery?.documents else { return }
+
+                for document in chats {
+                    let userChat = Chat(dictionary: document.data())
+                    if (userChat?.users.contains(user.id))! {
+
+                        var hiddenUsers = userChat!.hidden
+                        hiddenUsers.append(self.currentUser.uid)
+
+                        if hiddenUsers.count <= 2 {
+                            // update the hidden status for the current user
+                            self.updateHiddenStatus(for: hiddenUsers, at: document, onSuccess: {
+                                onSuccess()
+                            }, onError: { error in
+                                if let error = error { onError(error) }
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /// this function updates the 'hidden' status of the current user in the database
+    func updateHiddenStatus(for hiddenUsers: [String], at document: DocumentSnapshot, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+        document.reference.updateData([
+            "hidden" : hiddenUsers
+        ], completion: { error in
+            if let error = error {
+                onError(error)
+            } else {
+                onSuccess()
+            }
+        })
+    }
+
+    /// this function completely deletes the data representing the chat between the current user and the selected user in Firebase Firestore
+    private func deleteThread(at document: DocumentSnapshot, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void) {
+        document.reference.collection("thread").getDocuments { (threadQuery, error) in 
+            if let error = error {
+                onError(error)
+            } else {
+                for document in threadQuery!.documents {
+                    document.reference.delete() { error in
+                        if let error = error { onError(error) }
+                    }
+                }
+
+                document.reference.delete() { error in
+                    if let error = error { onError(error) }
+                }
+                onSuccess()
+            }
+        }
+    }
+
+    /// determines the hidden state of the current user for the chat with the selected user
+	func determineCurrentHiddenStatus(with user: User, onSuccess: @escaping (_ isHidden: Bool, _ document: DocumentSnapshot?) -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let chats = chatQuery?.documents else { return }
+				
+				var escaped = false
+				for document in chats {
+					let chat = Chat(dictionary: document.data())
+					
+					if (chat?.hidden.contains(self.currentUser.uid))! {
+						escaped = true
+						onSuccess(true, document)
+					}
+				}
+				// this is still returning even when success is triggered
+				if !escaped {
+					onSuccess(false, nil)
+				}
+			}
+		}
+    }
+
+	/// unhides the current chat with the user selected or creates a new one if a chat hasn't already been created
+	func unhideChat(with user: User, at document: DocumentSnapshot?, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+		if document == nil {
+			// checks to see if a chat already exists with the current user, else, create a new one
+			var escaped = false
+			self.createChat(with: user.id) { (error) in
+				if let error = error {
+					escaped = true
+					onError(error)
+				}
+			}
+			if !escaped {
+				onSuccess()
+			}
+        } else {
+			guard let document = document else { return }
+			let chat = Chat(dictionary: document.data()!)
+			var currentHiddenUsers = chat?.hidden
+			
+			currentHiddenUsers?.removeAll(where: { (username) -> Bool in
+				return username == currentUser.uid
+			})
+			
+			updateHiddenStatus(for: currentHiddenUsers!, at: document, onSuccess: {
+				onSuccess()
+			}) { (error) in
+				if let error = error { onError(error) }
+			}
+		}
+	}
+	
+	func deleteMessage(message: Message, docReference: DocumentReference, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+		docReference.collection("thread").getDocuments { (threadQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let thread = threadQuery?.documents else { return }
+				for document in thread {
+					let msg = Message(dictionary: document.data())
+					if message.id == msg?.id {
+						document.reference.delete { (error) in
+							if let error = error { onError(error) } else {
+								onSuccess()
+							}
+						}
+						break
+					}
+				}
+			}
+		}
+	}
+
 }
