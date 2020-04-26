@@ -17,12 +17,12 @@ class ChatVC: UIViewController {
     // -----------------------------------------
     
     var inputBottomAnchor: NSLayoutConstraint!
-    var selectedUser: User!
-    private var docReference: DocumentReference?
-    let currentUser = Auth.auth().currentUser!
-    var messages = [[Message]]()
-    var formater: DateFormatter {
-        let f = DateFormatter()
+    var selectedUser     : User!
+    var docReference	 : DocumentReference?
+    let currentUser 	 = Auth.auth().currentUser!
+    var messages    	 = [[Message]]()
+    var formater		 : DateFormatter {
+        let f 		 = DateFormatter()
         f.dateFormat = "M/d/yyyy"
         return f
     }
@@ -34,16 +34,16 @@ class ChatVC: UIViewController {
     lazy var textInputView = InputView()
     
     lazy var tableView: UITableView = {
-        let view = UITableView(frame: .zero, style: .grouped)
-        view.dataSource = self
-        view.delegate = self
+        let view 				 = UITableView(frame: .zero, style: .grouped)
+        view.dataSource 		 = self
+        view.delegate 			 = self
         view.sectionHeaderHeight = 50
-        view.tableFooterView = UIView()
+        view.tableFooterView     = UIView()
         view.keyboardDismissMode = .interactive
-        view.estimatedRowHeight = 50
-        view.separatorStyle = .none
-        view.rowHeight = UITableView.automaticDimension
-        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.estimatedRowHeight  = 50
+        view.separatorStyle      = .none
+        view.rowHeight 	         = UITableView.automaticDimension
+        view.backgroundColor     = UIColor(named: ColorNames.background)
         view.register(MessageCell.self, forCellReuseIdentifier: Cells.messageCell)
         return view
     }()
@@ -99,6 +99,8 @@ class ChatVC: UIViewController {
     private func setupUI() {
         [textInputView, tableView].forEach { view.addSubview($0) }
         
+		tableView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleMessageLongPress(sender:))))
+		
         constrainTextInputView()
         constrainTableView()
         loadChat()
@@ -147,7 +149,7 @@ class ChatVC: UIViewController {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
         }) { (messages, docReference) in
-            self.messages = messages
+            self.messages     = messages
             self.docReference = docReference
             self.tableView.reloadData()
 //            self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
@@ -205,59 +207,45 @@ class ChatVC: UIViewController {
 
         if notification.name == UIResponder.keyboardWillHideNotification {
             inputBottomAnchor.constant = .zero
-            tableView.contentInset = .zero
+            tableView.contentInset     = .zero
         } else {
             inputBottomAnchor.constant = -keyboardViewEndFrame.height + view.safeAreaInsets.bottom
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
+            tableView.contentInset 	   = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
             
             tableView.scrollIndicatorInsets = tableView.contentInset
         }
         
     }
-}
+	
+	@objc
+	func handleMessageLongPress(sender: UILongPressGestureRecognizer) {
+		if sender.state == .began {
+			let longPressLocation = sender.location(in: tableView)
+			let indexPathSelected = tableView.indexPathForRow(at: longPressLocation)
+			
+			guard let indexPath   = indexPathSelected else { return }
+			let cell			  = tableView.cellForRow(at: indexPath) as! MessageCell
+			let messageSender     = self.messages[indexPath.section][indexPath.row].senderID
+			
+			if messageSender == self.currentUser.uid {
+				cell.bubbleView.backgroundColor = UIColor(named: ColorNames.secondaryTextColor)
 
-extension ChatVC : UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages[section].count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messageCell, for: indexPath) as! MessageCell
-        cell.message = messages[indexPath.section][indexPath.row]
-        cell.backgroundColor = UIColor(named: ColorNames.background)
-        cell.selectionStyle = .none
-        
-        if currentUser.uid != messages[indexPath.section][indexPath.row].senderID {
-            MessagesManager.shared.updateWasReadState(message: messages[indexPath.section][indexPath.row], docReference: docReference!, osSuccess: { (error) in
-                
-            }) { (error) in
-                if let error = error {
-                    Alert.showBasicAlert(on: self, with: "An error occurred", message: error.localizedDescription)
-                }
-            }
-        }
-        
-        return cell
-    }
+				Alert.showDeleteConfirmation(on: self, onDeleteSelected: {
+					guard let docReference = self.docReference else { return }
+					let message			   = self.messages[indexPath.section][indexPath.row]
+					
+					MessagesManager.shared.deleteMessage(message: message, docReference: docReference, onSuccess: {
+						// no action needs to be taken when the document is updated, the screen automatically updates since there is a snapshot listener on it
+					}) { (error) in
+						if let error = error {
+							Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+						}
+					}
+				}) {
+					sender.state = .ended
+					cell.bubbleView.backgroundColor = UIColor(named: ColorNames.mainColor)
+				}
+			}
+		}
+	}
 }
-
-extension ChatVC: UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return messages.count
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
-        
-        let sectionDate = formater.string(from: messages[section][0].created.dateValue())
-        let currentDate = formater.string(from: Date())
-        
-        label.text = sectionDate == currentDate ? "Today" : sectionDate
-        
-        label.textAlignment = .center
-        label.backgroundColor = UIColor(named: ColorNames.background)
-        label.textColor = .systemGray3
-        return label
-    }
-}
-

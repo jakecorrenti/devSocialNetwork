@@ -16,11 +16,11 @@ class NewMessageVC: UITableViewController {
     // -----------------------------------------
     var users = [User]()
     var filteredUsers = [User]()
-    var isSeachBarEmpty: Bool {
+    var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     var isFiltering: Bool {
-        return searchController.isActive && !isSeachBarEmpty
+        return searchController.isActive && !isSearchBarEmpty
     }
     
     // -----------------------------------------
@@ -43,6 +43,7 @@ class NewMessageVC: UITableViewController {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = true
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,7 +60,8 @@ class NewMessageVC: UITableViewController {
     }
     
     private func getUsers() {
-        FirebaseStorageContext.shared.getListOfAllUsers { (users) in
+
+        FirebaseStorageContext.shared.getListOfAllUnmessagedUsers { (users) in
             self.users = users
             self.tableView.reloadData()
         }
@@ -119,29 +121,34 @@ extension NewMessageVC {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        MessagesManager.shared.createChat(with: users[indexPath.row].id) { (error) in
-            if let error = error {
-                Alert.showBasicAlert(on: self, with: error.localizedDescription)
-            }
-        }
-        
-        let user: User!
-        
-        if isFiltering {
-            user = filteredUsers[indexPath.row]
-        } else {
-            user = users[indexPath.row]
-        }
-        
-        let chat = ChatVC()
-        chat.selectedUser = user
-        navigationController?.pushViewController(chat, animated: true)
+
+		let user = isFiltering ? filteredUsers[indexPath.row] : users[indexPath.row]
+		
+		MessagesManager.shared.determineCurrentHiddenStatus(with: user, onSuccess: { (hiddenStatus, document)  in
+			
+			print(hiddenStatus)
+			
+			MessagesManager.shared.unhideChat(with: user, at: document, onSuccess: {
+
+                let chat = ChatVC()
+                chat.selectedUser = user
+                self.navigationController?.pushViewController(chat, animated: true)
+			}) { (error) in
+				if let error = error {
+					Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+				}
+			}
+		}) { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+			}
+		}
+
     }
 }
 
 extension NewMessageVC: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
-    // TODO
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
   }
