@@ -31,7 +31,7 @@ final class MessagesManager {
                         let hiddenUsers = document.data()["hidden"] as! [String]
 
                         if hiddenUsers.count == 2 {
-                            self.deleteThread(at: document, onSuccess: {
+							self.deleteThread(at: document.reference, onSuccess: {
 
                             }, onError: { error in
                                 if let error = error {
@@ -143,7 +143,7 @@ final class MessagesManager {
 
     /// creates the proper array format for the messages to be separated by date
     func getMessagesSeparatedByDate(messages: [Message], onSucces: @escaping (_ messages: [[Message]]) -> Void ) {
-        var formater: DateFormatter {
+        var formatter: DateFormatter {
             let f = DateFormatter()
             f.dateFormat = "M/d/yyyy"
             return f
@@ -152,8 +152,8 @@ final class MessagesManager {
         var groupedMessages = [[Message]]()
         
         for message in messages {
-            if !dates.contains(formater.string(from: message.created.dateValue())) {
-                dates.append(formater.string(from: message.created.dateValue()))
+            if !dates.contains(formatter.string(from: message.created.dateValue())) {
+                dates.append(formatter.string(from: message.created.dateValue()))
             }
         }
         
@@ -161,7 +161,7 @@ final class MessagesManager {
         for date in dates {
             var grouped = [Message]()
             for message in messages {
-                if formater.string(from: message.created.dateValue()) == date {
+                if formatter.string(from: message.created.dateValue()) == date {
                     grouped.append(message)
                 }
             }
@@ -290,8 +290,8 @@ final class MessagesManager {
     }
 
     /// this function completely deletes the data representing the chat between the current user and the selected user in Firebase Firestore
-    private func deleteThread(at document: DocumentSnapshot, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void) {
-        document.reference.collection("thread").getDocuments { (threadQuery, error) in 
+	func deleteThread(at document: DocumentReference, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void) {
+        document.collection("thread").getDocuments { (threadQuery, error) in
             if let error = error {
                 onError(error)
             } else {
@@ -301,7 +301,7 @@ final class MessagesManager {
                     }
                 }
 
-                document.reference.delete() { error in
+                document.delete() { error in
                     if let error = error { onError(error) }
                 }
                 onSuccess()
@@ -365,6 +365,7 @@ final class MessagesManager {
 		}
 	}
 	
+	/// deletes a specifed message from the DB and updates the user's interface in real time, assuming the message is not the last message in the chat
 	func deleteMessage(message: Message, docReference: DocumentReference, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void ) {
 		docReference.collection("thread").getDocuments { (threadQuery, error) in
 			if let error = error {
@@ -380,6 +381,46 @@ final class MessagesManager {
 							}
 						}
 						break
+					}
+				}
+			}
+		}
+	}
+	
+	
+	func getMessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void, onError: @escaping (_ error: Error?) -> Void) {
+		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let chats = chatQuery?.documents else { return }
+				
+				chats.forEach { document in
+					let chat 		= Chat(dictionary: document.data())
+					let hiddenUsers = chat!.hidden
+					var messagedUserIDs = [String]()
+					
+					for user in chat!.users where user != self.currentUser.uid {
+						if hiddenUsers.count == 2 {
+							// delete the thread
+							self.deleteThread(at: document.reference, onSuccess: {  }) { (error) in
+								if let error = error { onError(error) }
+							}
+						} else {
+							if !hiddenUsers.contains(self.currentUser.uid) {
+								messagedUserIDs.append(user)
+							}
+						}
+					}
+					
+					FirebaseStorageContext.shared.getListOfAllUsers { (users) in
+						var messagedUsers = [User]()
+						for _ in messagedUserIDs {
+							for user in users where messagedUserIDs.contains(user.id) {
+								messagedUsers.append(user)
+							}
+						}
+						onSuccess(messagedUsers)
 					}
 				}
 			}
