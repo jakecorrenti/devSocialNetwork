@@ -122,7 +122,7 @@ class MyMessagesVC: UITableViewController {
 
     
     @objc func addButtonPressed() {
-        navigationController?.pushViewController(NewMessageVC(), animated: true)
+        navigationController?.pushViewController(NewChatVC(), animated: true)
     }
 }
 

@@ -67,6 +67,7 @@ class FirebaseStorageContext: StorageContext {
 				for user in users {
 					if !messagedUsers.contains(where: { $0.id == user.id }) { unmessagedUsers.append(user) }
 				}
+                print(unmessagedUsers)
 				onSuccess(unmessagedUsers)
 			}) { (error) in
 				if let error = error { onError(error) }
