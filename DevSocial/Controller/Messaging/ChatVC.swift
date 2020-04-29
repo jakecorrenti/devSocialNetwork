@@ -85,12 +85,6 @@ class ChatVC: UIViewController {
     // MARK: Setup UI
     // -----------------------------------------
     
-    
-    
-    @objc func tap() {
-        view.endEditing(true)
-    }
-    
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = selectedUser.username
@@ -158,7 +152,6 @@ class ChatVC: UIViewController {
     
     private func insertNewMessage(_ message: Message) {
         //add the message to the messages array and reload it
-//        messages.append(message)
         tableView.reloadData()
         DispatchQueue.main.async {
 //            self.tableView.scrollToRow(at: IndexPath(row: self.messages.last!.count - 1, section: self.messages.count - 1), at: .bottom, animated: true)
@@ -250,4 +243,8 @@ class ChatVC: UIViewController {
 			}
 		}
 	}
+
+    @objc func tap() {
+        view.endEditing(true)
+    }
 }

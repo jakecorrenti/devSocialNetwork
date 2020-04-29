@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */; };
 		3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */; };
 		3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E04243120EE00F92618 /* AuthManager.swift */; };
 		3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatUserCell.swift; sourceTree = "<group>"; };
 		3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		3E0B0E04243120EE00F92618 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageContext.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				3EDC1E642435907000D014D8 /* MessageCell.swift */,
 				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
 				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
+				18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 				3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */,
+				18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

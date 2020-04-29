@@ -21,8 +21,10 @@ extension NewChatVC: UICollectionViewDataSource {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cells.defaultCell, for: indexPath)
-		cell.backgroundColor = .white
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cells.defaultCell, for: indexPath) as! NewChatUserCell
+		cell.selectedUser    	= selectedUsers[indexPath.row]
+		cell.backgroundColor    = UIColor(named: ColorNames.background)
+		cell.removeUserDelegate = self
 		return cell
 	}
 }

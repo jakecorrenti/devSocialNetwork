@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+protocol RemovedUserDelegate: class {
+	func userRemovedFromCollectionView(user: User)
+}
+
 class NewChatVC: UIViewController {
 	
     // -----------------------------------------
@@ -17,12 +21,12 @@ class NewChatVC: UIViewController {
 	var selectedUsers 	   = [User]()
 	var allUnmessagedUsers = [User]()
 	var userSearchResults  = [User]()
-	var isSearchBarEmtpy: Bool {
+	var isSearchBarEmpty: Bool {
 		return searchController.searchBar.text?.isEmpty ?? true
 	}
 	
 	var isSearchingUsers: Bool {
-		return searchController.isActive && !isSearchBarEmtpy
+		return searchController.isActive && !isSearchBarEmpty
 	}
 	
     // -----------------------------------------
@@ -30,18 +34,20 @@ class NewChatVC: UIViewController {
     // -----------------------------------------
 	
 	lazy var collectionView: UICollectionView = {
-		let viewLayout = UICollectionViewFlowLayout()
-		let view 	   = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
+		let viewLayout 			   = UICollectionViewFlowLayout()
+		let view 	   			   = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
 		viewLayout.scrollDirection = .horizontal
-		view.backgroundColor 	   = .red
+		viewLayout.minimumInteritemSpacing = 0
+		viewLayout.minimumLineSpacing = 0
+		view.backgroundColor 	   = UIColor(named: ColorNames.background)
 		view.dataSource 		   = self
 		view.delegate 			   = self
-		view.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Cells.defaultCell)
+		view.register(NewChatUserCell.self, forCellWithReuseIdentifier: Cells.defaultCell)
 		return view
 	}()
 	
 	lazy var tableView: UITableView = {
-		let view = UITableView()
+		let view 			 = UITableView()
 		view.backgroundColor = .blue
 		view.isHidden 		 = true
 		view.dataSource 	 = self
@@ -51,12 +57,14 @@ class NewChatVC: UIViewController {
 	}()
 	
 	lazy var searchController: UISearchController = {
-		let view = UISearchController(searchResultsController: nil)
+		let view 								  = UISearchController(searchResultsController: nil)
 		view.searchResultsUpdater 				  = self
 		view.obscuresBackgroundDuringPresentation = false
 		view.searchBar.placeholder 				  = "Search users"
 		return view
 	}()
+
+	var nextButton = UIBarButtonItem()
 	
     // -----------------------------------------
     // MARK: Lifecycle
@@ -87,12 +95,26 @@ class NewChatVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-		view.backgroundColor 			 = UIColor(named: ColorNames.background)
-		navigationItem.title 			 = "New chat"
-		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+		view.backgroundColor 			  = UIColor(named: ColorNames.background)
+		navigationItem.title 			  = "New chat"
+		navigationItem.backBarButtonItem  = UIBarButtonItem(
+												title : "",
+												style : .plain,
+												target: self,
+												action: nil
+											)
+
+		nextButton						  = UIBarButtonItem(
+												title : "Next",
+												style : .done,
+												target: self,
+												action: #selector(nextButtonPressed)
+											)
 		
-		navigationItem.searchController  = searchController
-		definesPresentationContext 	     = true
+		navigationItem.searchController   = searchController
+		definesPresentationContext 	      = true
+		nextButton.isEnabled			  = false
+		navigationItem.rightBarButtonItem = nextButton
     }
     
     private func setupUI() {
@@ -123,7 +145,8 @@ class NewChatVC: UIViewController {
 	}
 	
 	private func getUnmessagedUsers() {
-		FirebaseStorageContext.shared.getListOfAllUnmessagedUsers(onSuccess: { (users) in
+		FirebaseStorageContext.shared.getListOfAllUnmessagedUsers(onSuccess: { [weak self] users in
+			guard let self = self else { return }
 			self.allUnmessagedUsers = users
 		}) { (error) in
 			if let error = error {
@@ -138,12 +161,35 @@ class NewChatVC: UIViewController {
 		}
 		tableView.reloadData()
 	}
+
+	@objc
+	private func nextButtonPressed() {
+		// it will only be enabled when the collection view contains a user
+		// when the button is pressed, it will
+		print(":LKJSDF:LKJSDL:FKJS:LKDJF:LSKDJF")
+		let chat = ChatVC()
+		chat.selectedUser = selectedUsers.first
+		navigationController?.pushViewController(chat, animated: true)
+	}
+
 }
 
 extension NewChatVC: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		tableView.isHidden = !isSearchingUsers
 		searchUnmessagedUsers(for: searchController.searchBar.text!)
+	}
+}
+
+extension NewChatVC: RemovedUserDelegate {
+	func userRemovedFromCollectionView(user: User) {
+		// the loop should only happen once where there should only be one user with the same id as the selected user
+		for (index, selectedUser) in selectedUsers.enumerated() where selectedUser.id == user.id {
+			selectedUsers.remove(at: index)
+			collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+
+			if selectedUsers.count == 0 { nextButton.isEnabled = false }
+		}
 	}
 }
 
