@@ -48,11 +48,12 @@ class NewChatVC: UIViewController {
 	
 	lazy var tableView: UITableView = {
 		let view 			 = UITableView()
-		view.backgroundColor = .blue
+		view.backgroundColor = UIColor(named: ColorNames.background)
 		view.isHidden 		 = true
 		view.dataSource 	 = self
 		view.delegate	     = self
-		view.register(UITableViewCell.self, forCellReuseIdentifier: Cells.defaultCell)
+		view.tableFooterView = UIView()
+		view.register(NewMessageCell.self, forCellReuseIdentifier: Cells.defaultCell)
 		return view
 	}()
 	
@@ -166,9 +167,9 @@ class NewChatVC: UIViewController {
 	private func nextButtonPressed() {
 		// it will only be enabled when the collection view contains a user
 		// when the button is pressed, it will
-		print(":LKJSDF:LKJSDL:FKJS:LKDJF:LSKDJF")
-		let chat = ChatVC()
-		chat.selectedUser = selectedUsers.first
+		let chat 			   = ChatVC()
+		chat.selectedUser      = selectedUsers.first
+		chat.chatCreationState = .new
 		navigationController?.pushViewController(chat, animated: true)
 	}
 

@@ -84,14 +84,10 @@ class MyMessagesVC: UITableViewController {
     }
     
     private func getUsers() {
-		MessagesManager.shared.getMessagedUsers(onSuccess: { (users) in
+		MessagesManager.shared.getListOfMessagedUsers { (users) in
 			MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
 				self.users = sortedUsers
 				self.tableView.reloadData()
-			}
-		}) { (error) in
-			if let error = error {
-				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
 		}
     }
@@ -150,8 +146,9 @@ extension MyMessagesVC {
 
 extension MyMessagesVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chat = ChatVC()
-        chat.selectedUser = users[indexPath.row]
+        let chat 			   = ChatVC()
+        chat.selectedUser      = users[indexPath.row]
+		chat.chatCreationState = .existing
         navigationController?.pushViewController(chat, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

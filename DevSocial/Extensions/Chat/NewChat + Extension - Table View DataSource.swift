@@ -14,8 +14,8 @@ extension NewChatVC: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: Cells.defaultCell, for: indexPath)
-		cell.textLabel?.text = userSearchResults[indexPath.row].username
+		let cell = tableView.dequeueReusableCell(withIdentifier: Cells.defaultCell, for: indexPath) as! NewMessageCell
+		cell.selectedUser = userSearchResults[indexPath.row]
 		return cell 
 	}
 }
