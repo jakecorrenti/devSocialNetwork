@@ -8,12 +8,18 @@
 
 import Foundation
 
+enum ChatCreationState {
+	case new
+	case existing 
+}
+
 enum ColorNames {
     static let background         = "background"
     static let mainColor          = "mainColor"
     static let accessory          = "accessory"
     static let primaryTextColor   = "primaryTextColor"
     static let secondaryTextColor = "secondaryTextColor"
+	static let destructiveRed     = "destructiveRed"
 }
 
 enum Images {

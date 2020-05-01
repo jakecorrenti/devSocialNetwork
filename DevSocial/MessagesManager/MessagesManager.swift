@@ -74,9 +74,27 @@ final class MessagesManager {
             }
         }
     }
+
+    func createChat(with userID: String, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ documentID: String) -> Void) {
+        let users = [
+            currentUser.uid,
+            userID
+        ]
+        let data: [String : Any] = [
+            "users"  : users,
+            "hidden" : [String]()
+        ]
+
+        let docID = UUID().uuidString
+        db.collection("chats").document(docID).setData(data) { error in 
+            if let error = error { onError(error) } else {
+                onSuccess(docID)
+            }
+        }
+    }
     
     /// save a message the user sends into the database
-    func save(message msg: Message, at docReference: DocumentReference?, onError: @escaping (_ error: Error?) -> Void) {
+	func save(message msg: Message, at docReference: DocumentReference?, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping () -> Void) {
         let data: [ String : Any ] = [
             "content"    : msg.content,
             "created"    : msg.created,
@@ -85,10 +103,32 @@ final class MessagesManager {
             "senderName" : msg.senderName,
             "wasRead"    : msg.wasRead
         ]
-        
+
         docReference?.collection("thread").addDocument(data: data) { (error) in
             if let error = error {
                 onError(error)
+			} else {
+				onSuccess()
+			}
+        }
+    }
+
+	/// this method is used when the message sent is the very first message sent between the two users
+    func save(message msg: Message, at docID: String, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping () -> Void) {
+        let data: [ String : Any ] = [
+            "content"    : msg.content,
+            "created"    : msg.created,
+            "id"         : msg.id,
+            "senderID"   : msg.senderID,
+            "senderName" : msg.senderName,
+            "wasRead"    : msg.wasRead
+        ]
+
+		db.collection("chats").document(docID).collection("thread").addDocument(data: data) { (error) in
+            if let error = error {
+                onError(error)
+            } else {
+                onSuccess()
             }
         }
     }
@@ -387,13 +427,17 @@ final class MessagesManager {
 		}
 	}
 	
-	
+	/// get list of all the users that the current user started a conversation with in messages
 	func getMessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void, onError: @escaping (_ error: Error?) -> Void) {
 		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
 			if let error = error {
 				onError(error)
 			} else {
 				guard let chats = chatQuery?.documents else { return }
+
+                if chats.count == 0 {
+                    onSuccess([User]())
+                }
 				
 				chats.forEach { document in
 					let chat 		= Chat(dictionary: document.data())
@@ -416,10 +460,10 @@ final class MessagesManager {
 					FirebaseStorageContext.shared.getListOfAllUsers { (users) in
 						var messagedUsers = [User]()
 						for _ in messagedUserIDs {
-							for user in users where messagedUserIDs.contains(user.id) {
-								messagedUsers.append(user)
-							}
-						}
+                            for user in users where messagedUserIDs.contains(user.id) {
+                                messagedUsers.append(user)
+                            }
+                        }
 						onSuccess(messagedUsers)
 					}
 				}

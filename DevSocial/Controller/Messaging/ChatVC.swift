@@ -19,8 +19,10 @@ class ChatVC: UIViewController {
     var inputBottomAnchor: NSLayoutConstraint!
     var selectedUser     : User!
     var docReference	 : DocumentReference?
+	var docID            : String?
     let currentUser 	 = Auth.auth().currentUser!
     var messages    	 = [[Message]]()
+	var chatCreationState: ChatCreationState!
     var formater		 : DateFormatter {
         let f 		 = DateFormatter()
         f.dateFormat = "M/d/yyyy"
@@ -70,6 +72,7 @@ class ChatVC: UIViewController {
         setupNavBar()
         setupUI()
         setupObservers()
+		checkChatCreationState()
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
         textInputView.sendButton.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
@@ -85,12 +88,6 @@ class ChatVC: UIViewController {
     // MARK: Setup UI
     // -----------------------------------------
     
-    
-    
-    @objc func tap() {
-        view.endEditing(true)
-    }
-    
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = selectedUser.username
@@ -103,8 +100,13 @@ class ChatVC: UIViewController {
 		
         constrainTextInputView()
         constrainTableView()
-        loadChat()
     }
+	
+	private func checkChatCreationState() {
+		if chatCreationState == .existing {
+			loadChat()
+		}
+	}
     
     private func setupObservers() {
         let notificationCenter = NotificationCenter.default
@@ -132,69 +134,87 @@ class ChatVC: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: textInputView.separatorView.topAnchor)
         ])
     }
-    
-    func createChat() {
-        MessagesManager.shared.createChat(with: selectedUser.id) { (error) in
-            if let error = error {
-                Alert.showBasicAlert(on: self, with: error.localizedDescription)
-            } else {
-                self.loadChat()
-            }
-        }
-    }
-    
-    private func loadChat() {
-        MessagesManager.shared.loadChat(with: selectedUser, onError: { (error) in
-            if let error = error {
-                Alert.showBasicAlert(on: self, with: error.localizedDescription)
-            }
-        }) { (messages, docReference) in
-            self.messages     = messages
-            self.docReference = docReference
-            self.tableView.reloadData()
-//            self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
-        }
-    }
-    
-    private func insertNewMessage(_ message: Message) {
-        //add the message to the messages array and reload it
-//        messages.append(message)
-        tableView.reloadData()
-        DispatchQueue.main.async {
-//            self.tableView.scrollToRow(at: IndexPath(row: self.messages.last!.count - 1, section: self.messages.count - 1), at: .bottom, animated: true)
-        }
-    }
-    
-    private func save(_ message: Message) {
-        MessagesManager.shared.save(message: message, at: docReference) { (error) in
+	
+	private func loadChat() {
+		MessagesManager.shared.loadChat(with: selectedUser, onError: { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}) { (messages, docReference) in
+			self.messages = messages
+			self.docReference = docReference
+			self.tableView.reloadData()
+		}
+	}
+
+    private func createChat(handler: @escaping (_ docID: String) -> Void) {
+        MessagesManager.shared.createChat(with: selectedUser.id, onError: { error in
             if let error = error {
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
-        }
+        }, onSuccess: { docID in
+            handler(docID)
+        })
     }
-    
+
+	private func save(message: Message, docID: String, handler: @escaping () -> Void) {
+		MessagesManager.shared.save(message: message, at: docID, onError: { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}) {
+			handler()
+		}
+    }
+	
+	private func save(message: Message, docRef: DocumentReference, handler: @escaping () -> Void) {
+		MessagesManager.shared.save(message: message, at: docRef, onError: { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}) {
+			handler()
+		}
+    }
+	
+	private func insertMessageLocally(_ message: Message) {
+		if messages.count == 0 {
+			messages.append([message])
+		} else {
+			var messageGroup = messages.last
+			messageGroup?.append(message)
+		}
+		tableView.reloadData()
+	}
     
     @objc
     private func sendButtonPressed() {
-        //When use press send button this method is called.
-        let message = Message(id: UUID().uuidString, content: textInputView.textField.text!, created: Timestamp(), senderID: currentUser.uid, senderName: currentUser.displayName!, wasRead: false)
-        //calling function to insert and save message
-        insertNewMessage(message)
-        save(message)
-        //clearing input field
-        textInputView.textField.text = ""
-        tableView.reloadData()
-        
-        FirebaseStorageContext.shared.getFCMToken(for: selectedUser, onError: { (error) in
-            if let error = error {
-                Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+        //MARK: - IMPLEMENT
+		let message = Message(
+			id		   : UUID().uuidString,
+			content    : textInputView.textField.text!,
+			created    : Timestamp(),
+			senderID   : currentUser.uid,
+			senderName : currentUser.displayName!,
+			wasRead    : false
+		)
+		
+		if messages.count == 0 {
+            createChat { docID in
+				self.save(message: message, docID: docID) {
+					self.insertMessageLocally(message)
+					self.loadChat()
+				}
             }
-        }) { (token) in
-            if let token = token {
-                NotificationManager.shared.sendPushNotification(to: token, title: message.senderName, body: message.content)
-            }
-        }
-//        self.tableView.scrollToRow(at: IndexPath(row: messages.last!.count - 1, section: messages.count - 1), at: .bottom, animated: true)
+		} else {
+			guard let docReference = docReference else { return }
+			save(message: message, docRef: docReference) {
+				self.insertMessageLocally(message)
+			}
+		}
+		
+		textInputView.textField.text = ""
+		tableView.reloadData()
         
     }
     
@@ -250,4 +270,8 @@ class ChatVC: UIViewController {
 			}
 		}
 	}
+
+    @objc func tap() {
+        view.endEditing(true)
+    }
 }
