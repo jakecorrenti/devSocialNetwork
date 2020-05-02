@@ -219,6 +219,10 @@ class ChatVC: UIViewController {
 			}
 		}
 		
+		//MARK: - Send Notifications
+		// get FCM token from FirebaseStorage
+		// use the notificationManager to send the message
+		
 		textInputView.textField.text = ""
 		tableView.reloadData()
         
