@@ -25,25 +25,18 @@ class MessagedUserCell: UITableViewCell {
         didSet {
             avatarView.user    = selectedUser
             usernameLabel.text = selectedUser.username
-            MessagesManager.shared.getLastSentChat(with: selectedUser) { (message) in
+            MessagesManager.shared.getLastSentChat(with: selectedUser) { [weak self] message in
+				guard let self = self else { return }
                 if let message = message {
                     self.lastMessageLabel.text        = message.content
                     self.recentActivityDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
-                    
-//                    if message.senderID == Auth.auth().currentUser?.uid {
-//                        self.unreadIndicator.isHidden = false
-//					} else {
-//                        if !message.wasRead {
-//                            self.unreadIndicatorView.isHidden = true
-//                        }
-//                    }
-					if !message.wasRead {
+					
+					if !message.wasRead && message.senderID != Auth.auth().currentUser?.uid {
 						self.unreadIndicator.isHidden = false
+					} else {
+						self.unreadIndicator.isHidden = true
 					}
                     
-                } else {
-//                    self.lastMessageLabel.text = ""
-//                    self.recentMessageDateLabel.text = self.dateFormatter.string(from: Date())
                 }
             }
         }

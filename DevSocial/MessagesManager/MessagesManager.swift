@@ -429,7 +429,7 @@ final class MessagesManager {
 	
 	/// get list of all the users that the current user started a conversation with in messages
 	func getMessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void, onError: @escaping (_ error: Error?) -> Void) {
-		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+		db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener(includeMetadataChanges: false) { (chatQuery, error) in
 			if let error = error {
 				onError(error)
 			} else {
@@ -438,15 +438,13 @@ final class MessagesManager {
                 if chats.count == 0 {
                     onSuccess([User]())
                 }
-				
+				var messagedUserIDs = [String]()
 				chats.forEach { document in
 					let chat 		= Chat(dictionary: document.data())
 					let hiddenUsers = chat!.hidden
-					var messagedUserIDs = [String]()
 					
 					for user in chat!.users where user != self.currentUser.uid {
 						if hiddenUsers.count == 2 {
-							// delete the thread
 							self.deleteThread(at: document.reference, onSuccess: {  }) { (error) in
 								if let error = error { onError(error) }
 							}
@@ -456,7 +454,7 @@ final class MessagesManager {
 							}
 						}
 					}
-					
+
 					FirebaseStorageContext.shared.getListOfAllUsers { (users) in
 						var messagedUsers = [User]()
 						for _ in messagedUserIDs {

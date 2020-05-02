@@ -140,16 +140,18 @@ class ChatVC: UIViewController {
 			if let error = error {
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
-		}) { (messages, docReference) in
-			self.messages = messages
+		}) { [weak self] (messages, docReference) in
+			guard let self    = self else { return }
+			self.messages     = messages
 			self.docReference = docReference
 			self.tableView.reloadData()
 		}
 	}
 
     private func createChat(handler: @escaping (_ docID: String) -> Void) {
-        MessagesManager.shared.createChat(with: selectedUser.id, onError: { error in
+		MessagesManager.shared.createChat(with: selectedUser.id, onError: { [weak self] error in
             if let error = error {
+				guard let self = self else { return }
                 Alert.showBasicAlert(on: self, with: error.localizedDescription)
             }
         }, onSuccess: { docID in
@@ -158,8 +160,9 @@ class ChatVC: UIViewController {
     }
 
 	private func save(message: Message, docID: String, handler: @escaping () -> Void) {
-		MessagesManager.shared.save(message: message, at: docID, onError: { (error) in
+		MessagesManager.shared.save(message: message, at: docID, onError: { [weak self] (error) in
 			if let error = error {
+				guard let self = self else { return }
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
 		}) {
@@ -168,8 +171,9 @@ class ChatVC: UIViewController {
     }
 	
 	private func save(message: Message, docRef: DocumentReference, handler: @escaping () -> Void) {
-		MessagesManager.shared.save(message: message, at: docRef, onError: { (error) in
+		MessagesManager.shared.save(message: message, at: docRef, onError: { [weak self] (error) in
 			if let error = error {
+				guard let self = self else { return }
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
 		}) {
@@ -189,7 +193,6 @@ class ChatVC: UIViewController {
     
     @objc
     private func sendButtonPressed() {
-        //MARK: - IMPLEMENT
 		let message = Message(
 			id		   : UUID().uuidString,
 			content    : textInputView.textField.text!,
@@ -198,17 +201,20 @@ class ChatVC: UIViewController {
 			senderName : currentUser.displayName!,
 			wasRead    : false
 		)
-		
+
 		if messages.count == 0 {
-            createChat { docID in
-				self.save(message: message, docID: docID) {
-					self.insertMessageLocally(message)
-					self.loadChat()
+			createChat { [weak self] docID in
+				guard let self = self else { return }
+				self.save(message: message, docID: docID) { [weak savedSelf = self] in
+					guard let savedSelf = savedSelf else { return }
+					savedSelf.insertMessageLocally(message)
+					savedSelf.loadChat()
 				}
-            }
+			}
 		} else {
 			guard let docReference = docReference else { return }
-			save(message: message, docRef: docReference) {
+			save(message: message, docRef: docReference) { [weak self] in
+				guard let self = self else { return }
 				self.insertMessageLocally(message)
 			}
 		}
