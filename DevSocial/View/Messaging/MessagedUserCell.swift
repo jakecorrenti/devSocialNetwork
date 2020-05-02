@@ -16,31 +16,34 @@ class MessagedUserCell: UITableViewCell {
     // -----------------------------------------
     
     var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
+        let formatter 		 = DateFormatter()
         formatter.dateFormat = "M/d/yyyy"
         return formatter
     }
     
     var selectedUser: User! {
         didSet {
-            avatarView.user = selectedUser
+            avatarView.user    = selectedUser
             usernameLabel.text = selectedUser.username
             MessagesManager.shared.getLastSentChat(with: selectedUser) { (message) in
                 if let message = message {
-                    self.lastMessageLabel.text = message.content
-                    self.recentMessageDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
+                    self.lastMessageLabel.text        = message.content
+                    self.recentActivityDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
                     
-                    if message.senderID == Auth.auth().currentUser?.uid {
-                        self.unreadIndicatorView.isHidden = true
-                    } else {
-                        if message.wasRead {
-                            self.unreadIndicatorView.isHidden = true
-                        }
-                    }
+//                    if message.senderID == Auth.auth().currentUser?.uid {
+//                        self.unreadIndicator.isHidden = false
+//					} else {
+//                        if !message.wasRead {
+//                            self.unreadIndicatorView.isHidden = true
+//                        }
+//                    }
+					if !message.wasRead {
+						self.unreadIndicator.isHidden = false
+					}
                     
                 } else {
-                    self.lastMessageLabel.text = ""
-                    self.recentMessageDateLabel.text = self.dateFormatter.string(from: Date())
+//                    self.lastMessageLabel.text = ""
+//                    self.recentMessageDateLabel.text = self.dateFormatter.string(from: Date())
                 }
             }
         }
@@ -49,43 +52,42 @@ class MessagedUserCell: UITableViewCell {
     // -----------------------------------------
     // MARK: Views
     // -----------------------------------------
-    
-    lazy var unreadIndicatorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: ColorNames.mainColor)
-        view.layer.cornerRadius = 6
-        view.layer.masksToBounds = true
+
+    lazy var avatarView: AvatarView = {
+        let view 					   = AvatarView()
+        view.bgView.layer.cornerRadius = 25
         return view
     }()
-    
-    lazy var usernameLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 18)
+
+    lazy var unreadIndicator: UIView = {
+        let view 			    = UIView()
+		view.isHidden			= true
+        view.backgroundColor 	= UIColor(named: ColorNames.mainColor)
+        view.layer.cornerRadius = 7.5
+        view.layer.borderColor  = UIColor(named: ColorNames.background)?.cgColor
+        view.layer.borderWidth  = 2
         return view
     }()
-    
-    lazy var lastMessageLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 15)
-        view.textColor = .systemGray
-        view.numberOfLines = 0
-        return view
-    }()
-    
-    let avatarView = AvatarView()
-    
-    lazy var recentMessageDateLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 11)
-        view.textColor = .systemGray
-        return view
-    }()
-    
-    lazy var textStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [self.usernameLabel, self.lastMessageLabel])
-        view.axis = .vertical
-        return view
-    }()
+	
+	lazy var recentActivityDateLabel: UILabel = {
+		let view 	   = UILabel()
+		view.textColor = UIColor(named: ColorNames.secondaryTextColor)
+		view.font 	   = .systemFont(ofSize: 13)
+		return view
+	}()
+	
+	lazy var usernameLabel: UILabel = {
+		let view  = UILabel()
+		view.font = .boldSystemFont(ofSize: 18)
+		return view
+	}()
+	
+	lazy var lastMessageLabel: UILabel = {
+		let view       = UILabel()
+		view.textColor = UIColor(named: ColorNames.secondaryTextColor)
+		view.font      = .systemFont(ofSize: 13)
+		return view
+	}()
     
     // -----------------------------------------
     // MARK: Initialization
@@ -106,50 +108,60 @@ class MessagedUserCell: UITableViewCell {
     // -----------------------------------------
     
     private func setupUI() {
-        [unreadIndicatorView, avatarView, recentMessageDateLabel, textStack].forEach { addSubview($0) }
-        
-        constrainUnreadIndicator()
+        [avatarView, unreadIndicator, recentActivityDateLabel, usernameLabel, lastMessageLabel].forEach { addSubview($0) }
+
         constrainAvatarView()
-        constrainDateLabel()
-        constrainTextStack()
+		constrainUnreadIndicator()
+		constrainRecentActivityDateLabel()
+		constrainUsernameLabel()
+		constrainLastMessageLabel()
     }
-    
-    private func constrainUnreadIndicator() {
-        unreadIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            unreadIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            unreadIndicatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            unreadIndicatorView.heightAnchor.constraint(equalToConstant: 12),
-            unreadIndicatorView.widthAnchor.constraint(equalToConstant: 12)
-        ])
-    }
-    
+
     private func constrainAvatarView() {
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            avatarView.leadingAnchor.constraint(equalTo: unreadIndicatorView.trailingAnchor, constant: 8),
             avatarView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            avatarView.heightAnchor.constraint(equalToConstant: 45),
-            avatarView.widthAnchor.constraint(equalToConstant: 45)
+            avatarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            avatarView.heightAnchor.constraint(equalToConstant: 50),
+            avatarView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
-    
-    private func constrainTextStack() {
-        textStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textStack.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
-            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            textStack.trailingAnchor.constraint(lessThanOrEqualTo: recentMessageDateLabel.leadingAnchor, constant: -8)
-        ])
+
+    private func constrainUnreadIndicator() {
+        unreadIndicator.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			unreadIndicator.topAnchor.constraint(equalTo: avatarView.topAnchor),
+			unreadIndicator.leadingAnchor.constraint(equalTo: avatarView.leadingAnchor),
+			unreadIndicator.heightAnchor.constraint(equalToConstant: 15),
+			unreadIndicator.widthAnchor.constraint(equalToConstant: 15)
+		])
     }
-    
-    private func constrainDateLabel() {
-        recentMessageDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            recentMessageDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            recentMessageDateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8)
-        ])
-    }
+	
+	private func constrainRecentActivityDateLabel() {
+		recentActivityDateLabel.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			recentActivityDateLabel.topAnchor.constraint(equalTo: avatarView.topAnchor),
+			recentActivityDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+		])
+	}
+	
+	private func constrainUsernameLabel () {
+		usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			usernameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 13),
+			usernameLabel.bottomAnchor.constraint(equalTo: avatarView.centerYAnchor),
+			usernameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -(recentActivityDateLabel.frame.width + 12))
+		])
+	}
+	
+	private func constrainLastMessageLabel() {
+		lastMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			lastMessageLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
+			lastMessageLabel.topAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 4),
+			lastMessageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+		])
+	}
+
 }
 

@@ -13,8 +13,8 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
-    var users = [User]()
-    var filteredUsers = [User]()
+    var users 			 = [User]()
+    var filteredUsers    = [User]()
     var isSearchBarEmpty: Bool {
       return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -28,9 +28,9 @@ class MyMessagesVC: UITableViewController {
     
     lazy var searchController: UISearchController = {
         let view = UISearchController(searchResultsController: nil)
-        view.searchResultsUpdater = self
+        view.searchResultsUpdater 				  = self
         view.obscuresBackgroundDuringPresentation = false
-        view.searchBar.placeholder = "Search messages"
+        view.searchBar.placeholder 				  = "Search messages"
         return view
     }()
     
@@ -66,9 +66,8 @@ class MyMessagesVC: UITableViewController {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = "Messages"
         
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        
+        navigationItem.searchController  = searchController
+        definesPresentationContext 	     = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
@@ -77,8 +76,9 @@ class MyMessagesVC: UITableViewController {
     
     private func setupUI() {
         tableView.backgroundColor = UIColor(named: ColorNames.background)
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.delegate 		  = self
+        tableView.dataSource 	  = self
+		tableView.separatorStyle  = .none
         tableView.tableFooterView = UIView()
         tableView.register(MessagedUserCell.self, forCellReuseIdentifier: Cells.messagedUserCell)
     }
@@ -133,12 +133,12 @@ extension MyMessagesVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messagedUserCell, for: indexPath) as! MessagedUserCell
+        let cell		     = tableView.dequeueReusableCell(withIdentifier: Cells.messagedUserCell, for: indexPath) as! MessagedUserCell
 		
-		let user = isFiltering ? filteredUsers[indexPath.row] : users[indexPath.row]
-		cell.selectedUser = user
+		let user 		     = isFiltering ? filteredUsers[indexPath.row] : users[indexPath.row]
+		cell.selectedUser    = user
 
-        cell.accessoryType = .disclosureIndicator
+//        cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = UIColor(named: ColorNames.background)
         return cell
     }
@@ -160,7 +160,6 @@ extension MyMessagesVC {
 
 extension MyMessagesVC: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
-    // TODO
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
   }
