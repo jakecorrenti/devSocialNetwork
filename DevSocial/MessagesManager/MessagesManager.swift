@@ -158,6 +158,7 @@ final class MessagesManager {
                         if (chat?.users.contains(user.id))! {
                             documentReference = doc.reference
                             
+							//MARK: - Change the metadata changes to false to reduce tha mount of write queries?
                             doc.reference.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (threadQuery, error) in
                                 if let error = error {
                                     onError(error)

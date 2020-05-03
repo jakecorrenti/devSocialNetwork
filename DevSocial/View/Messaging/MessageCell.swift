@@ -15,20 +15,26 @@ class MessageCell: UITableViewCell {
     // MARK: Properties
     // -----------------------------------------
     
-    var contentLeading: NSLayoutConstraint!
-    var contentTrailing: NSLayoutConstraint!
+    var contentLeading  : NSLayoutConstraint!
+    var contentTrailing : NSLayoutConstraint!
+	var avatarLeading   : NSLayoutConstraint!
+	var avatarTrailing  : NSLayoutConstraint!
     
     var message: Message! {
         didSet {
-            self.contentLabel.text = message.content
+            self.contentLabel.text     = message.content
             bubbleView.backgroundColor = message.senderID == Auth.auth().currentUser?.uid ? UIColor(named: ColorNames.mainColor) : UIColor(named: ColorNames.accessory)
-            contentLabel.textColor = message.senderID == Auth.auth().currentUser?.uid ? .white : UIColor(named: ColorNames.primaryTextColor)
+            contentLabel.textColor     = message.senderID == Auth.auth().currentUser?.uid ? .white : UIColor(named: ColorNames.primaryTextColor)
             
             if message.senderID == Auth.auth().currentUser?.uid {
-                self.contentLeading.isActive = false
+                self.contentLeading.isActive  = false
+				self.avatarLeading.isActive   = false
+				self.avatarTrailing.isActive  = true
                 self.contentTrailing.isActive = true
-            } else {
-                self.contentLeading.isActive = true
+			} else {
+                self.contentLeading.isActive  = true
+				self.avatarLeading.isActive   = true
+				self.avatarTrailing.isActive  = false
                 self.contentTrailing.isActive = false
             }
         }
@@ -37,17 +43,22 @@ class MessageCell: UITableViewCell {
     // -----------------------------------------
     // MARK: Views
     // -----------------------------------------
+	
+	lazy var avatarView: AvatarView = {
+		let view 					   = AvatarView()
+		view.bgView.layer.cornerRadius = 15
+		return view
+	}()
     
     lazy var contentLabel: UILabel = {
-        let view = UILabel()
+        let view		   = UILabel()
         view.numberOfLines = 0
         return view
     }()
     
     lazy var bubbleView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        view.layer.cornerRadius = 8
+        let view 			    = UIView()
+         view.layer.cornerRadius = 20
         return view
     }()
     
@@ -72,25 +83,43 @@ class MessageCell: UITableViewCell {
     // -----------------------------------------
     
     private func setupUI() {
-        addSubview(bubbleView)
-        addSubview(contentLabel)
+		[avatarView, bubbleView, contentLabel].forEach { addSubview($0) }
+		
+		constrainContentLabel()
+		constrainBubbleView()
+		constrainAvatarView()
         
-        contentLabel.translatesAutoresizingMaskIntoConstraints = false
+        avatarLeading   = avatarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)
+        avatarTrailing  = avatarView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+		contentLeading  = contentLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 14)
+		contentTrailing = contentLabel.trailingAnchor.constraint(equalTo: avatarView.leadingAnchor, constant: -14)
+    }
+	
+	private func constrainAvatarView() {
+		avatarView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			avatarView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor),
+			avatarView.heightAnchor.constraint(equalToConstant: 30),
+			avatarView.widthAnchor.constraint(equalToConstant: 30)
+		])
+	}
+	
+	private func constrainContentLabel() {
+		contentLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             contentLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             contentLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             contentLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.frame.width * 0.85)
         ])
-        
-        bubbleView.translatesAutoresizingMaskIntoConstraints = false
+	}
+	
+	private func constrainBubbleView() {
+		bubbleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            bubbleView.topAnchor.constraint(equalTo: contentLabel.topAnchor, constant: -8),
-            bubbleView.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor, constant:  -8),
-            bubbleView.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: 8),
-            bubbleView.bottomAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 8)
+            bubbleView.topAnchor.constraint(equalTo: contentLabel.topAnchor, constant: -10),
+            bubbleView.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor, constant:  -10),
+            bubbleView.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor, constant: 10),
+            bubbleView.bottomAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 10)
         ])
-        
-        contentLeading = contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
-        contentTrailing = contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-    }
+	}
 }

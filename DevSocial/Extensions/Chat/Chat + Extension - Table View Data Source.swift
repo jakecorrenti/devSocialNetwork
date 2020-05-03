@@ -14,10 +14,13 @@ extension ChatVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cells.messageCell, for: indexPath) as! MessageCell
-        cell.message = messages[indexPath.section][indexPath.row]
+        let cell             = tableView.dequeueReusableCell(withIdentifier: Cells.messageCell, for: indexPath) as! MessageCell
+        cell.message         = messages[indexPath.section][indexPath.row]
         cell.backgroundColor = UIColor(named: ColorNames.background)
-        cell.selectionStyle = .none
+        cell.selectionStyle  = .none
+		
+		cell.avatarView.initialLabel.text = String(messages[indexPath.section][indexPath.row].senderName.first!)
+		cell.avatarView.initialLabel.font = .boldSystemFont(ofSize: 13)
         
         if currentUser.uid != messages[indexPath.section][indexPath.row].senderID {
             MessagesManager.shared.updateWasReadState(message: messages[indexPath.section][indexPath.row], docReference: docReference!, osSuccess: { (error) in
