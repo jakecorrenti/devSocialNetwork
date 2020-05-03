@@ -23,6 +23,7 @@ class ChatVC: UIViewController {
     let currentUser 	 = Auth.auth().currentUser!
     var messages    	 = [[Message]]()
 	var chatCreationState: ChatCreationState!
+	
     var formater		 : DateFormatter {
         let f 		 = DateFormatter()
         f.dateFormat = "M/d/yyyy"
@@ -42,7 +43,7 @@ class ChatVC: UIViewController {
         view.sectionHeaderHeight = 50
         view.tableFooterView     = UIView()
         view.keyboardDismissMode = .interactive
-        view.estimatedRowHeight  = 50
+        view.estimatedRowHeight  = 100
         view.separatorStyle      = .none
         view.rowHeight 	         = UITableView.automaticDimension
         view.backgroundColor     = UIColor(named: ColorNames.background)
@@ -121,7 +122,7 @@ class ChatVC: UIViewController {
         NSLayoutConstraint.activate([
             inputBottomAnchor,
             textInputView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            textInputView.heightAnchor.constraint(equalToConstant: 50)
+            textInputView.heightAnchor.constraint(equalToConstant: 58)
         ])
     }
     
@@ -131,7 +132,7 @@ class ChatVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: textInputView.separatorView.topAnchor)
+            tableView.bottomAnchor.constraint(equalTo: textInputView.topAnchor)
         ])
     }
 	
@@ -225,6 +226,7 @@ class ChatVC: UIViewController {
 		
 		textInputView.textField.text = ""
 		tableView.reloadData()
+		textInputView.setSendButtonDeactivatedState()
         
     }
     

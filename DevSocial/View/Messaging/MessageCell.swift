@@ -86,19 +86,19 @@ class MessageCell: UITableViewCell {
 		[avatarView, bubbleView, contentLabel].forEach { addSubview($0) }
 		
 		constrainContentLabel()
-		constrainAvatarView()
 		constrainBubbleView()
+		constrainAvatarView()
         
         avatarLeading   = avatarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)
         avatarTrailing  = avatarView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
-		contentLeading  = contentLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 20)
-		contentTrailing = contentLabel.trailingAnchor.constraint(equalTo: avatarView.leadingAnchor, constant: -20)
+		contentLeading  = contentLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 14)
+		contentTrailing = contentLabel.trailingAnchor.constraint(equalTo: avatarView.leadingAnchor, constant: -14)
     }
 	
 	private func constrainAvatarView() {
 		avatarView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			avatarView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor),
+			avatarView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor),
 			avatarView.heightAnchor.constraint(equalToConstant: 30),
 			avatarView.widthAnchor.constraint(equalToConstant: 30)
 		])
