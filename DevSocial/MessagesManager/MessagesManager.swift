@@ -16,51 +16,6 @@ final class MessagesManager {
     private let currentUser = Auth.auth().currentUser!
     private let db          = Firestore.firestore()
     
-    /// get list of all the users that the current user started a conversation with in messages
-    func getListOfMessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void) {
-        // added a document listener to have a realtime update when a user receives a message on MyMessagesVC (replace with just .getDocuments() to remove this ability
-        db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener(includeMetadataChanges: true) { (chatQuery, error) in
-            if let error = error {
-                print("ERROR: \(error.localizedDescription)")
-            } else {
-                var messagedUsersIDS = [String]()
-                var messagedUsers    = [User]()
-                for document in chatQuery!.documents {
-                    for user in document.data()["users"] as! [String] {
-
-                        let hiddenUsers = document.data()["hidden"] as! [String]
-
-                        if hiddenUsers.count == 2 {
-							self.deleteThread(at: document.reference, onSuccess: {
-
-                            }, onError: { error in
-                                if let error = error {
-                                    print("❌ There was an error: \(error.localizedDescription)")
-                                }
-                            })
-                            continue
-                        } else if user != self.currentUser.uid {
-                            if !hiddenUsers.contains(self.currentUser.uid) {
-                                messagedUsersIDS.append(user)
-                            }
-                        }
-                    }
-                }
-                
-                FirebaseStorageContext.shared.getListOfAllUsers { (users) in
-                    for id in messagedUsersIDS {
-                        for user in users {
-                            if id == user.id {
-                                messagedUsers.append(user)
-                            }
-                        }
-                    }
-                    onSuccess(messagedUsers)
-                }
-            }
-        }
-    }
-    
     /// create a new chat in the database
     func createChat(with userID: String, onError: @escaping (_ error: Error?) -> Void) {
         let users = [currentUser.uid, userID]
@@ -75,6 +30,7 @@ final class MessagesManager {
         }
     }
 
+	/// create a new chat in the database
     func createChat(with userID: String, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ documentID: String) -> Void) {
         let users = [
             currentUser.uid,
@@ -134,54 +90,52 @@ final class MessagesManager {
     }
     
     /// load the chat that has been logged between the current user and another user within the app
-    func loadChat(with user: User, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ messages: [[Message]], _ docReference: DocumentReference?) -> Void) {
-        // on success returns a list of messages that were sent between the users
-        var documentReference: DocumentReference?
-        var messages = [Message]()
-        
-        db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (snapshot, error) in
-            if let error = error {
-                print("❌ An error has occurred: \(error.localizedDescription)")
-            } else {
-                guard let queryCount = snapshot?.documents.count else { return }
-                
-                if queryCount == 0 {
-                    self.createChat(with: user.id) { (error) in
-                        if let error = error {
-                            onError(error)
-                        }
-                    }
-                } else if queryCount >= 1 {
-                    for doc in snapshot!.documents {
-                        let chat = Chat(dictionary: doc.data())
-                        
-                        if (chat?.users.contains(user.id))! {
-                            documentReference = doc.reference
-                            
-							//MARK: - Change the metadata changes to false to reduce tha mount of write queries?
-                            doc.reference.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (threadQuery, error) in
-                                if let error = error {
-                                    onError(error)
-                                } else {
-                                    messages.removeAll()
-                                    for message in threadQuery!.documents {
-                                        let msg = Message(dictionary: message.data())
-                                        messages.append(msg!)
-                                    }
-                                    
-                                    self.getMessagesSeparatedByDate(messages: messages) { (messages) in
-                                        onSuccess(messages, documentReference)
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+	func loadChat(with user : User,
+				  onError   : @escaping (_ error: Error?) -> Void,
+				  onSuccess : @escaping (_ messages: [[Message]], _ docReference: DocumentReference?, _ docListener: ListenerRegistration) -> Void) {
 
+		var documentReference : DocumentReference?
+		var messages		  = [Message]()
+		var listener		  : ListenerRegistration!
+		
+		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let chatCount = chatQuery?.count else { return }
+				
+				if chatCount == 0 {
+					
+				} else {
+					for userChat in chatQuery!.documents {
+						let chat = Chat(dictionary: userChat.data())
+						
+						if (chat?.users.contains(user.id))! {
+							documentReference = userChat.reference
+							
+							listener = userChat.reference.collection("thread").order(by: "created", descending: false).addSnapshotListener { [weak self] (threadQuery, error) in
+								guard let self = self else { return }
+								if let error = error {
+									onError(error)
+								} else {
+									messages.removeAll()
+									threadQuery!.documents.forEach { message in
+										messages.append(Message(dictionary: message.data())!)
+									}
+									
+									self.getMessagesSeparatedByDate(messages: messages) { (separatedMessages) in
+										onSuccess(separatedMessages, documentReference, listener)
+									}
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	
     /// creates the proper array format for the messages to be separated by date
     func getMessagesSeparatedByDate(messages: [Message], onSucces: @escaping (_ messages: [[Message]]) -> Void ) {
         var formatter: DateFormatter {
@@ -225,7 +179,7 @@ final class MessagesManager {
                         if (userChat?.users.contains(user.id))! {
                             let docReference = document.reference
 
-                            docReference.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (threadQuery, error) in
+                            docReference.collection("thread").order(by: "created", descending: false).getDocuments { (threadQuery, error) in
                                 if let error = error {
                                     print("❌ An Error Occurred: \(error.localizedDescription)")
                                 } else {
@@ -429,45 +383,49 @@ final class MessagesManager {
 	}
 	
 	/// get list of all the users that the current user started a conversation with in messages
-	func getMessagedUsers(onSuccess: @escaping (_ users: [User]) -> Void, onError: @escaping (_ error: Error?) -> Void) {
-		db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener(includeMetadataChanges: false) { (chatQuery, error) in
+	func getMessagedUsers(onSuccess: @escaping (_ users: [User], _ listener: ListenerRegistration) -> Void, onError: @escaping (_ error: Error?) -> Void) {
+		var listener : ListenerRegistration!
+		
+		listener = db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener({ [weak self] (chatQuery, error) in
+			guard let self = self else { return }
 			if let error = error {
 				onError(error)
 			} else {
 				guard let chats = chatQuery?.documents else { return }
-
-                if chats.count == 0 {
-                    onSuccess([User]())
-                }
-				var messagedUserIDs = [String]()
+				
+				if chats.count == 0 {
+					onSuccess([User](), listener)
+				}
+				
+				var messagedUsersIDs = [String]()
 				chats.forEach { document in
-					let chat 		= Chat(dictionary: document.data())
+					let chat 	    = Chat(dictionary: document.data())
 					let hiddenUsers = chat!.hidden
 					
 					for user in chat!.users where user != self.currentUser.uid {
 						if hiddenUsers.count == 2 {
-							self.deleteThread(at: document.reference, onSuccess: {  }) { (error) in
+							self.deleteThread(at: document.reference, onSuccess: { }) { (error) in
 								if let error = error { onError(error) }
 							}
 						} else {
 							if !hiddenUsers.contains(self.currentUser.uid) {
-								messagedUserIDs.append(user)
+								messagedUsersIDs.append(user)
 							}
 						}
 					}
-
+					
 					FirebaseStorageContext.shared.getListOfAllUsers { (users) in
 						var messagedUsers = [User]()
-						for _ in messagedUserIDs {
-                            for user in users where messagedUserIDs.contains(user.id) {
-                                messagedUsers.append(user)
-                            }
-                        }
-						onSuccess(messagedUsers)
+						messagedUsersIDs.forEach { _ in
+							for user in users where messagedUsersIDs.contains(user.id) {
+								messagedUsers.append(user)
+							}
+						}
+						onSuccess(messagedUsers, listener)
 					}
 				}
 			}
-		}
+		})
 	}
 
 }

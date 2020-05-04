@@ -23,6 +23,7 @@ class ChatVC: UIViewController {
     let currentUser 	 = Auth.auth().currentUser!
     var messages    	 = [[Message]]()
 	var chatCreationState: ChatCreationState!
+	var threadListener   : ListenerRegistration?
 	
     var formater		 : DateFormatter {
         let f 		 = DateFormatter()
@@ -65,6 +66,7 @@ class ChatVC: UIViewController {
         super.viewWillDisappear(animated)
         
         tabBarController?.tabBar.isHidden = false
+		threadListener?.remove()
     }
     
     override func viewDidLoad() {
@@ -83,6 +85,7 @@ class ChatVC: UIViewController {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+		threadListener?.remove()
     }
     
     // -----------------------------------------
@@ -137,14 +140,16 @@ class ChatVC: UIViewController {
     }
 	
 	private func loadChat() {
-		MessagesManager.shared.loadChat(with: selectedUser, onError: { (error) in
+		MessagesManager.shared.loadChat(with: selectedUser, onError: { [weak self] (error) in
 			if let error = error {
+				guard let self = self else { return }
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
-		}) { [weak self] (messages, docReference) in
-			guard let self    = self else { return }
-			self.messages     = messages
-			self.docReference = docReference
+		}) { [weak self] (messages, docReference, listener) in
+			guard let self 		= self else { return }
+			self.messages       = messages
+			self.docReference   = docReference
+			self.threadListener = listener
 			self.tableView.reloadData()
 		}
 	}

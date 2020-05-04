@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MyMessagesVC: UITableViewController {
     
@@ -15,6 +16,7 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     var users 			 = [User]()
     var filteredUsers    = [User]()
+	var chatsListener   : ListenerRegistration?
     var isSearchBarEmpty: Bool {
       return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -49,6 +51,7 @@ class MyMessagesVC: UITableViewController {
         super.viewWillDisappear(animated)
         
         tabBarController?.tabBar.isHidden = false
+		chatsListener?.remove()
     }
     
     override func viewDidLoad() {
@@ -84,12 +87,25 @@ class MyMessagesVC: UITableViewController {
     }
     
     private func getUsers() {
-		MessagesManager.shared.getMessagedUsers(onSuccess: { (users) in
-			MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
-				self.users = sortedUsers
+//		MessagesManager.shared.getMessagedUsers(onSuccess: { (users) in
+//			MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
+//				self.users = sortedUsers
+//				self.tableView.reloadData()
+//			}
+//		}) { (error) in
+//			if let error = error {
+//				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+//			}
+//		}
+		MessagesManager.shared.getMessagedUsers(onSuccess: { (users, listener) in
+			MessagesManager.shared.compareUserActivity(users: users) { [weak self] (sortedUsers) in
+				guard let self 	   = self else { return }
+				self.users 		   = sortedUsers
+				self.chatsListener = listener
 				self.tableView.reloadData()
 			}
-		}) { (error) in
+		}) { [weak self] (error) in
+			guard let self = self else { return }
 			if let error = error {
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
