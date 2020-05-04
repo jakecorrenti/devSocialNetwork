@@ -14,6 +14,7 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
+	
     var users 			 = [User]()
     var filteredUsers    = [User]()
 	var chatsListener   : ListenerRegistration?
@@ -35,7 +36,9 @@ class MyMessagesVC: UITableViewController {
         view.searchBar.placeholder 				  = "Search messages"
         return view
     }()
-    
+	
+	var refresh = UIRefreshControl()
+	
     // -----------------------------------------
     // MARK: Lifecycle
     // -----------------------------------------
@@ -83,26 +86,20 @@ class MyMessagesVC: UITableViewController {
         tableView.dataSource 	  = self
 		tableView.separatorStyle  = .none
         tableView.tableFooterView = UIView()
+		tableView.refreshControl  = refresh
         tableView.register(MessagedUserCell.self, forCellReuseIdentifier: Cells.messagedUserCell)
+		
+		refresh.addTarget(self, action: #selector(refreshControlActivated(_:)), for: .valueChanged)
     }
     
     private func getUsers() {
-//		MessagesManager.shared.getMessagedUsers(onSuccess: { (users) in
-//			MessagesManager.shared.compareUserActivity(users: users) { (sortedUsers) in
-//				self.users = sortedUsers
-//				self.tableView.reloadData()
-//			}
-//		}) { (error) in
-//			if let error = error {
-//				Alert.showBasicAlert(on: self, with: error.localizedDescription)
-//			}
-//		}
 		MessagesManager.shared.getMessagedUsers(onSuccess: { (users, listener) in
 			MessagesManager.shared.compareUserActivity(users: users) { [weak self] (sortedUsers) in
 				guard let self 	   = self else { return }
 				self.users 		   = sortedUsers
 				self.chatsListener = listener
 				self.tableView.reloadData()
+				self.refresh.endRefreshing()
 			}
 		}) { [weak self] (error) in
 			guard let self = self else { return }
@@ -140,6 +137,10 @@ class MyMessagesVC: UITableViewController {
     @objc func addButtonPressed() {
         navigationController?.pushViewController(NewChatVC(), animated: true)
     }
+	
+	@objc func refreshControlActivated(_ sender: UIRefreshControl) {
+		getUsers()
+	}
 }
 
 extension MyMessagesVC {
