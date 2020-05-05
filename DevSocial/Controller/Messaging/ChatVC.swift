@@ -196,6 +196,18 @@ class ChatVC: UIViewController {
 		}
 		tableView.reloadData()
 	}
+	
+	private func sendNotificationToUser(for message: Message) {
+		FirebaseStorageContext.shared.getFCMToken(for: selectedUser, onError: { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}) { (token) in
+			if let token = token {
+				NotificationManager.shared.sendPushNotification(token: token, title: message.senderName, body: message.content)
+			}
+		}
+	}
     
     @objc
     private func sendButtonPressed() {
@@ -225,9 +237,7 @@ class ChatVC: UIViewController {
 			}
 		}
 		
-		//MARK: - Send Notifications
-		// get FCM token from FirebaseStorage
-		// use the notificationManager to send the message
+		sendNotificationToUser(for: message)
 		
 		textInputView.textField.text = ""
 		tableView.reloadData()
