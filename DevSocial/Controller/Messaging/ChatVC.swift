@@ -16,16 +16,17 @@ class ChatVC: UIViewController {
     // MARK: Properties
     // -----------------------------------------
     
-    var inputBottomAnchor: NSLayoutConstraint!
-    var selectedUser     : User!
-    var docReference	 : DocumentReference?
-	var docID            : String?
-    let currentUser 	 = Auth.auth().currentUser!
-    var messages    	 = [[Message]]()
-	var chatCreationState: ChatCreationState!
-	var threadListener   : ListenerRegistration?
+    var inputBottomAnchor : NSLayoutConstraint!
+    var selectedUser      : User!
+    var docReference	  : DocumentReference?
+	var docID             : String?
+	var chatCreationState : ChatCreationState!
+	var threadListener    : ListenerRegistration?
 	
-    var formater		 : DateFormatter {
+	let currentUser 	  = Auth.auth().currentUser!
+    var messages    	  = [[Message]]()
+	
+    var formater		  : DateFormatter {
         let f 		 = DateFormatter()
         f.dateFormat = "M/d/yyyy"
         return f
@@ -199,14 +200,14 @@ class ChatVC: UIViewController {
 	
 	private func sendNotificationToUser(for message: Message) {
 		FirebaseStorageContext.shared.getFCMToken(for: selectedUser, onError: { (error) in
-			if let error = error {
-				Alert.showBasicAlert(on: self, with: error.localizedDescription)
-			}
-		}) { (token) in
-			if let token = token {
-				NotificationManager.shared.sendPushNotification(token: token, title: message.senderName, body: message.content)
-			}
-		}
+            if let error = error {
+                Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+            }
+        }) { (token) in
+            if let token = token {
+                NotificationManager.shared.sendPushNotification(token: token, title: message.senderName, body: message.content)
+            }
+        }
 	}
     
     @objc
@@ -242,7 +243,6 @@ class ChatVC: UIViewController {
 		textInputView.textField.text = ""
 		tableView.reloadData()
 		textInputView.setSendButtonDeactivatedState()
-        
     }
     
     @objc
