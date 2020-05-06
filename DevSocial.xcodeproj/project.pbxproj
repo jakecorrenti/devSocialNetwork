@@ -42,7 +42,6 @@
 		3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530F2437D91500A708F6 /* NewMessageCell.swift */; };
 		3EAE53122438130000A708F6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE53112438130000A708F6 /* AvatarView.swift */; };
 		3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */; };
-		3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED8CBA324364DA000044F7A /* NewMessageVC.swift */; };
 		3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC1E642435907000D014D8 /* MessageCell.swift */; };
 		3EDCEDC82456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCEDC72456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift */; };
 		3EDCEDCA2456495000FF87E3 /* NewChat + Extension - CollectionView Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCEDC92456495000FF87E3 /* NewChat + Extension - CollectionView Delegates.swift */; };
@@ -108,7 +107,6 @@
 		3EAE530F2437D91500A708F6 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
 		3EAE53112438130000A708F6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
-		3ED8CBA324364DA000044F7A /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
 		3EDC1E642435907000D014D8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		3EDCEDC72456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChat + Extension - CollectionView DataSource.swift"; sourceTree = "<group>"; };
 		3EDCEDC92456495000FF87E3 /* NewChat + Extension - CollectionView Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChat + Extension - CollectionView Delegates.swift"; sourceTree = "<group>"; };
@@ -317,7 +315,6 @@
 			children = (
 				3E5EC97F243292FA00744959 /* MyMessagesVC.swift */,
 				3E5EC9812432C73B00744959 /* ChatVC.swift */,
-				3ED8CBA324364DA000044F7A /* NewMessageVC.swift */,
 				3E2A6A2F24553218008B64C0 /* NewChatVC.swift */,
 			);
 			path = Messaging;
@@ -653,7 +650,6 @@
 				AEB726792432878B006923CA /* ExploreVC.swift in Sources */,
 				AE15CF17244E54B000316ADF /* TextFieldCell.swift in Sources */,
 				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
-				3ED8CBA424364DA000044F7A /* NewMessageVC.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
 				3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */,
 				AE00CBCC2438570400685F0C /* HomeRequestCell.swift in Sources */,

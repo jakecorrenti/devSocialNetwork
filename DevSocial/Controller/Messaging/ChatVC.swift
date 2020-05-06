@@ -16,15 +16,17 @@ class ChatVC: UIViewController {
     // MARK: Properties
     // -----------------------------------------
     
-    var inputBottomAnchor: NSLayoutConstraint!
-    var selectedUser     : User!
-    var docReference	 : DocumentReference?
-	var docID            : String?
-    let currentUser 	 = Auth.auth().currentUser!
-    var messages    	 = [[Message]]()
-	var chatCreationState: ChatCreationState!
+    var inputBottomAnchor : NSLayoutConstraint!
+    var selectedUser      : User!
+    var docReference	  : DocumentReference?
+	var docID             : String?
+	var chatCreationState : ChatCreationState!
+	var threadListener    : ListenerRegistration?
 	
-    var formater		 : DateFormatter {
+	let currentUser 	  = Auth.auth().currentUser!
+    var messages    	  = [[Message]]()
+	
+    var formater		  : DateFormatter {
         let f 		 = DateFormatter()
         f.dateFormat = "M/d/yyyy"
         return f
@@ -65,6 +67,7 @@ class ChatVC: UIViewController {
         super.viewWillDisappear(animated)
         
         tabBarController?.tabBar.isHidden = false
+		threadListener?.remove()
     }
     
     override func viewDidLoad() {
@@ -83,6 +86,7 @@ class ChatVC: UIViewController {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+		threadListener?.remove()
     }
     
     // -----------------------------------------
@@ -137,14 +141,16 @@ class ChatVC: UIViewController {
     }
 	
 	private func loadChat() {
-		MessagesManager.shared.loadChat(with: selectedUser, onError: { (error) in
+		MessagesManager.shared.loadChat(with: selectedUser, onError: { [weak self] (error) in
 			if let error = error {
+				guard let self = self else { return }
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
-		}) { [weak self] (messages, docReference) in
-			guard let self    = self else { return }
-			self.messages     = messages
-			self.docReference = docReference
+		}) { [weak self] (messages, docReference, listener) in
+			guard let self 		= self else { return }
+			self.messages       = messages
+			self.docReference   = docReference
+			self.threadListener = listener
 			self.tableView.reloadData()
 		}
 	}
@@ -191,6 +197,18 @@ class ChatVC: UIViewController {
 		}
 		tableView.reloadData()
 	}
+	
+	private func sendNotificationToUser(for message: Message) {
+		FirebaseStorageContext.shared.getFCMToken(for: selectedUser, onError: { (error) in
+            if let error = error {
+                Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+            }
+        }) { (token) in
+            if let token = token {
+                NotificationManager.shared.sendPushNotification(token: token, title: message.senderName, body: message.content)
+            }
+        }
+	}
     
     @objc
     private func sendButtonPressed() {
@@ -220,14 +238,11 @@ class ChatVC: UIViewController {
 			}
 		}
 		
-		//MARK: - Send Notifications
-		// get FCM token from FirebaseStorage
-		// use the notificationManager to send the message
+		sendNotificationToUser(for: message)
 		
 		textInputView.textField.text = ""
 		tableView.reloadData()
 		textInputView.setSendButtonDeactivatedState()
-        
     }
     
     @objc

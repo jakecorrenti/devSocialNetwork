@@ -21,6 +21,7 @@ class NewChatVC: UIViewController {
 	var selectedUsers 	   = [User]()
 	var allUnmessagedUsers = [User]()
 	var userSearchResults  = [User]()
+	var userListener	   : ListenerRegistration?
 	var isSearchBarEmpty: Bool {
 		return searchController.searchBar.text?.isEmpty ?? true
 	}
@@ -38,7 +39,7 @@ class NewChatVC: UIViewController {
 		let view 	   			   = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
 		viewLayout.scrollDirection = .horizontal
 		viewLayout.minimumInteritemSpacing = 0
-		viewLayout.minimumLineSpacing = 0
+		viewLayout.minimumLineSpacing      = 0
 		view.backgroundColor 	   = UIColor(named: ColorNames.background)
 		view.dataSource 		   = self
 		view.delegate 			   = self
@@ -81,6 +82,7 @@ class NewChatVC: UIViewController {
         super.viewWillDisappear(animated)
         
         tabBarController?.tabBar.isHidden = false
+		userListener?.remove()
     }
     
     override func viewDidLoad() {
@@ -146,12 +148,14 @@ class NewChatVC: UIViewController {
 	}
 	
 	private func getUnmessagedUsers() {
-		FirebaseStorageContext.shared.getListOfAllUnmessagedUsers(onSuccess: { [weak self] users in
-			guard let self = self else { return }
+		FirebaseStorageContext.shared.getListOfAllUnmessagedUsers(onSuccess: { [weak self] (users, listener) in
+			guard let self 		    = self else { return }
 			self.allUnmessagedUsers = users
-		}) { (error) in
+			self.userListener 	    = listener
+		}) { [weak self] (error) in
+			guard let self = self else { return }
 			if let error = error {
-				Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
 		}
 	}
