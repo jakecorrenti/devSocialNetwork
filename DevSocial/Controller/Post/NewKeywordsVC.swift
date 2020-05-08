@@ -50,6 +50,9 @@ class NewKeywordsVC: UITableViewController {
         view.backgroundColor = UIColor(named: ColorNames.background)
         self.title = "Home"
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
     }
     

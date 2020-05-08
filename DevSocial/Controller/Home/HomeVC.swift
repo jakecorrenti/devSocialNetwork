@@ -69,6 +69,11 @@ class HomeVC: UITableViewController {
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
+        extendedLayoutIncludesOpaqueBars = true
+        
         let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
         navigationItem.rightBarButtonItem = messages
         
@@ -136,27 +141,7 @@ extension HomeVC {
             
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             
-            cell.title = item.title
-            
-            cell.desc = item.desc
-            
-            cell.profileImage = UIImage(named: Images.emptyProfileImage)
-            cell.authorName = item.profile.username
-            cell.authorHeadline = "Software Engineer at Google"
-            
-            let datePosted = item.datePosted.dateValue()
-            
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .short
-            let dateString = formatter.string(from: datePosted)
-            let days = Date().interval(ofComponent: .day, fromDate: datePosted)
-            if days == 0 {
-                cell.dateInfo = "Posted Today (\(dateString))"
-            } else if days == 1 {
-                cell.dateInfo = "Posted 1 Day ago (\(dateString))"
-            } else {
-                cell.dateInfo = "Posted \(days) Days ago (\(dateString))"
-            }
+            cell.post = item
                         
             return cell
         case .request:
@@ -164,25 +149,7 @@ extension HomeVC {
             
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
-            cell.title = item.title
-            
-            cell.profileImage = UIImage(named: Images.emptyProfileImage)
-            cell.authorName = item.profile.username
-            cell.authorHeadline = "Software Engineer at Google"
-            
-            let datePosted = item.datePosted.dateValue()
-            
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .short
-            let dateString = formatter.string(from: datePosted)
-            let days = Date().interval(ofComponent: .day, fromDate: datePosted)
-            if days == 0 {
-                cell.dateInfo = "Posted Today (\(dateString))"
-            } else if days == 1 {
-                cell.dateInfo = "Posted 1 Day ago (\(dateString))"
-            } else {
-                cell.dateInfo = "Posted \(days) Days ago (\(dateString))"
-            }
+            cell.post = item
             
             return cell
         case .empty:

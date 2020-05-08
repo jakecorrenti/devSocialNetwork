@@ -10,6 +10,10 @@ import UIKit
 
 class TextFieldCell: UITableViewCell {
     
+    // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
+    
     lazy var textField: CustomTextField = {
         let tf = CustomTextField()
         tf.backgroundColor = .clear
@@ -20,7 +24,11 @@ class TextFieldCell: UITableViewCell {
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
-
+    
+    // -----------------------------------------
+    // MARK: Initialization
+    // -----------------------------------------
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -32,6 +40,10 @@ class TextFieldCell: UITableViewCell {
         
         setupUI()
     }
+    
+    // -----------------------------------------
+    // MARK: Setup UI
+    // -----------------------------------------
     
     private func setupUI() {
         self.addSubview(textField)

@@ -15,5 +15,6 @@ struct User: Hashable {
     let dateCreated: Timestamp
     let id: String
     let fcmToken: String?
+    let headline: String
 }
 

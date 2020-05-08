@@ -10,6 +10,10 @@ import UIKit
 
 class TextViewCell: UITableViewCell {
     
+    // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
+
     var placeholder: String? {
         didSet {
             textView.text = placeholder
@@ -26,6 +30,10 @@ class TextViewCell: UITableViewCell {
     
     var callBack: ((UITextView) -> ())?
     
+    // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
+
     lazy var textView: UITextView = {
         let tv = UITextView()
         tv.backgroundColor = .clear
@@ -40,6 +48,10 @@ class TextViewCell: UITableViewCell {
         return tv
     }()
     
+    // -----------------------------------------
+    // MARK: Initialization
+    // -----------------------------------------
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -51,6 +63,10 @@ class TextViewCell: UITableViewCell {
         
         setupUI()
     }
+    
+    // -----------------------------------------
+    // MARK: Setup UI
+    // -----------------------------------------
     
     private func setupUI() {
         self.addSubview(textView)

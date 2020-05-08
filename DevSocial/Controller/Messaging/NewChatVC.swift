@@ -113,9 +113,14 @@ class NewChatVC: UIViewController {
 												target: self,
 												action: #selector(nextButtonPressed)
 											)
+        
+        navigationItem.searchController   = searchController
+        definesPresentationContext           = true
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
+        extendedLayoutIncludesOpaqueBars = true
 		
-		navigationItem.searchController   = searchController
-		definesPresentationContext 	      = true
 		nextButton.isEnabled			  = false
 		navigationItem.rightBarButtonItem = nextButton
     }

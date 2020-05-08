@@ -50,7 +50,8 @@ final class AuthManager {
 
                             dateCreated: Timestamp(),
                             id         : self.auth.currentUser!.uid,
-                            fcmToken   : fcmToken
+                            fcmToken   : fcmToken,
+                            headline: ""
                         )
                         
                         storageContext.saveUser(user: user) { (error) in
