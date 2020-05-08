@@ -186,6 +186,7 @@
 		3E0B0E15243151E400F92618 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AEB99F382466119700A25A96 /* Explore */,
 				3E8614C0245376EF0053F9A1 /* Chat */,
 				3E0B0E16243151F400F92618 /* Extension + String.swift */,
 				AE713AB22454FA240000F47F /* Extension + Date.swift */,
@@ -449,6 +450,13 @@
 				AEB7267F24328814006923CA /* ProfileVC.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		AEB99F382466119700A25A96 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Explore;
 			sourceTree = "<group>";
 		};
 		DFFC860B8BD449767CB316A6 /* Frameworks */ = {

@@ -40,6 +40,9 @@ class ProfileVC : UIViewController {
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
         let signOut = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signout))
         navigationItem.rightBarButtonItem = signOut
     }

@@ -51,7 +51,8 @@ class FirebaseStorageContext: StorageContext {
                         email: document.data()["email"] as! String,
                         dateCreated: Timestamp(),
                         id: document.data()["id"] as! String,
-                        fcmToken: document.data()["fcmToken"] as? String
+                        fcmToken: document.data()["fcmToken"] as? String,
+                        headline: document.data()["headline"] as? String ?? "New User"
                     ))
                 }
                 onSuccess(users)
@@ -83,6 +84,7 @@ class FirebaseStorageContext: StorageContext {
             "uid"         : post.uid,
             "user"        : ["username"     :post.profile.username,
                              "email"        :post.profile.email,
+                             "headline"     :post.profile.headline,
                              "dateCreated"  :post.profile.dateCreated,
                              "id"           :post.profile.id
                             ],
@@ -119,7 +121,8 @@ class FirebaseStorageContext: StorageContext {
                                     email           : user["email"] as? String ?? "",
                                     dateCreated     : user["dateCreated"] as! Timestamp,
                                     id              : user["id"] as? String ?? "",
-                                    fcmToken        : user["fcmToken"] as? String ?? ""
+                                    fcmToken        : user["fcmToken"] as? String ?? "",
+                                    headline        : user["headline"] as? String ?? "New User"
                                       ),
                         datePosted    : results["datePosted"] as! Timestamp,
                         lastEdited    : results["lastEdited"] as? Timestamp ?? nil,

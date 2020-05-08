@@ -90,7 +90,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
                     email: email ?? "",
                     dateCreated: Timestamp(),
                     id: Auth.auth().currentUser!.uid,
-                    fcmToken: fcmToken
+                    fcmToken: fcmToken,
+                    headline: ""
                 )
                 
                 FirebaseStorageContext.shared.saveUser(user: user) { (error) in

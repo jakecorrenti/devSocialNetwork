@@ -96,6 +96,9 @@ class ChatVC: UIViewController {
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = selectedUser.username
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
     }
     
     private func setupUI() {

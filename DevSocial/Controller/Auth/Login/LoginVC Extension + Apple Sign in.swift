@@ -117,7 +117,8 @@ extension LoginVC: ASAuthorizationControllerDelegate {
                         email: appleIDCredential.email ?? "",
                         dateCreated: Timestamp(),
                         id: Auth.auth().currentUser!.uid,
-                        fcmToken: fcmToken
+                        fcmToken: fcmToken,
+                        headline: ""
                     )
                     
                     let db = Firestore.firestore()

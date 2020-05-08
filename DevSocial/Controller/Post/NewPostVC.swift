@@ -80,8 +80,9 @@ class NewPostVC : UIViewController {
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
         self.title = "New Post"
-        
-        navigationController?.navigationBar.isTranslucent = false
+                
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
         
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonPressed))
         navigationItem.leftBarButtonItem = cancelButton
@@ -147,7 +148,7 @@ class NewPostVC : UIViewController {
         AuthManager.shared.getFCMToken { (token) in
             let manager = FirebaseStorageContext()
             if let user = self.currentUser {
-                let user = User(username: user.displayName!, email: user.email!, dateCreated: Timestamp(), id: user.uid, fcmToken: token)
+                let user = User(username: user.displayName!, email: user.email!, dateCreated: Timestamp(), id: user.uid, fcmToken: token, headline: "")
                 let newPost = Post(title: title, type: PostType(type) ?? .empty, desc: desc, uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: keywords)
                 
                 manager.createPost(post: newPost, onError: { (error) in

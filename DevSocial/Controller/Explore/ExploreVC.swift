@@ -11,6 +11,43 @@ import UIKit
 class ExploreVC : UIViewController {
     
     // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
+
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isSearchingUsers: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
+    
+    // -----------------------------------------
+    // MARK: Views
+    // -----------------------------------------
+    
+    lazy var searchController: UISearchController = {
+        let search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search Notes"
+        search.searchBar.barTintColor = UIColor(named: ColorNames.accessory)
+        search.hidesNavigationBarDuringPresentation = false
+        return search
+    }()
+    
+    lazy var tableView: UITableView = {
+        let view = UITableView(frame: .zero, style: .grouped)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.isHidden = true
+//        view.dataSource = self
+//        view.delegate = self
+        view.register(NewMessageCell.self, forCellReuseIdentifier: Cells.defaultCell)
+        return view
+    }()
+    
+    // -----------------------------------------
     // MARK: Lifecycle
     // -----------------------------------------
     
@@ -38,9 +75,35 @@ class ExploreVC : UIViewController {
     
     private func setupNavBar() {
         view.backgroundColor = UIColor(named: ColorNames.background)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
+        definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
     }
     
     // TODO: update later
     private func setupUI() {
+        view.addSubview(tableView)
+        
+        constrainTableView()
+    }
+    
+    private func constrainTableView() {
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+}
+
+extension ExploreVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        tableView.isHidden = !isSearchingUsers
+        
     }
 }

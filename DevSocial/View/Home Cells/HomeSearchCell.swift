@@ -14,50 +14,30 @@ class HomeSearchCell: UITableViewCell {
     // MARK: Properties
     // -----------------------------------------
     
-    var title: String? {
+    var post: Post? {
         didSet {
-            if let title = title {
-                titleView.text = title
-            }
-        }
-    }
-    
-    var profileImage: UIImage? {
-        didSet {
-            if let img = profileImage {
-                profileImageView.image = img
-            }
-        }
-    }
-    
-    var authorName: String? {
-        didSet {
-            if let name = authorName {
-                authorNameView.text = name
-            }
-        }
-    }
-    
-    var authorHeadline: String? {
-        didSet {
-            if let headline = authorHeadline {
-                authorHeadlineView.text = headline
-            }
-        }
-    }
-    
-    var desc: String? {
-        didSet {
-            if let desc = desc {
-                descView.text = desc
-            }
-        }
-    }
-    
-    var dateInfo: String? {
-        didSet {
-            if let info = dateInfo {
-                dateView.text = info
+            guard let post = post else { return }
+            let formatter = DateFormatter()
+            
+            titleView.text = post.title
+            // TODO: Add profile image support
+//            profileImageView.image = post.profile.profileImage
+            profileImageView.image = UIImage(named: Images.emptyProfileImage)
+            authorNameView.text = post.profile.username
+            authorHeadlineView.text = post.profile.headline
+            descView.text = post.desc
+            
+            let datePosted = post.datePosted.dateValue()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            let dateString = formatter.string(from: datePosted)
+            let days = Date().interval(ofComponent: .day, fromDate: datePosted)
+            if days == 0 {
+                dateView.text = "Posted Today (\(dateString))"
+            } else if days == 1 {
+                dateView.text = "Posted 1 Day ago (\(dateString))"
+            } else {
+                dateView.text = "Posted \(days) Days ago (\(dateString))"
             }
         }
     }

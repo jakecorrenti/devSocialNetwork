@@ -72,7 +72,12 @@ class MyMessagesVC: UITableViewController {
         view.backgroundColor = UIColor(named: ColorNames.background)
         navigationItem.title = "Messages"
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
         navigationItem.searchController  = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext 	     = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         
