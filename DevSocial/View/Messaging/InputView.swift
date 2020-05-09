@@ -21,10 +21,10 @@ class InputView: UIView {
 		return view
 	}()
 	
-	lazy var textField: UITextField = {
-		let view 	     = UITextField()
-		view.placeholder = "Enter message..."
-		view.addTarget(self, action: #selector(manageSendButtonState), for: .editingChanged)
+	lazy var textView: UITextView = {
+		let view  			 = UITextView()
+		view.font 			 = .systemFont(ofSize: 15)
+		view.backgroundColor = UIColor(named: ColorNames.accessory)
 		return view
 	}()
 	
@@ -58,41 +58,44 @@ class InputView: UIView {
     // -----------------------------------------
     
     private func setupUI() {
-		[bgView, sendButton, textField].forEach { addSubview($0) }
+		[bgView, sendButton, textView].forEach { addSubview($0) }
 		
-		constrainBgView()
+		bgView.layer.borderColor = UIColor(named: ColorNames.secondaryTextColor)?.cgColor
+		bgView.layer.borderWidth = 0.25
+		
 		constrainSendButton()
-		constrainTextField()
+		constrainTextView()
+		constrainBGView()
 		setSendButtonDeactivatedState()
     }
     
-	private func constrainBgView() {
-		bgView.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			bgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-			bgView.topAnchor.constraint(equalTo: topAnchor),
-			bgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-			bgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
-		])
-	}
-	
 	private func constrainSendButton() {
 		sendButton.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			sendButton.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -4),
-			sendButton.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 4),
-			sendButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -4),
-			sendButton.widthAnchor.constraint(equalToConstant: 42)
+			sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+			sendButton.heightAnchor.constraint(equalToConstant: 35),
+			sendButton.widthAnchor.constraint(equalToConstant: 35),
+			sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
 		])
 	}
 	
-	private func constrainTextField() {
-		textField.translatesAutoresizingMaskIntoConstraints = false
+	private func constrainTextView() {
+		textView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			textField.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 4),
-			textField.topAnchor.constraint(equalTo: sendButton.topAnchor),
-			textField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -4),
-			textField.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -4)
+			textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+			textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+			textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -4),
+			textView.heightAnchor.constraint(equalToConstant: 35)
+		])
+	}
+	
+	private func constrainBGView() {
+		bgView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			bgView.topAnchor.constraint(equalTo: textView.topAnchor, constant: -4),
+			bgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+			bgView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 4),
+			bgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
 		])
 	}
 	
@@ -105,20 +108,4 @@ class InputView: UIView {
 		sendButton.backgroundColor = UIColor(named: ColorNames.mainColor)
 		sendButton.isEnabled	   = true
 	}
-	
-	@objc
-	private func manageSendButtonState() {
-		let contents = textField.text
-		if contents == nil || contents == "" {
-			setSendButtonDeactivatedState()
-		} else {
-			let trimmedContents = contents?.trimmingCharacters(in: .whitespacesAndNewlines)
-			if trimmedContents == nil || trimmedContents == "" {
-				setSendButtonDeactivatedState()
-			} else {
-				setSendButtonActivatedState()
-			}
-		}
-	}
-
 }

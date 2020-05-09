@@ -11,7 +11,6 @@ import FirebaseFirestore
 import Firebase
 
 class ChatVC: UIViewController {
-    
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
@@ -77,7 +76,7 @@ class ChatVC: UIViewController {
         setupUI()
         setupObservers()
 		checkChatCreationState()
-        
+
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
         textInputView.sendButton.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
     }
@@ -124,7 +123,9 @@ class ChatVC: UIViewController {
     
     private func constrainTextInputView() {
         inputBottomAnchor = textInputView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        
+		textInputView.textView.delegate = self
+		textInputView.textView.isUserInteractionEnabled = true
+
         textInputView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             inputBottomAnchor,
@@ -139,7 +140,7 @@ class ChatVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: textInputView.topAnchor)
+			tableView.bottomAnchor.constraint(equalTo: textInputView.bgView.topAnchor)
         ])
     }
 	
@@ -212,12 +213,46 @@ class ChatVC: UIViewController {
             }
         }
 	}
+
+	private func handleSendButtonState() {
+		let contents = textInputView.textView.text
+		if contents == nil || contents == "" {
+			textInputView.setSendButtonDeactivatedState()
+		} else {
+			let trimmedContents = contents?.trimmingCharacters(in: .whitespacesAndNewlines)
+			if trimmedContents == nil || trimmedContents == "" {
+				textInputView.setSendButtonDeactivatedState()
+			} else {
+				textInputView.setSendButtonActivatedState()
+			}
+		}
+	}
+	
+	private func handleTextInputTextViewSize() {
+		let size 		  = CGSize(width: view.frame.width - 74, height: .infinity)
+		let estimatedSize = textInputView.textView.sizeThatFits(size)
+
+		textInputView.textView.constraints.forEach { constraint in
+			if constraint.firstAttribute == .height {
+				if estimatedSize.height <= 35 {
+					constraint.constant 				   = 35
+					textInputView.textView.isScrollEnabled = false
+				} else if Int(estimatedSize.height) >= 195 {
+					constraint.constant 				   = 195
+					textInputView.textView.isScrollEnabled = true
+				} else {
+					constraint.constant 				   = estimatedSize.height
+					textInputView.textView.isScrollEnabled = false
+				}
+			}
+		}
+	}
     
     @objc
     private func sendButtonPressed() {
 		let message = Message(
 			id		   : UUID().uuidString,
-			content    : textInputView.textField.text!,
+			content    : textInputView.textView.text!,
 			created    : Timestamp(),
 			senderID   : currentUser.uid,
 			senderName : currentUser.displayName!,
@@ -242,8 +277,10 @@ class ChatVC: UIViewController {
 		}
 		
 		sendNotificationToUser(for: message)
-		
-		textInputView.textField.text = ""
+		for constraint in textInputView.textView.constraints where constraint.firstAttribute == .height {
+			constraint.constant = 35
+		}
+		textInputView.textView.text = ""
 		tableView.reloadData()
 		textInputView.setSendButtonDeactivatedState()
     }
@@ -264,7 +301,6 @@ class ChatVC: UIViewController {
             
             tableView.scrollIndicatorInsets = tableView.contentInset
         }
-        
     }
 	
 	@objc
@@ -301,7 +337,15 @@ class ChatVC: UIViewController {
 		}
 	}
 
-    @objc func tap() {
+    @objc
+	func tap() {
         view.endEditing(true)
     }
+}
+
+extension ChatVC: UITextViewDelegate {
+	func textViewDidChange(_ textView: UITextView) {
+		handleSendButtonState()
+		handleTextInputTextViewSize()
+	}
 }
