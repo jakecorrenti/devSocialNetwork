@@ -38,9 +38,8 @@ class NewChatUserCell: UICollectionViewCell {
     }()
 
     lazy var avatarView: AvatarView = {
-        let view                = AvatarView()
-        view.layer.cornerRadius = 22.5
-        return view 
+        let view = AvatarView()
+        return view
     }()
     
     lazy var usernameLabel: UILabel = {

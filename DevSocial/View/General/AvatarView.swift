@@ -25,16 +25,16 @@ class AvatarView: UIView {
     // -----------------------------------------
     
     lazy var bgView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 22.5
+        let view                 = UIView()
+        view.backgroundColor     = .lightGray
+        view.layer.cornerRadius  = 22.5
         view.layer.masksToBounds = true
         return view
     }()
     
     lazy var initialLabel: UILabel = {
-        let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 18)
+        let view       = UILabel()
+        view.font      = .boldSystemFont(ofSize: 18)
         view.textColor = .darkGray
         return view
     }()
@@ -73,8 +73,8 @@ class AvatarView: UIView {
             bgView.leadingAnchor.constraint(equalTo: leadingAnchor),
             bgView.trailingAnchor.constraint(equalTo: trailingAnchor),
             bgView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            bgView.heightAnchor.constraint(equalToConstant: 45),
-            bgView.widthAnchor.constraint(equalToConstant: 45)
+//            bgView.heightAnchor.constraint(equalToConstant: 45),
+//            bgView.widthAnchor.constraint(equalToConstant: 45)
         ])
     }
     
