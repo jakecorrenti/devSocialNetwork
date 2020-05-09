@@ -80,8 +80,8 @@ class ChatVC: UIViewController {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
         textInputView.sendButton.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
+
+	override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
@@ -156,6 +156,7 @@ class ChatVC: UIViewController {
 			self.docReference   = docReference
 			self.threadListener = listener
 			self.tableView.reloadData()
+			self.scrollChatToBottom()
 		}
 	}
 
@@ -247,6 +248,12 @@ class ChatVC: UIViewController {
 			}
 		}
 	}
+
+	private func scrollChatToBottom() {
+		if messages.count > 0 {
+			tableView.scrollToRow(at: IndexPath(row: messages[messages.count - 1].count - 1, section: messages.count - 1), at: .top, animated: true)
+		}
+	}
     
     @objc
     private func sendButtonPressed() {
@@ -283,24 +290,31 @@ class ChatVC: UIViewController {
 		textInputView.textView.text = ""
 		tableView.reloadData()
 		textInputView.setSendButtonDeactivatedState()
+		scrollChatToBottom()
     }
     
     @objc
     private func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-
+        guard let keyboardValue    = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        let keyboardViewEndFrame   = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
             inputBottomAnchor.constant = .zero
             tableView.contentInset     = .zero
         } else {
-            inputBottomAnchor.constant = -keyboardViewEndFrame.height + view.safeAreaInsets.bottom
-            tableView.contentInset 	   = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
-            
+            inputBottomAnchor.constant 		= -keyboardViewEndFrame.height + view.safeAreaInsets.bottom
+            tableView.contentInset 	   		= UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
             tableView.scrollIndicatorInsets = tableView.contentInset
-        }
+
+			UIView.animate(withDuration: 0, animations: { [weak self] () -> Void in
+				guard let self = self else { return }
+				self.view.layoutIfNeeded()
+			}, completion: { [weak self] _ in
+				guard let self = self else { return }
+				self.scrollChatToBottom()
+			})
+		}
     }
 	
 	@objc
