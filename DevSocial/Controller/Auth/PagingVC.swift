@@ -51,21 +51,23 @@ class PagingVC: UIViewController {
     }
     
     private func setupPagingViews() {
-        let login = LoginVC()
-        let signup = SignupVC()
+        let login   = LoginVC()
+        let signUp  = SignupVC()
+        let bgColor = UIColor(named: ColorNames.background)
         
-        login.title = "Login"
-        signup.title = "Sign up"
+        login.title  = "Login"
+        signUp.title = "Sign up"
         
-        pagingController = PagingViewController(viewControllers: [login, signup])
-        pagingController.textColor = .systemGray
-        pagingController.backgroundColor = UIColor(named: ColorNames.background)!
-        pagingController.selectedBackgroundColor = UIColor(named: ColorNames.background)!
-        pagingController.selectedTextColor = UIColor(named: ColorNames.mainColor)!
-        pagingController.indicatorOptions = .hidden
-        pagingController.borderOptions = .hidden
-        pagingController.menuItemSize = .fixed(width: 100, height: 25)
-        pagingController.menuBackgroundColor = UIColor(named: ColorNames.background)!
+        pagingController 						        = PagingViewController(viewControllers: [login, signUp])
+        pagingController.textColor 				        = .systemGray
+        pagingController.backgroundColor 		        = bgColor!
+        pagingController.selectedBackgroundColor        = bgColor!
+        pagingController.selectedTextColor 	            = UIColor(named: ColorNames.mainColor)!
+        pagingController.indicatorOptions 	 	        = .hidden
+        pagingController.borderOptions 		 	        = .hidden
+        pagingController.menuItemSize 		 	        = .fixed(width: 100, height: 25)
+        pagingController.menuBackgroundColor 	        = bgColor!
+        pagingController.collectionView.backgroundColor = bgColor
     }
     
     private func setupUI() {

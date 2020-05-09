@@ -172,7 +172,7 @@ class LoginVC: UIViewController {
         /*
          loops through each view in the stack view, and check if it is of type CustomTextField
          if it is, it adds it to the array of text fields
-         checks if the textfield is populated and does not have a space as its text, and if it is not empty, the number of text fields populated is incremented
+         checks if the text field is populated and does not have a space as its text, and if it is not empty, the number of text fields populated is incremented
          */
         tfStack.stackView.arrangedSubviews.forEach { tf in
             if tf.isKind(of: CustomTextField.self) {

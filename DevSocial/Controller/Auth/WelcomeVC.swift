@@ -15,32 +15,32 @@ class WelcomeVC: UIViewController {
     // -----------------------------------------
     
     lazy var titleLabel: UILabel = {
-        let view = UILabel()
-        view.text = "Welcome to DevSocial"
-        view.font = .boldSystemFont(ofSize: 30)
+        let view 		   = UILabel()
+        view.text          = "Welcome to DevSocial"
+        view.font 		   = .boldSystemFont(ofSize: 30)
         view.textAlignment = .center
         return view
     }()
     
     lazy var welcomeImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: Images.welcomeImage))
+        let view 		 = UIImageView(image: UIImage(named: Images.welcomeImage))
         view.contentMode = .scaleAspectFit
         return view
     }()
     
     lazy var subtitleLabel: UILabel = {
-        let view = UILabel()
-        view.text = "Find your next teammate or project to work on!"
+        let view 		   = UILabel()
+        view.text 		   = "Find your next teammate or project to work on!"
         view.numberOfLines = 0
         view.textAlignment = .center
-        view.textColor = .systemGray
-        view.font = .boldSystemFont(ofSize: 20)
+        view.textColor 	   = .systemGray
+        view.font 		   = .boldSystemFont(ofSize: 20)
         return view
     }()
     
     lazy var welcomeSubtitleStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [self.welcomeImageView, self.subtitleLabel])
-        view.axis = .vertical
+        let view     = UIStackView(arrangedSubviews: [self.welcomeImageView, self.subtitleLabel])
+        view.axis    = .vertical
         view.spacing = 24
         return view
     }()
