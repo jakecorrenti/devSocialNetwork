@@ -295,22 +295,23 @@ class ChatVC: UIViewController {
     
     @objc
     private func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-
+        guard let keyboardValue    = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        let keyboardViewEndFrame   = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
             inputBottomAnchor.constant = .zero
             tableView.contentInset     = .zero
         } else {
-            inputBottomAnchor.constant = -keyboardViewEndFrame.height + view.safeAreaInsets.bottom
-            tableView.contentInset 	   = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
+            inputBottomAnchor.constant 		= -keyboardViewEndFrame.height + view.safeAreaInsets.bottom
+            tableView.contentInset 	   		= UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + inputBottomAnchor.constant, right: 0)
             tableView.scrollIndicatorInsets = tableView.contentInset
 
-			UIView.animate(withDuration: 0, animations: { () -> Void in
+			UIView.animate(withDuration: 0, animations: { [weak self] () -> Void in
+				guard let self = self else { return }
 				self.view.layoutIfNeeded()
-			}, completion: { _ in
+			}, completion: { [weak self] _ in
+				guard let self = self else { return }
 				self.scrollChatToBottom()
 			})
 		}
