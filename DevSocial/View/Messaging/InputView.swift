@@ -24,7 +24,7 @@ class InputView: UIView {
 	lazy var textView: UITextView = {
 		let view  			 = UITextView()
 		view.font 			 = .systemFont(ofSize: 15)
-//		view.isScrollEnabled = false
+		view.backgroundColor = UIColor(named: ColorNames.accessory)
 		return view
 	}()
 	
@@ -60,6 +60,9 @@ class InputView: UIView {
     private func setupUI() {
 		[bgView, sendButton, textView].forEach { addSubview($0) }
 		
+		bgView.layer.borderColor = UIColor(named: ColorNames.secondaryTextColor)?.cgColor
+		bgView.layer.borderWidth = 0.25
+		
 		constrainSendButton()
 		constrainTextView()
 		constrainBGView()
@@ -70,8 +73,8 @@ class InputView: UIView {
 		sendButton.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-			sendButton.heightAnchor.constraint(equalToConstant: 42),
-			sendButton.widthAnchor.constraint(equalToConstant: 42),
+			sendButton.heightAnchor.constraint(equalToConstant: 35),
+			sendButton.widthAnchor.constraint(equalToConstant: 35),
 			sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
 		])
 	}
@@ -82,7 +85,7 @@ class InputView: UIView {
 			textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
 			textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
 			textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -4),
-			textView.heightAnchor.constraint(equalToConstant: 42)
+			textView.heightAnchor.constraint(equalToConstant: 35)
 		])
 	}
 	

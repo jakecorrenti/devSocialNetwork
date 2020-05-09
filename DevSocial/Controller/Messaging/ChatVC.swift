@@ -11,7 +11,6 @@ import FirebaseFirestore
 import Firebase
 
 class ChatVC: UIViewController {
-    
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
@@ -77,7 +76,7 @@ class ChatVC: UIViewController {
         setupUI()
         setupObservers()
 		checkChatCreationState()
-        
+
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
         textInputView.sendButton.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
     }
@@ -122,7 +121,8 @@ class ChatVC: UIViewController {
     private func constrainTextInputView() {
         inputBottomAnchor = textInputView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 		textInputView.textView.delegate = self
-		
+		textInputView.textView.isUserInteractionEnabled = true
+
         textInputView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             inputBottomAnchor,
@@ -226,13 +226,13 @@ class ChatVC: UIViewController {
 	}
 	
 	private func handleTextInputTextViewSize() {
-		let size 				 = CGSize(width: view.frame.width - 74, height: .infinity)
-		let estimatedSize        = textInputView.textView.sizeThatFits(size)
+		let size 		  = CGSize(width: view.frame.width - 74, height: .infinity)
+		let estimatedSize = textInputView.textView.sizeThatFits(size)
 
 		textInputView.textView.constraints.forEach { constraint in
 			if constraint.firstAttribute == .height {
-				if estimatedSize.height <= 42 {
-					constraint.constant 				   = 42
+				if estimatedSize.height <= 35 {
+					constraint.constant 				   = 35
 					textInputView.textView.isScrollEnabled = false
 				} else if Int(estimatedSize.height) >= 195 {
 					constraint.constant 				   = 195
@@ -275,7 +275,7 @@ class ChatVC: UIViewController {
 		
 		sendNotificationToUser(for: message)
 		for constraint in textInputView.textView.constraints where constraint.firstAttribute == .height {
-			constraint.constant = 42
+			constraint.constant = 35
 		}
 		textInputView.textView.text = ""
 		tableView.reloadData()
@@ -298,7 +298,6 @@ class ChatVC: UIViewController {
             
             tableView.scrollIndicatorInsets = tableView.contentInset
         }
-        
     }
 	
 	@objc
@@ -335,7 +334,8 @@ class ChatVC: UIViewController {
 		}
 	}
 
-    @objc func tap() {
+    @objc
+	func tap() {
         view.endEditing(true)
     }
 }
