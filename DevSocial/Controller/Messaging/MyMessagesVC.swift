@@ -154,6 +154,12 @@ extension MyMessagesVC {
         if isFiltering {
             return filteredUsers.count
         }
+		
+		if users.count == 0 {
+			tableView.setEmtpyState()
+		} else {
+			tableView.restoreState()
+		}
         
         return users.count
     }
