@@ -172,14 +172,38 @@ class NewChatVC: UIViewController {
 		tableView.reloadData()
 	}
 
+	private func checkPreviousChatHistory(hasPreviousChat: @escaping (_ hasPrevious: Bool) -> Void) {
+		guard let selectedUser = selectedUsers.first else { return }
+		MessagesManager.shared.determineCurrentHiddenStatus(with: selectedUser, onSuccess: { (hiddenStatus, document) in
+			if hiddenStatus {
+				MessagesManager.shared.unhideChat(with: selectedUser, at: document, onSuccess: {
+					hasPreviousChat(true)
+				}, onError: { [weak self] error in
+					guard let self = self else { return }
+					if let error = error {
+						Alert.showBasicAlert(on: self, with: error.localizedDescription)
+					}
+				})
+			} else {
+				hasPreviousChat(false)
+			}
+		}, onError: { [weak self] error in
+			guard let self = self else { return }
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		})
+	}
+
 	@objc
 	private func nextButtonPressed() {
-		// it will only be enabled when the collection view contains a user
-		// when the button is pressed, it will
-		let chat 			   = ChatVC()
-		chat.selectedUser      = selectedUsers.first
-		chat.chatCreationState = .new
-		navigationController?.pushViewController(chat, animated: true)
+		checkPreviousChatHistory { [weak self] hasPreviousChat in
+			guard let self 		   = self else { return }
+			let chat 			   = ChatVC()
+			chat.selectedUser 	   = self.selectedUsers.first
+			chat.chatCreationState = hasPreviousChat ? .existing : .new
+			self.navigationController?.pushViewController(chat, animated: true)
+		}
 	}
 
 }
