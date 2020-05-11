@@ -174,25 +174,26 @@ class NewChatVC: UIViewController {
 
 	private func checkPreviousChatHistory(hasPreviousChat: @escaping (_ hasPrevious: Bool) -> Void) {
 		guard let selectedUser = selectedUsers.first else { return }
+		
 		MessagesManager.shared.determineCurrentHiddenStatus(with: selectedUser, onSuccess: { (hiddenStatus, document) in
 			if hiddenStatus {
 				MessagesManager.shared.unhideChat(with: selectedUser, at: document, onSuccess: {
-					hasPreviousChat(true)
-				}, onError: { [weak self] error in
+					hasPreviousChat(hiddenStatus)
+				}) { [weak self] (error) in
 					guard let self = self else { return }
 					if let error = error {
 						Alert.showBasicAlert(on: self, with: error.localizedDescription)
 					}
-				})
+				}
 			} else {
-				hasPreviousChat(false)
+				hasPreviousChat(hiddenStatus)
 			}
-		}, onError: { [weak self] error in
+		}) { [weak self] (error) in
 			guard let self = self else { return }
 			if let error = error {
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
-		})
+		}
 	}
 
 	@objc
