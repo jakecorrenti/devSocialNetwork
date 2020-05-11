@@ -156,7 +156,7 @@ extension MyMessagesVC {
         }
 		
 		if users.count == 0 {
-			tableView.setEmtpyState()
+			tableView.setEmptyState()
 		} else {
 			tableView.restoreState()
 		}

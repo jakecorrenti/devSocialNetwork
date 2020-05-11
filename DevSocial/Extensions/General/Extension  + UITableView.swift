@@ -10,7 +10,7 @@ import UIKit
 
 extension UITableView {
 	
-	func setEmtpyState() {
+	func setEmptyState() {
 		let view = MyMessagesEmptyState(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
 		
 		view.sizeToFit()

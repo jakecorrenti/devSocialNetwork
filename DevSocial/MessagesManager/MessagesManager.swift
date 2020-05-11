@@ -167,7 +167,7 @@ final class MessagesManager {
     
     /// gets the last sent message in the chat between the two users
     func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message?) -> Void) {
-        db.collection(_: "chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in 
+        db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
             if let error = error {
                 print(" ❌ There was an error: \(error.localizedDescription)")
             } else {
@@ -303,7 +303,7 @@ final class MessagesManager {
     }
 
     /// determines the hidden state of the current user for the chat with the selected user
-	func determineCurrentHiddenStatus(with user: User, onSuccess: @escaping (_ isHidden: Bool, _ document: DocumentSnapshot?) -> Void, onError: @escaping (_ error: Error?) -> Void ) {
+	func determineCurrentHiddenStatus(with user: User, onSuccess: @escaping (_ isHidden: Bool,_ document: DocumentSnapshot?) -> Void, onError: @escaping (_ error: Error?) -> Void ) {
 		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
 			if let error = error {
 				onError(error)
@@ -314,7 +314,7 @@ final class MessagesManager {
 				for document in chats {
 					let chat = Chat(dictionary: document.data())
 					
-					if (chat?.hidden.contains(self.currentUser.uid))! {
+					if (chat?.hidden.contains(self.currentUser.uid))! && (chat?.users.contains(user.id))! {
 						escaped = true
 						onSuccess(true, document)
 					}
@@ -342,14 +342,14 @@ final class MessagesManager {
 				onSuccess()
 			}
         } else {
-			guard let document = document else { return }
-			let chat = Chat(dictionary: document.data()!)
+			guard let document 	   = document else { return }
+			let chat 			   = Chat(dictionary: document.data()!)
 			var currentHiddenUsers = chat?.hidden
-			
+
 			currentHiddenUsers?.removeAll(where: { (username) -> Bool in
 				return username == currentUser.uid
 			})
-			
+
 			updateHiddenStatus(for: currentHiddenUsers!, at: document, onSuccess: {
 				onSuccess()
 			}) { (error) in
@@ -381,7 +381,7 @@ final class MessagesManager {
 	}
 	
 	/// get list of all the users that the current user started a conversation with in messages
-	func getMessagedUsers(onSuccess: @escaping (_ users: [User], _ listener: ListenerRegistration) -> Void, onError: @escaping (_ error: Error?) -> Void) {
+	func getMessagedUsers(onSuccess: @escaping (_ users: [User],_ listener: ListenerRegistration) -> Void, onError: @escaping (_ error: Error?) -> Void) {
 		var listener : ListenerRegistration!
 		
 		listener = db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener({ [weak self] (chatQuery, error) in
