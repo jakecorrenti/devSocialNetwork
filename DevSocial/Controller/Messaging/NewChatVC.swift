@@ -166,8 +166,11 @@ class NewChatVC: UIViewController {
 	}
 	
 	private func searchUnmessagedUsers(for username: String) {
-		userSearchResults = allUnmessagedUsers.filter { (user: User) -> Bool in
-			return user.username.lowercased().contains(username.lowercased())
+		userSearchResults.removeAll()
+		for user in allUnmessagedUsers where user.username.lowercased().contains(username.lowercased()) {
+			if !userSearchResults.contains(user) {
+				userSearchResults.append(user)
+			}
 		}
 		tableView.reloadData()
 	}

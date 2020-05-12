@@ -127,7 +127,7 @@ class MyMessagesVC: UITableViewController {
             MessagesManager.shared.handleDeleteChatAction(user: user, onSuccess: {
                 DispatchQueue.main.async {
                     self.users.remove(at: indexPath.row)
-                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+					self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadData()
                 }
             }, onError: { error in
