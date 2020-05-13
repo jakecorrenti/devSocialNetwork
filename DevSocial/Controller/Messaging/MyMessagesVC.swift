@@ -14,11 +14,11 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     // MARK: Properties
     // -----------------------------------------
-	
-    var users 			 = [User]()
-    var filteredUsers    = [User]()
-	var chatsListener   : ListenerRegistration?
-    var isSearchBarEmpty: Bool {
+
+    var users 			    = [User]()
+    var filteredUsers       = [User]()
+	var chatsListener      : ListenerRegistration?
+    var isSearchBarEmpty   : Bool {
       return searchController.searchBar.text?.isEmpty ?? true
     }
     var isFiltering: Bool {
@@ -37,7 +37,7 @@ class MyMessagesVC: UITableViewController {
         return view
     }()
 	
-	var refresh = UIRefreshControl()
+	var refresh 		  = UIRefreshControl()
 	
     // -----------------------------------------
     // MARK: Lifecycle
@@ -47,6 +47,7 @@ class MyMessagesVC: UITableViewController {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = true
+		showLoadingView()
         getUsers()
     }
     
@@ -96,7 +97,7 @@ class MyMessagesVC: UITableViewController {
 		
 		refresh.addTarget(self, action: #selector(refreshControlActivated(_:)), for: .valueChanged)
     }
-    
+
     private func getUsers() {
 		MessagesManager.shared.getMessagedUsers(onSuccess: { (users, listener) in
 			MessagesManager.shared.compareUserActivity(users: users) { [weak self] (sortedUsers) in
@@ -105,6 +106,7 @@ class MyMessagesVC: UITableViewController {
 				self.chatsListener = listener
 				self.tableView.reloadData()
 				self.refresh.endRefreshing()
+				self.dismissLoadingView()
 			}
 		}) { [weak self] (error) in
 			guard let self = self else { return }
@@ -113,7 +115,7 @@ class MyMessagesVC: UITableViewController {
 			}
 		}
     }
-    
+
     private func filterContentForSearchText(_ searchText: String) {
         filteredUsers = users.filter { (user: User) -> Bool in
         return user.username.lowercased().contains(searchText.lowercased())

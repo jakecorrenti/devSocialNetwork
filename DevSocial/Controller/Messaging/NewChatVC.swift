@@ -22,7 +22,7 @@ class NewChatVC: UIViewController {
 	var allUnmessagedUsers = [User]()
 	var userSearchResults  = [User]()
 	var userListener	   : ListenerRegistration?
-	var isSearchBarEmpty: Bool {
+	var isSearchBarEmpty   : Bool {
 		return searchController.searchBar.text?.isEmpty ?? true
 	}
 	
@@ -100,22 +100,11 @@ class NewChatVC: UIViewController {
     private func setupNavBar() {
 		view.backgroundColor 			  = UIColor(named: ColorNames.background)
 		navigationItem.title 			  = "New chat"
-		navigationItem.backBarButtonItem  = UIBarButtonItem(
-												title : "",
-												style : .plain,
-												target: self,
-												action: nil
-											)
-
-		nextButton						  = UIBarButtonItem(
-												title : "Next",
-												style : .done,
-												target: self,
-												action: #selector(nextButtonPressed)
-											)
+		navigationItem.backBarButtonItem  = UIBarButtonItem(title : "", style : .plain, target: self, action: nil)
+		nextButton						  = UIBarButtonItem(title : "Next", style : .done, target: self, action: #selector(nextButtonPressed))
         
         navigationItem.searchController   = searchController
-        definesPresentationContext           = true
+        definesPresentationContext        = true
         
         self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
         self.navigationController?.navigationBar.isTranslucent = false
