@@ -14,26 +14,27 @@ class TabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let home = UINavigationController(rootViewController: HomeVC())
-        home.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: TabImages.home), tag: 0)
+        let home 		    = UINavigationController(rootViewController: HomeVC())
+        home.tabBarItem     = UITabBarItem(title: "Home", image: UIImage(systemName: TabImages.home), tag: 0)
         
-        let explore = UINavigationController(rootViewController: ExploreVC())
-        explore.tabBarItem = UITabBarItem(title: "Explore", image: UIImage(systemName: TabImages.explore), tag: 1)
+        let explore 	    = UINavigationController(rootViewController: ExploreVC())
+        explore.tabBarItem  = UITabBarItem(title: "Explore", image: UIImage(systemName: TabImages.explore), tag: 1)
         
-        let activity = UINavigationController(rootViewController: ActivityVC())
+        let activity 	    = UINavigationController(rootViewController: ActivityVC())
         activity.tabBarItem = UITabBarItem(title: "Activity", image: UIImage(systemName: TabImages.activity), tag: 2)
         
-        let profile = UINavigationController(rootViewController: ProfileVC())
-        profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: TabImages.profile), tag: 3)
+        let profile 	    = UINavigationController(rootViewController: ProfileVC())
+        profile.tabBarItem  = UITabBarItem(title: "Profile", image: UIImage(systemName: TabImages.profile), tag: 3)
         
-        viewControllers = [home, explore, activity, profile]
+        viewControllers     = [home, explore, activity, profile]
         
         updateFCMToken()
     }
     
     private func updateFCMToken() {
-        FirebaseStorageContext.shared.updateFCMToken { (error) in
-            if let error = error {
+        FirebaseStorageContext.shared.updateFCMToken { [weak self] (error) in
+			guard let self = self else { return }
+            if let _ = error {
                 Alert.showBasicAlert(on: self, with: "Oh no!", message: "please restart your app, there was an error")
             }
         }

@@ -145,6 +145,7 @@ class ChatVC: UIViewController {
     }
 	
 	private func loadChat() {
+		showLoadingView()
 		MessagesManager.shared.loadChat(with: selectedUser, onError: { [weak self] (error) in
 			if let error = error {
 				guard let self = self else { return }
@@ -157,6 +158,7 @@ class ChatVC: UIViewController {
 			self.threadListener = listener
 			self.tableView.reloadData()
 			self.scrollChatToBottom()
+			self.dismissLoadingView()
 		}
 	}
 
