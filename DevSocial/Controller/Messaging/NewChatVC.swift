@@ -38,11 +38,11 @@ class NewChatVC: UIViewController {
 		let viewLayout 			   = UICollectionViewFlowLayout()
 		let view 	   			   = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
 		viewLayout.scrollDirection = .horizontal
-		viewLayout.minimumInteritemSpacing = 0
-		viewLayout.minimumLineSpacing      = 0
 		view.backgroundColor 	   = UIColor(named: ColorNames.background)
 		view.dataSource 		   = self
 		view.delegate 			   = self
+		viewLayout.minimumInteritemSpacing = 0
+		viewLayout.minimumLineSpacing      = 0
 		view.register(NewChatUserCell.self, forCellWithReuseIdentifier: Cells.defaultCell)
 		return view
 	}()
@@ -142,10 +142,12 @@ class NewChatVC: UIViewController {
 	}
 	
 	private func getUnmessagedUsers() {
+		showLoadingView()
 		FirebaseStorageContext.shared.getListOfAllUnmessagedUsers(onSuccess: { [weak self] (users, listener) in
 			guard let self 		    = self else { return }
 			self.allUnmessagedUsers = users
 			self.userListener 	    = listener
+			self.dismissLoadingView()
 		}) { [weak self] (error) in
 			guard let self = self else { return }
 			if let error = error {
