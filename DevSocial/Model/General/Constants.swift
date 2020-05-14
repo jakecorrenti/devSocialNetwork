@@ -42,6 +42,9 @@ enum Cells {
     static let messageCell      = "messageCellID"
     static let messagedUserCell = "messagedUserCellID"
     static let newMessageCell   = "newMessageCellID"
+    static let userCell         = "userCellID"
+    static let postSearchCell   = "postSearchCellID"
+    static let postRequestCell  = "postRequestCellID"
 }
 
 enum SmileyImages {
