@@ -57,8 +57,8 @@ class MessageCell: UITableViewCell {
     }()
     
     lazy var bubbleView: UIView = {
-        let view 			    = UIView()
-         view.layer.cornerRadius = 20
+        let view 			     = UIView()
+         view.layer.cornerRadius = 15
         return view
     }()
     

@@ -16,7 +16,6 @@ extension UIViewController {
 	func showLoadingView() {
         containerView = UIView(frame: view.bounds)
         view.addSubview(containerView)
-        
 		containerView.backgroundColor = UIColor(named: ColorNames.background)
         containerView.alpha 		  = 0
         
@@ -24,7 +23,6 @@ extension UIViewController {
             containerView.alpha = 0.8
         }
         containerView.addSubview(activityIndicator)
-        
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([

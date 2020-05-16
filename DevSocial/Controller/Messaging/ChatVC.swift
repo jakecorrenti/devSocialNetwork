@@ -328,7 +328,7 @@ class ChatVC: UIViewController {
 			guard let indexPath   = indexPathSelected else { return }
 			let cell			  = tableView.cellForRow(at: indexPath) as! MessageCell
 			let messageSender     = self.messages[indexPath.section][indexPath.row].senderID
-			let lastMessage = self.messages.count == 1 && self.messages[0].count == 1
+			let lastMessage       = self.messages.count == 1 && self.messages[0].count == 1
 			
 			if messageSender == self.currentUser.uid && !lastMessage {
 				cell.bubbleView.backgroundColor = UIColor(named: ColorNames.secondaryTextColor)
