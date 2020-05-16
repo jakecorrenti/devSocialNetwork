@@ -35,7 +35,14 @@ class ChatVC: UIViewController {
     // MARK: Views
     // -----------------------------------------
     
-    lazy var textInputView = InputView()
+	lazy var textInputView: InputView = {
+		let view = InputView()
+		view.textView.delegate 				   = self
+		view.textView.isUserInteractionEnabled = true
+		view.textView.text 					   = "Enter message..."
+		view.textView.textColor 			   = UIColor(named: ColorNames.secondaryTextColor)
+		return view
+	}()
     
     lazy var tableView: UITableView = {
         let view 				 = UITableView(frame: .zero, style: .grouped)
@@ -123,8 +130,6 @@ class ChatVC: UIViewController {
     
     private func constrainTextInputView() {
         inputBottomAnchor = textInputView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-		textInputView.textView.delegate = self
-		textInputView.textView.isUserInteractionEnabled = true
 
         textInputView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -363,5 +368,19 @@ extension ChatVC: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		handleSendButtonState()
 		handleTextInputTextViewSize()
+	}
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		if textView.text == "Enter message..." {
+			textView.text = ""
+			textView.textColor = UIColor(named: ColorNames.primaryTextColor)
+		}
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		if textView.text == "" || textView.text == nil {
+			textView.text      = "Enter message..."
+			textView.textColor = UIColor(named: ColorNames.secondaryTextColor)
+		}
 	}
 }
