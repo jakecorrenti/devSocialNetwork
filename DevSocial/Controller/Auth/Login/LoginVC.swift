@@ -166,6 +166,7 @@ class LoginVC: UIViewController {
     }
 
     @objc func loginButtonPressed() {
+        showLoadingView()
         var populatedCount = 0
         var textFields = [CustomTextField]()
         
@@ -199,9 +200,12 @@ class LoginVC: UIViewController {
                 }
             }
             
-            AuthManager.shared.signInWithFirebase(email: email, password: password) { (error) in
+            AuthManager.shared.signInWithFirebase(email: email, password: password) { [weak self] (error) in
+                guard let self = self else { return }
                 if let error = error {
                     Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+                } else {
+                    self.dismissLoadingView()
                 }
             }
         } else {
