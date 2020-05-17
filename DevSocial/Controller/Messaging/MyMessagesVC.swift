@@ -37,7 +37,7 @@ class MyMessagesVC: UITableViewController {
         return view
     }()
 	
-	var refresh 		  = UIRefreshControl()
+	var refresh = UIRefreshControl()
 	
     // -----------------------------------------
     // MARK: Lifecycle
