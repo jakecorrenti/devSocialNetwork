@@ -127,13 +127,14 @@ class MyMessagesVC: UITableViewController {
     private func deleteChat(with user: User, at indexPath: IndexPath) {
         Alert.showDeleteConfirmation(on: self) {
             MessagesManager.shared.handleDeleteChatAction(user: user, onSuccess: {
-                DispatchQueue.main.async {
-                    self.users.remove(at: indexPath.row)
-					self.tableView.deleteRows(at: [indexPath], with: .fade)
-                    self.tableView.reloadData()
+                DispatchQueue.main.async { [ weak self] in
+                    self?.users.remove(at: indexPath.row)
+					self?.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self?.tableView.reloadData()
                 }
-            }, onError: { error in
+            }, onError: { [weak self] error in
                 if let error = error {
+                    guard let self = self else { return }
                     Alert.showBasicAlert(on: self, with: "An error occurred", message: error.localizedDescription)
                 }
             })
