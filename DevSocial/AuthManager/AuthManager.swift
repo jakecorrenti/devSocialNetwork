@@ -101,38 +101,34 @@ final class AuthManager {
                 // if the user is created successfully, set up their username in Firebase
                 let profileChangeRequest          = self.auth.currentUser?.createProfileChangeRequest()
                 profileChangeRequest?.displayName = username
-                profileChangeRequest?.commitChanges(completion: { (commitError) in
+                profileChangeRequest?.commitChanges(completion: { [weak self] (commitError) in
+					guard let self = self else { return }
                     if let commitError = commitError {
                         onError(commitError)
                     } else {
-                        // if all of the auth is valid, add the user to the database
-                        var fcmToken: String = ""
-                        
-                        self.getFCMToken { (token) in
-                            fcmToken = token
-                        }
-                        
-                        let user      = User(
-                            username   : username.lowercased(),
-                            email      : email,
 
-                            dateCreated: Timestamp(),
-                            id         : self.auth.currentUser!.uid,
-                            fcmToken   : fcmToken,
-                            headline: ""
-                        )
-                        
-                        storageContext.saveUser(user: user) { (error) in
-                            if let error = error {
-                                onError(error)
-                            }
-                        }
-                        
-                        storageContext.addUsername(username: username, uid: user.id) { (error) in
-                            if let error = error {
-                                onError(error)
-                            }
-                        }
+						self.getFCMToken { (fcmToken) in
+							let user = User(
+								username	: username.lowercased(),
+								email		: email,
+								dateCreated : Timestamp(),
+								id			: self.auth.currentUser!.uid,
+								fcmToken	: fcmToken,
+								headline	: ""
+							)
+							
+							storageContext.saveUser(user: user, onError: { (error) in
+								if let error = error {
+									onError(error)
+								}
+							}) {
+								storageContext.addUsername(username: user.username, uid: user.id) { (error) in
+									if let error = error {
+										onError(error)
+									}
+								}
+							}
+						}
                     }
                 })
             }
