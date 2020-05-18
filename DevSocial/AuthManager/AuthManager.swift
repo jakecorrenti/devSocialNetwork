@@ -70,15 +70,35 @@ final class AuthManager {
 							onError(error)
 						} else {
 							if !snapshot!.exists {
-								FirebaseStorageContext.shared.saveUser(user: user, onError: { (error) in
+//								FirebaseStorageContext.shared.saveUser(user: user, onError: { (error) in
+//									if let error = error {
+//										onError(error)
+//									}
+//								}) {
+//									// save the username
+//									FirebaseStorageContext.shared.addUsername(username: user.username, uid: user.id) { error in
+//										if let error = error {
+//											onError(error)
+//										}
+//									}
+//								}
+								let profileChangeRequest = self.auth.currentUser!.createProfileChangeRequest()
+								profileChangeRequest.displayName = user.username
+								profileChangeRequest.commitChanges { (error) in
 									if let error = error {
 										onError(error)
-									}
-								}) {
-									// save the username
-									FirebaseStorageContext.shared.addUsername(username: user.username, uid: user.id) { error in
-										if let error = error {
-											onError(error)
+									} else {
+										FirebaseStorageContext.shared.saveUser(user: user, onError: { (error) in
+											if let error = error {
+												onError(error)
+											}
+										}) {
+											// save the username
+											FirebaseStorageContext.shared.addUsername(username: user.username, uid: user.id) { error in
+												if let error = error {
+													onError(error)
+												}
+											}
 										}
 									}
 								}

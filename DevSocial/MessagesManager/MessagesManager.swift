@@ -206,6 +206,8 @@ final class MessagesManager {
     func compareUserActivity(users: [User], onSuccess: @escaping (_ sortedUsers: [User]) -> Void) {
         var messages = [User : Message]()
         
+		if users.count == 0 { onSuccess([User]()) }
+		
         for user in users {
             getLastSentChat(with: user) { (message) in
                 if let message = message {
