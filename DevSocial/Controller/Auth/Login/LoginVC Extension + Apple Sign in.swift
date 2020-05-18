@@ -67,6 +67,7 @@ extension LoginVC {
 	}
     
 	private func startSignInWithAppleFlow() {
+		showLoadingView()
 		let appleIDProvider = ASAuthorizationAppleIDProvider()
 		let request = appleIDProvider.createRequest()
 		request.requestedScopes = [.fullName, .email]
@@ -126,6 +127,8 @@ extension LoginVC: ASAuthorizationControllerDelegate {
 				guard let self = self else { return }
 				if let error = error {
 					Alert.showBasicAlert(on: self, with: error.localizedDescription)
+				} else {
+					self.dismissLoadingView()
 				}
 			}
 		}
