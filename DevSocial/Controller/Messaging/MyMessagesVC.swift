@@ -63,8 +63,6 @@ class MyMessagesVC: UITableViewController {
         
         setupNavBar()
         setupUI()
-		print(Auth.auth().currentUser!.displayName)
-		print(Auth.auth().currentUser?.uid)
     }
     
     // -----------------------------------------
@@ -102,7 +100,6 @@ class MyMessagesVC: UITableViewController {
 
     private func getUsers() {
 		MessagesManager.shared.getMessagedUsers(onSuccess: { (users, listener) in
-			print(users.count)
 			MessagesManager.shared.compareUserActivity(users: users) { [weak self] (sortedUsers) in
 				guard let self 	   = self else { return }
 				self.users 		   = sortedUsers

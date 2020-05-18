@@ -272,21 +272,18 @@ class ChatVC: UIViewController {
 			senderName : currentUser.displayName!,
 			wasRead    : false
 		)
-
+		
 		if messages.count == 0 {
-			createChat { [weak self] docID in
-				guard let self = self else { return }
-				self.save(message: message, docID: docID) { [weak savedSelf = self] in
-					guard let savedSelf = savedSelf else { return }
-					savedSelf.insertMessageLocally(message)
-					savedSelf.loadChat()
+			createChat { [weak self] (docID) in
+				self?.save(message: message, docID: docID) { [weak self] in
+					self?.insertMessageLocally(message)
+					self?.loadChat()
 				}
 			}
 		} else {
 			guard let docReference = docReference else { return }
 			save(message: message, docRef: docReference) { [weak self] in
-				guard let self = self else { return }
-				self.insertMessageLocally(message)
+				self?.insertMessageLocally(message)
 			}
 		}
 		
