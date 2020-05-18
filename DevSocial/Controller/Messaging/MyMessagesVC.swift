@@ -63,6 +63,8 @@ class MyMessagesVC: UITableViewController {
         
         setupNavBar()
         setupUI()
+		
+		print(Auth.auth().currentUser?.displayName)
     }
     
     // -----------------------------------------

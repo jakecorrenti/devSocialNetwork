@@ -70,35 +70,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
       let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                         accessToken: authentication.accessToken)
       // ...
-        
-        Auth.auth().signIn(with: credential) { (result, error) in
-            if let error = error {
-                Alert.showBasicAlert(on: LoginVC(), with: "Oh no!", message: error.localizedDescription)
-                return
-            } else {
-        
-                let fullName = user.profile.name
-                let email = user.profile.email
-                
-                var fcmToken: String = ""
-                AuthManager.shared.getFCMToken { (token) in
-                    fcmToken = token
-                }
-                
-                let user = User(
-                    username: fullName ?? "",
-                    email: email ?? "",
-                    dateCreated: Timestamp(),
-                    id: Auth.auth().currentUser!.uid,
-                    fcmToken: fcmToken,
-                    headline: ""
-                )
-                
-                FirebaseStorageContext.shared.saveUser(user: user) { (error) in
-                    Alert.showBasicAlert(on: LoginVC(), with: "Oh no!", message: error?.localizedDescription)
-                }
-            }
-        }
+		
+		AuthManager.shared.signInWithGoogleUser(credential: credential, user: user, onSuccess: {
+			// nothing to do on success 
+		}) { (error) in
+			if let error = error {
+				Alert.showBasicAlert(on: LoginVC(), with: error.localizedDescription)
+			}
+		}
     }
 
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {

@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import GoogleSignIn
+import AuthenticationServices
 
 final class AuthManager {
     static let shared = AuthManager()
@@ -22,6 +23,73 @@ final class AuthManager {
             }
         }
     }
+
+    func signInWithAppleUser(credential: AuthCredential, user: ASAuthorizationAppleIDCredential, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+        let firstName = user.fullName?.givenName ?? ""
+        let lastName  = user.fullName?.familyName ?? ""
+        let email     = user.email ?? ""
+
+        completeSignInWithCredentials(credential: credential, firstName: firstName, lastName: lastName, email: email, onSuccess: {
+            onSuccess()
+        }, onError: { error in
+            onError(error)
+        })
+    }
+
+    func signInWithGoogleUser(credential: AuthCredential, user: GIDGoogleUser, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+        let firstName = user.profile.givenName ?? ""
+        let lastName  = user.profile.familyName ?? ""
+        let email     = user.profile.email ?? ""
+
+        completeSignInWithCredentials(credential: credential, firstName: firstName, lastName: lastName, email: email, onSuccess: {
+            onSuccess()
+        }, onError: { error in
+            onError(error)
+        })
+    }
+
+	/// abstracted functionality to make signing in with google and apple is unified
+    private func completeSignInWithCredentials(credential: AuthCredential, firstName: String, lastName: String, email: String, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+        
+		Auth.auth().signIn(with: credential) { (authResult, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				AuthManager.shared.getFCMToken { (fcmToken) in
+					let user = User(
+						username    : "\(firstName)\(lastName)\(UUID().uuidString)",
+						email       : email,
+						dateCreated : Timestamp(),
+						id          : Auth.auth().currentUser!.uid,
+						fcmToken    : fcmToken,
+						headline    : ""
+					)
+					
+					Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
+						if let error = error {
+							onError(error)
+						} else {
+							if !snapshot!.exists {
+								FirebaseStorageContext.shared.saveUser(user: user, onError: { (error) in
+									if let error = error {
+										onError(error)
+									}
+								}) {
+									// save the username
+									FirebaseStorageContext.shared.addUsername(username: user.username, uid: user.id) { error in
+										if let error = error {
+											onError(error)
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+    }
+
     
     /// create a user in Firebase using a username, email, and password
     func createUserWithFirebase(username: String, email: String, password: String, onError: @escaping (_ error: Error?) -> Void) {
@@ -33,38 +101,34 @@ final class AuthManager {
                 // if the user is created successfully, set up their username in Firebase
                 let profileChangeRequest          = self.auth.currentUser?.createProfileChangeRequest()
                 profileChangeRequest?.displayName = username
-                profileChangeRequest?.commitChanges(completion: { (commitError) in
+                profileChangeRequest?.commitChanges(completion: { [weak self] (commitError) in
+					guard let self = self else { return }
                     if let commitError = commitError {
                         onError(commitError)
                     } else {
-                        // if all of the auth is valid, add the user to the databse
-                        var fcmToken: String = ""
-                        
-                        self.getFCMToken { (token) in
-                            fcmToken = token
-                        }
-                        
-                        let user      = User(
-                            username   : username.lowercased(),
-                            email      : email,
 
-                            dateCreated: Timestamp(),
-                            id         : self.auth.currentUser!.uid,
-                            fcmToken   : fcmToken,
-                            headline: ""
-                        )
-                        
-                        storageContext.saveUser(user: user) { (error) in
-                            if let error = error {
-                                onError(error)
-                            }
-                        }
-                        
-                        storageContext.addUsername(username: username, uid: user.id) { (error) in
-                            if let error = error {
-                                onError(error)
-                            }
-                        }
+						self.getFCMToken { (fcmToken) in
+							let user = User(
+								username	: username.lowercased(),
+								email		: email,
+								dateCreated : Timestamp(),
+								id			: self.auth.currentUser!.uid,
+								fcmToken	: fcmToken,
+								headline	: ""
+							)
+							
+							storageContext.saveUser(user: user, onError: { (error) in
+								if let error = error {
+									onError(error)
+								}
+							}) {
+								storageContext.addUsername(username: user.username, uid: user.id) { (error) in
+									if let error = error {
+										onError(error)
+									}
+								}
+							}
+						}
                     }
                 })
             }
