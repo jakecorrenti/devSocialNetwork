@@ -48,6 +48,7 @@ final class AuthManager {
         })
     }
 
+	/// abstracted functionality to make signing in with google and apple is unified
     private func completeSignInWithCredentials(credential: AuthCredential, firstName: String, lastName: String, email: String, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
         
 		Auth.auth().signIn(with: credential) { (authResult, error) in
