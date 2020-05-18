@@ -98,11 +98,6 @@ extension LoginVC {
 extension LoginVC: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-			let userIdentifier = appleIDCredential.user
-			let fullName	   = appleIDCredential.fullName
-			let email 		   = appleIDCredential.email ?? ""
-			let firstName      = fullName?.givenName ?? ""
-			let lastName       = fullName?.familyName ?? ""
 
 			// Retrieve the secure nonce generated during Apple sign in
 			guard let nonce = currentNonce else {
@@ -124,46 +119,13 @@ extension LoginVC: ASAuthorizationControllerDelegate {
 					idToken        : idTokenString,
 					rawNonce       : nonce
 			)
-
-			Auth.auth().signIn(with: firebaseCredential) { [weak self] (authResult, error) in
+			
+			AuthManager.shared.signInWithAppleUser(credential: firebaseCredential, user: appleIDCredential, onSuccess: {
+				print("Success")
+			}) { [weak self] (error) in
 				guard let self = self else { return }
 				if let error = error {
 					Alert.showBasicAlert(on: self, with: error.localizedDescription)
-				} else {
-					//MARK: - if the user already exists, it rewrites the data and removes the email
-					AuthManager.shared.getFCMToken { (fcmToken) in
-						let user = User(
-							username    : "\(firstName)\(lastName)\(UUID().uuidString)",
-							email       : email,
-							dateCreated : Timestamp(),
-							id          : Auth.auth().currentUser!.uid,
-							fcmToken    : fcmToken,
-							headline    : ""
-						)
-						
-						Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
-							if let error = error {
-								print("Error")
-							} else {
-								if !snapshot!.exists {
-									FirebaseStorageContext.shared.saveUser(user: user, onError: { [weak self] (error) in
-										guard let self = self else { return }
-										if let error = error{
-											Alert.showBasicAlert(on: self, with: error.localizedDescription)
-										}
-									}) {
-										// save the username
-										FirebaseStorageContext.shared.addUsername(username: user.username, uid: user.id) { [weak self] error in
-											guard let self = self else { return }
-											if let error = error {
-												Alert.showBasicAlert(on: self, with: error.localizedDescription)
-											}
-										}
-									}
-								}
-							}
-						}
-					}
 				}
 			}
 		}
