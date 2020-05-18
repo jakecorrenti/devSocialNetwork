@@ -28,6 +28,22 @@ class FirebaseStorageContext: StorageContext {
             }
         }
     }
+	
+	func saveUser(user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping () -> Void) {
+		db.collection("users").document(user.id).setData([
+            "username"    : user.username,
+            "email"       : user.email,
+            "dateCreated" : user.dateCreated,
+            "id"          : user.id,
+            "fcmToken"    : user.fcmToken
+        ]) { (error) in
+            if let error = error {
+                onError(error)
+			} else {
+				onSuccess()
+			}
+        }
+	}
     
     /// delete a user's documents and collections from Firestore 
     func deleteUser(user: User, onError: @escaping (Error?) -> Void) {

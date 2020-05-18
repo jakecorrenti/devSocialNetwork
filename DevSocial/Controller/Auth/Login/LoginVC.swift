@@ -204,12 +204,14 @@ class LoginVC: UIViewController {
                 guard let self = self else { return }
                 if let error = error {
                     Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
+                    self.dismissLoadingView()
                 } else {
                     self.dismissLoadingView()
                 }
             }
         } else {
             Alert.showFillAllFieldsAlert(on: self)
+            self.dismissLoadingView()
         }
     }
 }
