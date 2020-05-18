@@ -153,7 +153,12 @@ extension LoginVC: ASAuthorizationControllerDelegate {
 										}
 									}) {
 										// save the username
-										print("SUCCESS")
+										FirebaseStorageContext.shared.addUsername(username: user.username, uid: user.id) { [weak self] error in
+											guard let self = self else { return }
+											if let error = error {
+												Alert.showBasicAlert(on: self, with: error.localizedDescription)
+											}
+										}
 									}
 								}
 							}
