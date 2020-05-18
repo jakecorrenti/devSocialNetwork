@@ -102,8 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
     
     // Firebase Cloud Messaging
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-      print("Firebase registration token: \(fcmToken)")
-
       let dataDict:[String: String] = ["token": fcmToken]
       NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
       // TODO: If necessary send token to application server.
