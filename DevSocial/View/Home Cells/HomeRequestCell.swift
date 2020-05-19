@@ -45,14 +45,6 @@ class HomeRequestCell: UITableViewCell {
     // MARK: Views
     // -----------------------------------------
     
-    var titleView : UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Helvetica Neue", size: 18.0)
-        label.textColor = UIColor(named: ColorNames.primaryTextColor)
-        return label
-    }()
-    
     var profileImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,6 +83,14 @@ class HomeRequestCell: UITableViewCell {
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
+    }()
+    
+    var titleView : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Helvetica Neue", size: 18.0)
+        label.textColor = UIColor(named: ColorNames.primaryTextColor)
+        return label
     }()
     
     var dateView : UILabel = {
