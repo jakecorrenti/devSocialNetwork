@@ -75,6 +75,7 @@ final class MessagesManager {
             "content"    : msg.content,
             "created"    : msg.created,
             "id"         : msg.id,
+			
             "senderID"   : msg.senderID,
             "senderName" : msg.senderName,
             "wasRead"    : msg.wasRead
@@ -131,7 +132,6 @@ final class MessagesManager {
 						}
 					}
 				}
-				
 			}
 		}
 	}

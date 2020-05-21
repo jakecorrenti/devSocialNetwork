@@ -101,9 +101,10 @@ class MyMessagesVC: UITableViewController {
     private func getUsers() {
 		MessagesManager.shared.getMessagedUsers(onSuccess: { (users, listener) in
 			MessagesManager.shared.compareUserActivity(users: users) { [weak self] (sortedUsers) in
-				guard let self 	   = self else { return }
-				self.users 		   = sortedUsers
-				self.chatsListener = listener
+				guard let self 	       = self else { return }
+				if let currentListener = self.chatsListener { currentListener.remove() }
+				self.users 		       = sortedUsers
+				self.chatsListener     = listener
 				self.tableView.reloadData()
 				self.refresh.endRefreshing()
 				self.dismissLoadingView()

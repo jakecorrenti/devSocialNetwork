@@ -157,10 +157,11 @@ class ChatVC: UIViewController {
 				Alert.showBasicAlert(on: self, with: error.localizedDescription)
 			}
 		}) { [weak self] (messages, docReference, listener) in
-			guard let self 		= self else { return }
-			self.messages       = messages
-			self.docReference   = docReference
-			self.threadListener = listener
+			guard let self 		   = self else { return }
+			if let currentListener = self.threadListener { currentListener.remove() }
+			self.messages          = messages
+			self.docReference      = docReference
+			self.threadListener    = listener
 			self.tableView.reloadData()
 			self.scrollChatToBottom()
 			self.dismissLoadingView()
