@@ -13,12 +13,11 @@ import Firebase
 final class MessagesManager {
 	
     static let shared 		= MessagesManager()
-    private let currentUser = Auth.auth().currentUser!
     private let db          = Firestore.firestore()
     
     /// create a new chat in the database
     func createChat(with userID: String, onError: @escaping (_ error: Error?) -> Void) {
-        let users = [currentUser.uid, userID]
+        let users = [Auth.auth().currentUser!.uid, userID]
         let data: [String : Any] = [
             "users"  : users, 
             "hidden" : [String]()
@@ -33,7 +32,7 @@ final class MessagesManager {
 	/// create a new chat in the database
     func createChat(with userID: String, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping (_ documentID: String) -> Void) {
         let users = [
-            currentUser.uid,
+            Auth.auth().currentUser!.uid,
             userID
         ]
         let data: [String : Any] = [
@@ -99,7 +98,7 @@ final class MessagesManager {
 		var messages		  = [Message]()
 		var listener		  : ListenerRegistration!
 		
-		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+		db.collection("chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).getDocuments { (chatQuery, error) in
 			if let error = error {
 				onError(error)
 			} else {
@@ -167,7 +166,7 @@ final class MessagesManager {
     
     /// gets the last sent message in the chat between the two users
     func getLastSentChat(with user: User, onSuccess: @escaping (_ lastMessage: Message?) -> Void) {
-        db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+        db.collection("chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).getDocuments { (chatQuery, error) in
             if let error = error {
                 print(" ❌ There was an error: \(error.localizedDescription)")
             } else {
@@ -244,7 +243,7 @@ final class MessagesManager {
 
     /// this function decides how to handle the deletion of a chat based on database values
     func handleDeleteChatAction(user: User, onSuccess: @escaping () -> Void, onError: @escaping (_ error: Error?) -> Void) {
-        db.collection(_: "chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in 
+        db.collection(_: "chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).getDocuments { (chatQuery, error) in 
             if let error = error {
                 onError(error)
             } else {
@@ -255,7 +254,7 @@ final class MessagesManager {
                     if (userChat?.users.contains(user.id))! {
 
                         var hiddenUsers = userChat!.hidden
-                        hiddenUsers.append(self.currentUser.uid)
+                        hiddenUsers.append(Auth.auth().currentUser!.uid)
 
                         if hiddenUsers.count <= 2 {
                             // update the hidden status for the current user
@@ -306,7 +305,7 @@ final class MessagesManager {
 
     /// determines the hidden state of the current user for the chat with the selected user
 	func determineCurrentHiddenStatus(with user: User, onSuccess: @escaping (_ isHidden: Bool,_ document: DocumentSnapshot?) -> Void, onError: @escaping (_ error: Error?) -> Void ) {
-		db.collection("chats").whereField("users", arrayContains: currentUser.uid).getDocuments { (chatQuery, error) in
+		db.collection("chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).getDocuments { (chatQuery, error) in
 			if let error = error {
 				onError(error)
 			} else {
@@ -316,7 +315,7 @@ final class MessagesManager {
 				for document in chats {
 					let chat = Chat(dictionary: document.data())
 					
-					if (chat?.hidden.contains(self.currentUser.uid))! && (chat?.users.contains(user.id))! {
+					if (chat?.hidden.contains(Auth.auth().currentUser!.uid))! && (chat?.users.contains(user.id))! {
 						escaped = true
 						onSuccess(true, document)
 					}
@@ -349,7 +348,7 @@ final class MessagesManager {
 			var currentHiddenUsers = chat?.hidden
 
 			currentHiddenUsers?.removeAll(where: { (username) -> Bool in
-				return username == currentUser.uid
+				return username == Auth.auth().currentUser!.uid
 			})
 
 			updateHiddenStatus(for: currentHiddenUsers!, at: document, onSuccess: {
@@ -385,8 +384,8 @@ final class MessagesManager {
 	/// get list of all the users that the current user started a conversation with in messages
 	func getMessagedUsers(onSuccess: @escaping (_ users: [User],_ listener: ListenerRegistration) -> Void, onError: @escaping (_ error: Error?) -> Void) {
 		var listener : ListenerRegistration!
-		
-		listener = db.collection("chats").whereField("users", arrayContains: currentUser.uid).addSnapshotListener({ [weak self] (chatQuery, error) in
+
+		listener = db.collection("chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).addSnapshotListener({ [weak self] (chatQuery, error) in
 			guard let self = self else { return }
 			if let error = error {
 				onError(error)
@@ -402,13 +401,13 @@ final class MessagesManager {
 					let chat 	    = Chat(dictionary: document.data())
 					let hiddenUsers = chat!.hidden
 					
-					for user in chat!.users where user != self.currentUser.uid {
+					for user in chat!.users where user != Auth.auth().currentUser!.uid {
 						if hiddenUsers.count == 2 {
 							self.deleteThread(at: document.reference, onSuccess: { }) { (error) in
 								if let error = error { onError(error) }
 							}
 						} else {
-							if !hiddenUsers.contains(self.currentUser.uid) {
+							if !hiddenUsers.contains(Auth.auth().currentUser!.uid) {
 								messagedUsersIDs.append(user)
 							}
 						}
