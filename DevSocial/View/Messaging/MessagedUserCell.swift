@@ -20,6 +20,8 @@ class MessagedUserCell: UITableViewCell {
         formatter.dateFormat = "M/d/yyyy"
         return formatter
     }
+	
+	var activityDateLabelEstimatedSize = CGSize()
     
     var selectedUser: User! {
         didSet {
@@ -28,13 +30,13 @@ class MessagedUserCell: UITableViewCell {
             MessagesManager.shared.getLastSentChat(with: selectedUser) { [weak self] message in
 				guard let self = self else { return }
                 if let message = message {
-                    self.lastMessageLabel.text        = message.content
-                    self.recentActivityDateLabel.text = self.dateFormatter.string(from: message.created.dateValue())
-					
+                    self.lastMessageLabel.text          = message.content
+                    self.recentActivityDateLabel.text   = self.dateFormatter.string(from: message.created.dateValue())
+					self.updateActivityDateLabelWidthConstraint()
 					if !message.wasRead && message.senderID != Auth.auth().currentUser?.uid {
-						self.unreadIndicator.isHidden = false
+						self.unreadIndicator.isHidden   = false
 					} else {
-						self.unreadIndicator.isHidden = true
+						self.unreadIndicator.isHidden   = true
 					}
                     
                 }
@@ -134,7 +136,8 @@ class MessagedUserCell: UITableViewCell {
 		recentActivityDateLabel.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			recentActivityDateLabel.topAnchor.constraint(equalTo: avatarView.topAnchor),
-			recentActivityDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+			recentActivityDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+			recentActivityDateLabel.widthAnchor.constraint(equalToConstant: 0)
 		])
 	}
 	
@@ -143,7 +146,7 @@ class MessagedUserCell: UITableViewCell {
 		NSLayoutConstraint.activate([
 			usernameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 13),
 			usernameLabel.bottomAnchor.constraint(equalTo: avatarView.centerYAnchor),
-			usernameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -(recentActivityDateLabel.frame.width + 12))
+			usernameLabel.trailingAnchor.constraint(equalTo: recentActivityDateLabel.leadingAnchor, constant: -8)
 		])
 	}
 	
@@ -154,6 +157,17 @@ class MessagedUserCell: UITableViewCell {
 			lastMessageLabel.topAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 4),
 			lastMessageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
 		])
+	}
+	
+	private func updateActivityDateLabelWidthConstraint() {
+		let size = CGSize(width: self.frame.width, height: .infinity)
+		let estimatedSize = recentActivityDateLabel.sizeThatFits(size)
+		
+		recentActivityDateLabel.constraints.forEach { constraint in
+			if constraint.firstAttribute == .width {
+				constraint.constant = estimatedSize.width
+			}
+		}
 	}
 
 }
