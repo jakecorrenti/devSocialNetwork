@@ -14,7 +14,7 @@ class FirebaseStorageContext: StorageContext {
     static let shared = FirebaseStorageContext()
     let db = Firestore.firestore()
     
-    /// save a user to Firestore
+    /// save the given user to Firestore
     func saveUser(user: User, onError: @escaping (Error?) -> Void) {
         db.collection("users").document(user.id).setData([
             "username"    : user.username,
@@ -30,6 +30,7 @@ class FirebaseStorageContext: StorageContext {
         }
     }
 	
+	/// save the given user to Firebase
 	func saveUser(user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping () -> Void) {
 		db.collection("users").document(user.id).setData([
             "username"    : user.username,
@@ -142,7 +143,7 @@ class FirebaseStorageContext: StorageContext {
 										id              : user["id"] as? String ?? "",
 										fcmToken        : user["fcmToken"] as? String ?? "",
 										headline        : user["headline"] as? String ?? "New User",
-										//MARK: - DO NOT USE NIL COELESCING FOR THIS VALUE
+										//MARK: - REDO THIS TYPE SO THAT NOT ALL USER PROPERTIES ARE NOT BEING SAVED, ONLY ID
 										isLoggedIn      : user["isLoggedIn"] as? Bool ?? true
                                       ),
                         datePosted    : results["datePosted"] as! Timestamp,

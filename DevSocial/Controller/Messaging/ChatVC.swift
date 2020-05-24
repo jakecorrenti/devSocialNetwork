@@ -216,9 +216,10 @@ class ChatVC: UIViewController {
             if let error = error {
                 Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
             }
-        }) { (token) in
+        }) { [weak self] (token) in
+			guard let self = self else { return }
             if let token = token {
-                NotificationManager.shared.sendPushNotification(token: token, title: message.senderName, body: message.content)
+				NotificationManager.shared.sendPushNotification(to: self.selectedUser, token: token, title: message.senderName, body: message.content)
             }
         }
 	}

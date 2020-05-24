@@ -29,6 +29,7 @@ final class AuthManager {
         }
     }
 
+	/// signs the user in with Apple given the credentials and user specified
     func signInWithAppleUser(credential: AuthCredential, user: ASAuthorizationAppleIDCredential, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
         let firstName = user.fullName?.givenName ?? ""
         let lastName  = user.fullName?.familyName ?? ""
@@ -41,6 +42,7 @@ final class AuthManager {
         })
     }
 
+	/// signs the user in with Google given the credentials and user specified
     func signInWithGoogleUser(credential: AuthCredential, user: GIDGoogleUser, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
         let firstName = user.profile.givenName ?? ""
         let lastName  = user.profile.familyName ?? ""
@@ -155,6 +157,7 @@ final class AuthManager {
         }
     }
     
+	/// gets the FCM Token that is associated with the device so that push notifications can be sent to it
     func getFCMToken(onSuccess: @escaping (_ token: String) -> Void) {
         
         InstanceID.instanceID().instanceID { (result, error) in
@@ -167,6 +170,7 @@ final class AuthManager {
         }
     }
 	
+	/// parses Firestore for the user object that has the same ID as the current user and returns it as a User object
 	func getFirebaseUserAsUserObject(onSucess: @escaping (User) -> Void, onError: @escaping (Error?) -> Void) {
 		let db = Firestore.firestore()
 		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
@@ -182,6 +186,7 @@ final class AuthManager {
 		}
 	}
 	
+	/// updates the login status for the given user
 	func updateLoggedInStatus(for user: User, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
 		let db = Firestore.firestore()
 		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
@@ -198,6 +203,7 @@ final class AuthManager {
 		}
 	}
 	
+	/// updates the login status for the current user
 	func updateCurrentUserLoginStatus(onError: @escaping (Error?) -> Void) {
 		getFirebaseUserAsUserObject(onSucess: { [weak self] (userObject) in
 			guard let self = self else { return }
@@ -209,6 +215,7 @@ final class AuthManager {
 		}
 	}
 	
+	/// updates the login status for the current user
 	func updateCurrentUserLoginStatus(onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
 		getFirebaseUserAsUserObject(onSucess: { [weak self] (userObject) in
 			guard let self = self else { return }
@@ -222,7 +229,19 @@ final class AuthManager {
 		}
 	}
 	
+	/// retrieves the login status for the given user
 	func getLoggedInStatus(for user: User, onSuccess: @escaping (Bool) -> Void, onError: @escaping (Error?) -> Void) {
-		
+		let db = Firestore.firestore()
+		db.collection("users").whereField("id", isEqualTo: user.id).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					let user = User(dictionary: userQuery.first!.data())
+					onSuccess(user!.isLoggedIn)
+				}
+			}
+		}
 	}
 }
