@@ -209,6 +209,19 @@ final class AuthManager {
 		}
 	}
 	
+	func updateCurrentUserLoginStatus(onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+		getFirebaseUserAsUserObject(onSucess: { [weak self] (userObject) in
+			guard let self = self else { return }
+			self.updateLoggedInStatus(for: userObject, onSuccess: {
+				onSuccess()
+			}) { (error) in
+				if let error = error { onError(error) }
+			}
+		}) { (error) in
+			if let error = error { onError(error) }
+		}
+	}
+	
 	func getLoggedInStatus(for user: User, onSuccess: @escaping (Bool) -> Void, onError: @escaping (Error?) -> Void) {
 		
 	}
