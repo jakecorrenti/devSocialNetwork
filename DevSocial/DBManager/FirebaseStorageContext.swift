@@ -21,7 +21,8 @@ class FirebaseStorageContext: StorageContext {
             "email"       : user.email,
             "dateCreated" : user.dateCreated,
             "id"          : user.id,
-            "fcmToken"    : user.fcmToken
+            "fcmToken"    : user.fcmToken,
+			"isLoggedIn"  : user.isLoggedIn
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -35,7 +36,8 @@ class FirebaseStorageContext: StorageContext {
             "email"       : user.email,
             "dateCreated" : user.dateCreated,
             "id"          : user.id,
-            "fcmToken"    : user.fcmToken
+            "fcmToken"    : user.fcmToken,
+			"isLoggedIn"  : user.isLoggedIn
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -68,7 +70,8 @@ class FirebaseStorageContext: StorageContext {
                         dateCreated: Timestamp(),
                         id: document.data()["id"] as! String,
                         fcmToken: document.data()["fcmToken"] as? String,
-                        headline: document.data()["headline"] as? String ?? "New User"
+                        headline: document.data()["headline"] as? String ?? "New User",
+						isLoggedIn: document.data()["isLoggedIn"] as! Bool
                     ))
                 }
                 onSuccess(users)
@@ -132,13 +135,15 @@ class FirebaseStorageContext: StorageContext {
                         type          : PostType(results["type"] as! String) ?? .empty,
                         desc          : results["desc"] as? String ?? "",
                         uid           : results["uid"] as! String,
-                        profile: User(
-                                    username        : user["username"] as? String ?? "",
-                                    email           : user["email"] as? String ?? "",
-                                    dateCreated     : user["dateCreated"] as! Timestamp,
-                                    id              : user["id"] as? String ?? "",
-                                    fcmToken        : user["fcmToken"] as? String ?? "",
-                                    headline        : user["headline"] as? String ?? "New User"
+                        profile: User (
+										username        : user["username"] as? String ?? "",
+										email           : user["email"] as? String ?? "",
+										dateCreated     : user["dateCreated"] as! Timestamp,
+										id              : user["id"] as? String ?? "",
+										fcmToken        : user["fcmToken"] as? String ?? "",
+										headline        : user["headline"] as? String ?? "New User",
+										//MARK: - DO NOT USE NIL COELESCING FOR THIS VALUE
+										isLoggedIn      : user["isLoggedIn"] as? Bool ?? true
                                       ),
                         datePosted    : results["datePosted"] as! Timestamp,
                         lastEdited    : results["lastEdited"] as? Timestamp ?? nil,

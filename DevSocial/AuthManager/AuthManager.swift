@@ -20,7 +20,12 @@ final class AuthManager {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 onError(error)
-            }
+			} else {
+				//MARK: - update user login state
+				self.updateCurrentUserLoginStatus { (error) in
+					if let error = error { onError(error) }
+				}
+			}
         }
     }
 
@@ -62,7 +67,8 @@ final class AuthManager {
 						dateCreated : Timestamp(),
 						id          : Auth.auth().currentUser!.uid,
 						fcmToken    : fcmToken,
-						headline    : ""
+						headline    : "",
+						isLoggedIn  : true
 					)
 					
 					Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
@@ -89,6 +95,11 @@ final class AuthManager {
 											}
 										}
 									}
+								}
+							} else {
+								//MARK: - Update user login state
+								self.updateCurrentUserLoginStatus { (error) in
+									if let error = error { onError(error) }
 								}
 							}
 						}
@@ -122,7 +133,8 @@ final class AuthManager {
 								dateCreated : Timestamp(),
 								id			: self.auth.currentUser!.uid,
 								fcmToken	: fcmToken,
-								headline	: ""
+								headline	: "",
+								isLoggedIn  : true
 							)
 							
 							storageContext.saveUser(user: user, onError: { (error) in
@@ -154,4 +166,50 @@ final class AuthManager {
           }
         }
     }
+	
+	func getFirebaseUserAsUserObject(onSucess: @escaping (User) -> Void, onError: @escaping (Error?) -> Void) {
+		let db = Firestore.firestore()
+		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					let user = User(dictionary: userQuery.first!.data())
+					onSucess(user!)
+				}
+			}
+		}
+	}
+	
+	func updateLoggedInStatus(for user: User, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+		let db = Firestore.firestore()
+		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					userQuery.first?.reference.updateData(["isLoggedIn" : !user.isLoggedIn], completion: { (error) in
+						if let error = error { onError(error) } else { onSuccess() }
+					})
+				}
+			}
+		}
+	}
+	
+	func updateCurrentUserLoginStatus(onError: @escaping (Error?) -> Void) {
+		getFirebaseUserAsUserObject(onSucess: { [weak self] (userObject) in
+			guard let self = self else { return }
+			self.updateLoggedInStatus(for: userObject, onSuccess: { }) { (error) in
+				if let error = error { onError(error) }
+			}
+		}) { (error) in
+			if let error = error { onError(error) }
+		}
+	}
+	
+	func getLoggedInStatus(for user: User, onSuccess: @escaping (Bool) -> Void, onError: @escaping (Error?) -> Void) {
+		
+	}
 }
