@@ -32,11 +32,11 @@ class TabController: UITabBarController {
     }
     
     private func updateFCMToken() {
-        FirebaseStorageContext.shared.updateFCMToken { [weak self] (error) in
-			guard let self = self else { return }
-            if let _ = error {
-                Alert.showBasicAlert(on: self, with: "Oh no!", message: "please restart your app, there was an error")
-            }
-        }
+//        FirebaseStorageContext.shared.updateFCMToken { [weak self] (error) in
+//			guard let self = self else { return }
+//            if let _ = error {
+//                Alert.showBasicAlert(on: self, with: "Oh no!", message: "please restart your app, there was an error")
+//            }
+//        }
     }
 }

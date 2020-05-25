@@ -145,21 +145,39 @@ class NewPostVC : UIViewController {
             desc = descText
         }
         
-        AuthManager.shared.getFCMToken { (token) in
-            let manager = FirebaseStorageContext()
-            if let user = self.currentUser {
-                let user = User(username: user.displayName!, email: user.email!, dateCreated: Timestamp(), id: user.uid, fcmToken: token, headline: "")
-                let newPost = Post(title: title, type: PostType(type) ?? .empty, desc: desc, uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: keywords)
-                
-                manager.createPost(post: newPost, onError: { (error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    }
-                }) {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-        }
+//        AuthManager.shared.getFCMToken { (token) in
+//            let manager = FirebaseStorageContext()
+//            if let user = self.currentUser {
+//                let user = User(username: user.displayName!, email: user.email!, dateCreated: Timestamp(), id: user.uid, fcmToken: token, headline: "")
+//                let newPost = Post(title: title, type: PostType(type) ?? .empty, desc: desc, uid: UUID().uuidString, profile: user, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: keywords)
+//
+//                manager.createPost(post: newPost, onError: { (error) in
+//                    if let error = error {
+//                        print(error.localizedDescription)
+//                    }
+//                }) {
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+//            }
+//        }
+		AuthManager.shared.getFirebaseUserAsUserObject(onSucess: { (userObject) in
+			let newPost = Post(title: title, type: PostType(type) ?? .empty, desc: desc, uid: UUID().uuidString, profile: userObject, datePosted: Timestamp(), lastEdited: Timestamp(), keywords: keywords)
+			
+			FirebaseStorageContext.shared.createPost(post: newPost, onError: { [weak self] (error) in
+				guard let self = self else { return }
+				if let error = error {
+					Alert.showBasicAlert(on: self, with: error.localizedDescription)
+				}
+			}) { [weak self] in
+				self?.dismiss(animated: true, completion: nil)
+			}
+			
+		}) { [weak self] (error) in
+			guard let self = self else { return }
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}
         
     }
 }

@@ -52,11 +52,18 @@ class ProfileVC : UIViewController {
     }
     
     @objc func signout() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
+		AuthManager.shared.removeFCMToken(onSuccess: {
+			let firebaseAuth = Auth.auth()
+			do {
+				try firebaseAuth.signOut()
+			} catch let signOutError as NSError {
+				print ("Error signing out: %@", signOutError)
+			}
+		}) { [weak self] (error) in
+			guard let self = self else { return }
+			if let error = error  {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}
     }
 }

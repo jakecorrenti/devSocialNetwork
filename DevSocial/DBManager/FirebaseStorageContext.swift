@@ -14,14 +14,14 @@ class FirebaseStorageContext: StorageContext {
     static let shared = FirebaseStorageContext()
     let db = Firestore.firestore()
     
-    /// save a user to Firestore
+    /// save the given user to Firestore
     func saveUser(user: User, onError: @escaping (Error?) -> Void) {
         db.collection("users").document(user.id).setData([
             "username"    : user.username,
             "email"       : user.email,
             "dateCreated" : user.dateCreated,
             "id"          : user.id,
-            "fcmToken"    : user.fcmToken
+            "fcmTokens"   : user.fcmTokens
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -29,13 +29,14 @@ class FirebaseStorageContext: StorageContext {
         }
     }
 	
+	/// save the given user to Firebase
 	func saveUser(user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping () -> Void) {
 		db.collection("users").document(user.id).setData([
             "username"    : user.username,
             "email"       : user.email,
             "dateCreated" : user.dateCreated,
             "id"          : user.id,
-            "fcmToken"    : user.fcmToken
+            "fcmTokens"   : user.fcmTokens
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -63,12 +64,12 @@ class FirebaseStorageContext: StorageContext {
                 var users = [User]()
                 for document in snapshot!.documents where document.data()["id"] as? String != Auth.auth().currentUser?.uid {
                     users.append(User(
-                        username: document.data()["username"] as! String,
-                        email: document.data()["email"] as! String,
-                        dateCreated: Timestamp(),
-                        id: document.data()["id"] as! String,
-                        fcmToken: document.data()["fcmToken"] as? String,
-                        headline: document.data()["headline"] as? String ?? "New User"
+                        username	: document.data()["username"] as! String,
+                        email		: document.data()["email"] as! String,
+                        dateCreated : Timestamp(),
+                        id		    : document.data()["id"] as! String,
+                        fcmTokens   : document.data()["fcmTokens"] as! [String],
+                        headline    : document.data()["headline"] as? String ?? "New User"
                     ))
                 }
                 onSuccess(users)
@@ -132,13 +133,14 @@ class FirebaseStorageContext: StorageContext {
                         type          : PostType(results["type"] as! String) ?? .empty,
                         desc          : results["desc"] as? String ?? "",
                         uid           : results["uid"] as! String,
-                        profile: User(
-                                    username        : user["username"] as? String ?? "",
-                                    email           : user["email"] as? String ?? "",
-                                    dateCreated     : user["dateCreated"] as! Timestamp,
-                                    id              : user["id"] as? String ?? "",
-                                    fcmToken        : user["fcmToken"] as? String ?? "",
-                                    headline        : user["headline"] as? String ?? "New User"
+                        profile: User (
+										username        : user["username"] as? String ?? "",
+										email           : user["email"] as? String ?? "",
+										dateCreated     : user["dateCreated"] as! Timestamp,
+										id              : user["id"] as? String ?? "",
+										//MARK: - UPDATE POST MODELS TO NOT REQUIRE THIS
+										fcmTokens       : user["fcmTokens"] as? [String] ?? [String](),
+										headline        : user["headline"] as? String ?? "New User"
                                       ),
                         datePosted    : results["datePosted"] as! Timestamp,
                         lastEdited    : results["lastEdited"] as? Timestamp ?? nil,
@@ -171,44 +173,18 @@ class FirebaseStorageContext: StorageContext {
             }
         }
     }
-    
-    func updateFCMToken(onError: @escaping (Error?) -> Void) {
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                onError(error)
-            } else if let result = result {
-                self.db.collection("users").getDocuments { (snapshot, error) in
-                    if let error = error {
-                        onError(error)
-                    } else {
-                        for document in snapshot!.documents {
-                            if document.data()["id"] as? String == Auth.auth().currentUser?.uid {
-                                document.reference.updateData([
-                                    "fcmToken" : result.token
-                                ]) { (error) in
-                                    if let error = error {
-                                        onError(error)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func getFCMToken(for user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping (String?) -> Void) {
-        self.db.collection("users").getDocuments { (snapshot, error) in
-            if let error = error {
-                onError(error)
-            } else {
-                for document in snapshot!.documents {
-                    if document.data()["id"] as? String == user.id {
-                        onSuccess(document.data()["fcmToken"] as? String)
-                    }
-                }
-            }
-        }
-    }
+	
+	func getAllFCMTokens(for user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping ([String]) -> Void) {
+		db.collection("users").whereField("id", isEqualTo: user.id).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					let user = User(dictionary: userQuery.first!.data())
+					onSuccess(user!.fcmTokens)
+				}
+			}
+		}
+	}
 }

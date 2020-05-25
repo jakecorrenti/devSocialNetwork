@@ -43,7 +43,7 @@ class LoginVC: UIViewController {
     
     lazy var forgotPasswordButton: UIButton = {
         let view = UIButton(type: .system)
-        view.setTitle("Forget password?", for: .normal)
+        view.setTitle("Forgot password?", for: .normal)
         view.titleLabel?.font = .boldSystemFont(ofSize: 15)
         view.setTitleColor(UIColor(named: ColorNames.mainColor), for: .normal)
         view.addTarget(self, action: #selector(forgotPasswordButtonPressed), for: .touchUpInside)

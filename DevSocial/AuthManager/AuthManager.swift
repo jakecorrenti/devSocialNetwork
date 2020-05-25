@@ -20,10 +20,16 @@ final class AuthManager {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 onError(error)
-            }
+			} else {
+				//MARK: - update user login state
+				self.addFCMToken { (error) in
+					if let error = error { onError(error) }
+				}
+			}
         }
     }
 
+	/// signs the user in with Apple given the credentials and user specified
     func signInWithAppleUser(credential: AuthCredential, user: ASAuthorizationAppleIDCredential, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
         let firstName = user.fullName?.givenName ?? ""
         let lastName  = user.fullName?.familyName ?? ""
@@ -36,6 +42,7 @@ final class AuthManager {
         })
     }
 
+	/// signs the user in with Google given the credentials and user specified
     func signInWithGoogleUser(credential: AuthCredential, user: GIDGoogleUser, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
         let firstName = user.profile.givenName ?? ""
         let lastName  = user.profile.familyName ?? ""
@@ -61,7 +68,7 @@ final class AuthManager {
 						email       : email,
 						dateCreated : Timestamp(),
 						id          : Auth.auth().currentUser!.uid,
-						fcmToken    : fcmToken,
+						fcmTokens   : [fcmToken],
 						headline    : ""
 					)
 					
@@ -89,6 +96,11 @@ final class AuthManager {
 											}
 										}
 									}
+								}
+							} else {
+								//MARK: - Update user login state
+								self.addFCMToken { (error) in
+									if let error = error { onError(error) }
 								}
 							}
 						}
@@ -121,7 +133,7 @@ final class AuthManager {
 								email		: email,
 								dateCreated : Timestamp(),
 								id			: self.auth.currentUser!.uid,
-								fcmToken	: fcmToken,
+								fcmTokens	: [fcmToken],
 								headline	: ""
 							)
 							
@@ -143,6 +155,7 @@ final class AuthManager {
         }
     }
     
+	/// gets the FCM Token that is associated with the device so that push notifications can be sent to it
     func getFCMToken(onSuccess: @escaping (_ token: String) -> Void) {
         
         InstanceID.instanceID().instanceID { (result, error) in
@@ -154,4 +167,62 @@ final class AuthManager {
           }
         }
     }
+	
+	/// parses Firestore for the user object that has the same ID as the current user and returns it as a User object
+	func getFirebaseUserAsUserObject(onSucess: @escaping (User) -> Void, onError: @escaping (Error?) -> Void) {
+		let db = Firestore.firestore()
+		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					let user = User(dictionary: userQuery.first!.data())
+					onSucess(user!)
+				}
+			}
+		}
+	}
+	
+	func addFCMToken(onError: @escaping (Error?) -> Void) {
+		self.getFCMToken { (token) in
+			let db = Firestore.firestore()
+			db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+				if let error = error {
+					onError(error)
+				} else {
+					guard let userQuery = userQuery?.documents else { return }
+					if userQuery.count == 1 {
+						var user = User(dictionary: userQuery.first!.data())
+						user!.addToken(token: token)
+						userQuery.first?.reference.updateData(["fcmTokens" : user?.fcmTokens], completion: { (error) in
+							if let error = error { onError(error) }
+						})
+					}
+				}
+			}
+		}
+	}
+	
+	func removeFCMToken(onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+		self.getFCMToken { (token) in
+			let db = Firestore.firestore()
+			db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+				if let error = error {
+					onError(error)
+				} else {
+					guard let userQuery = userQuery?.documents else { return }
+					if userQuery.count == 1 {
+						var user = User(dictionary: userQuery.first!.data())
+						user?.removeToken(token: token)
+						userQuery.first?.reference.updateData(["fcmTokens" : user?.fcmTokens], completion: { (error) in
+							if let error = error { onError(error) } else {
+								onSuccess()
+							}
+						})
+					}
+				}
+			}
+		}
+	}
 }
