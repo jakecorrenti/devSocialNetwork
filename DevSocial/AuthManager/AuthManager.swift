@@ -22,7 +22,7 @@ final class AuthManager {
                 onError(error)
 			} else {
 				//MARK: - update user login state
-				self.updateCurrentUserLoginStatus { (error) in
+				self.addFCMToken { (error) in
 					if let error = error { onError(error) }
 				}
 			}
@@ -68,9 +68,8 @@ final class AuthManager {
 						email       : email,
 						dateCreated : Timestamp(),
 						id          : Auth.auth().currentUser!.uid,
-						fcmToken    : fcmToken,
-						headline    : "",
-						isLoggedIn  : true
+						fcmTokens   : [fcmToken],
+						headline    : ""
 					)
 					
 					Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
@@ -100,7 +99,7 @@ final class AuthManager {
 								}
 							} else {
 								//MARK: - Update user login state
-								self.updateCurrentUserLoginStatus { (error) in
+								self.addFCMToken { (error) in
 									if let error = error { onError(error) }
 								}
 							}
@@ -134,9 +133,8 @@ final class AuthManager {
 								email		: email,
 								dateCreated : Timestamp(),
 								id			: self.auth.currentUser!.uid,
-								fcmToken	: fcmToken,
-								headline	: "",
-								isLoggedIn  : true
+								fcmTokens	: [fcmToken],
+								headline	: ""
 							)
 							
 							storageContext.saveUser(user: user, onError: { (error) in
@@ -186,60 +184,43 @@ final class AuthManager {
 		}
 	}
 	
-	/// updates the login status for the given user
-	func updateLoggedInStatus(for user: User, onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
-		let db = Firestore.firestore()
-		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
-			if let error = error {
-				onError(error)
-			} else {
-				guard let userQuery = userQuery?.documents else { return }
-				if userQuery.count == 1 {
-					userQuery.first?.reference.updateData(["isLoggedIn" : !user.isLoggedIn], completion: { (error) in
-						if let error = error { onError(error) } else { onSuccess() }
-					})
+	func addFCMToken(onError: @escaping (Error?) -> Void) {
+		self.getFCMToken { (token) in
+			let db = Firestore.firestore()
+			db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+				if let error = error {
+					onError(error)
+				} else {
+					guard let userQuery = userQuery?.documents else { return }
+					if userQuery.count == 1 {
+						var user = User(dictionary: userQuery.first!.data())
+						user!.addToken(token: token)
+						userQuery.first?.reference.updateData(["fcmTokens" : user?.fcmTokens], completion: { (error) in
+							if let error = error { onError(error) }
+						})
+					}
 				}
 			}
 		}
 	}
 	
-	/// updates the login status for the current user
-	func updateCurrentUserLoginStatus(onError: @escaping (Error?) -> Void) {
-		getFirebaseUserAsUserObject(onSucess: { [weak self] (userObject) in
-			guard let self = self else { return }
-			self.updateLoggedInStatus(for: userObject, onSuccess: { }) { (error) in
-				if let error = error { onError(error) }
-			}
-		}) { (error) in
-			if let error = error { onError(error) }
-		}
-	}
-	
-	/// updates the login status for the current user
-	func updateCurrentUserLoginStatus(onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
-		getFirebaseUserAsUserObject(onSucess: { [weak self] (userObject) in
-			guard let self = self else { return }
-			self.updateLoggedInStatus(for: userObject, onSuccess: {
-				onSuccess()
-			}) { (error) in
-				if let error = error { onError(error) }
-			}
-		}) { (error) in
-			if let error = error { onError(error) }
-		}
-	}
-	
-	/// retrieves the login status for the given user
-	func getLoggedInStatus(for user: User, onSuccess: @escaping (Bool) -> Void, onError: @escaping (Error?) -> Void) {
-		let db = Firestore.firestore()
-		db.collection("users").whereField("id", isEqualTo: user.id).getDocuments { (userQuery, error) in
-			if let error = error {
-				onError(error)
-			} else {
-				guard let userQuery = userQuery?.documents else { return }
-				if userQuery.count == 1 {
-					let user = User(dictionary: userQuery.first!.data())
-					onSuccess(user!.isLoggedIn)
+	func removeFCMToken(onSuccess: @escaping () -> Void, onError: @escaping (Error?) -> Void) {
+		self.getFCMToken { (token) in
+			let db = Firestore.firestore()
+			db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
+				if let error = error {
+					onError(error)
+				} else {
+					guard let userQuery = userQuery?.documents else { return }
+					if userQuery.count == 1 {
+						var user = User(dictionary: userQuery.first!.data())
+						user?.removeToken(token: token)
+						userQuery.first?.reference.updateData(["fcmTokens" : user?.fcmTokens], completion: { (error) in
+							if let error = error { onError(error) } else {
+								onSuccess()
+							}
+						})
+					}
 				}
 			}
 		}

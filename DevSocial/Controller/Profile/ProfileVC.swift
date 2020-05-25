@@ -52,7 +52,7 @@ class ProfileVC : UIViewController {
     }
     
     @objc func signout() {
-		AuthManager.shared.updateCurrentUserLoginStatus(onSuccess: {
+		AuthManager.shared.removeFCMToken(onSuccess: {
 			let firebaseAuth = Auth.auth()
 			do {
 				try firebaseAuth.signOut()

@@ -21,8 +21,7 @@ class FirebaseStorageContext: StorageContext {
             "email"       : user.email,
             "dateCreated" : user.dateCreated,
             "id"          : user.id,
-            "fcmToken"    : user.fcmToken,
-			"isLoggedIn"  : user.isLoggedIn
+            "fcmTokens"   : user.fcmTokens
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -37,8 +36,7 @@ class FirebaseStorageContext: StorageContext {
             "email"       : user.email,
             "dateCreated" : user.dateCreated,
             "id"          : user.id,
-            "fcmToken"    : user.fcmToken,
-			"isLoggedIn"  : user.isLoggedIn
+            "fcmTokens"   : user.fcmTokens
         ]) { (error) in
             if let error = error {
                 onError(error)
@@ -70,9 +68,8 @@ class FirebaseStorageContext: StorageContext {
                         email: document.data()["email"] as! String,
                         dateCreated: Timestamp(),
                         id: document.data()["id"] as! String,
-                        fcmToken: document.data()["fcmToken"] as? String,
-                        headline: document.data()["headline"] as? String ?? "New User",
-						isLoggedIn: document.data()["isLoggedIn"] as! Bool
+                        fcmTokens: document.data()["fcmTokens"] as! [String],
+                        headline: document.data()["headline"] as? String ?? "New User"
                     ))
                 }
                 onSuccess(users)
@@ -141,10 +138,9 @@ class FirebaseStorageContext: StorageContext {
 										email           : user["email"] as? String ?? "",
 										dateCreated     : user["dateCreated"] as! Timestamp,
 										id              : user["id"] as? String ?? "",
-										fcmToken        : user["fcmToken"] as? String ?? "",
-										headline        : user["headline"] as? String ?? "New User",
-										//MARK: - REDO THIS TYPE SO THAT NOT ALL USER PROPERTIES ARE NOT BEING SAVED, ONLY ID
-										isLoggedIn      : user["isLoggedIn"] as? Bool ?? true
+										//MARK: - UPDATE POST MODELS TO NOT REQUIRE THIS
+										fcmTokens       : user["fcmTokens"] as? [String] ?? [String](),
+										headline        : user["headline"] as? String ?? "New User"
                                       ),
                         datePosted    : results["datePosted"] as! Timestamp,
                         lastEdited    : results["lastEdited"] as? Timestamp ?? nil,
@@ -217,4 +213,6 @@ class FirebaseStorageContext: StorageContext {
             }
         }
     }
+	
+	func getAllFCMTokens(for user: User, onError: @escaping )
 }

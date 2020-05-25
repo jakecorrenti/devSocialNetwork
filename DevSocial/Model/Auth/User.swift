@@ -14,17 +14,15 @@ struct User: Hashable {
     let email       : String
     let dateCreated : Timestamp
     let id          : String
-    let fcmToken    : String?
+    var fcmTokens   : [String]
     let headline    : String
-	let isLoggedIn  : Bool
 	var dictionary  : [String : Any] {
 		return [
 			"username"    : username,
 			"email"       : email,
 			"dateCreated" : dateCreated,
 			"id" 		  : id,
-			"fcmToken"    : fcmToken,
-			"isLoggedIn"  : isLoggedIn
+			"fcmTokens"   : fcmTokens
 		]
 	}
 }
@@ -35,8 +33,7 @@ extension User {
 		let email 		   = dictionary["email"] as? String,
 		let dateCreated    = dictionary["dateCreated"] as? Timestamp,
 		let id 			   = dictionary["id"] as? String,
-		let isLoggedIn     = dictionary["isLoggedIn"] as? Bool,
-		let fcmToken       = dictionary["fcmToken"] as? String else { return nil }
+		let fcmTokens      = dictionary["fcmTokens"] as? [String] else { return nil }
 		// since the headline is not in the database, it would produce nil and not return the object 
 		
 		self.init(
@@ -44,10 +41,20 @@ extension User {
 			email		: email,
 			dateCreated : dateCreated,
 			id			: id,
-			fcmToken	: fcmToken,
-			headline    : "",
-			isLoggedIn  : isLoggedIn
+			fcmTokens   : fcmTokens,
+			headline    : ""
 		)
+	}
+	
+	mutating func addToken(token: String) {
+		fcmTokens.append(token)
+	}
+	
+	mutating func removeToken(token: String) {
+		let index = fcmTokens.firstIndex(of: token)
+		if let index = index {
+			fcmTokens.remove(at: index)
+		}
 	}
 }
 

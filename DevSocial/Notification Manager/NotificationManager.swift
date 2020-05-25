@@ -14,8 +14,8 @@ final class NotificationManager {
     
 	func sendPushNotification(to user: User, token: String, title: String, body: String) {
 		
-		AuthManager.shared.getLoggedInStatus(for: user, onSuccess: { (status) in
-			if status {
+//		AuthManager.shared.getLoggedInStatus(for: user, onSuccess: { (status) in
+//			if status {
 			   let urlString = "https://fcm.googleapis.com/fcm/send"
 			   let url = NSURL(string: urlString)!
 			   let paramString: [String : Any] = ["to" : token,
@@ -39,12 +39,12 @@ final class NotificationManager {
 				   }
 			   }
 			   task.resume()
-			}
-		}) { (error) in
-			if let error = error {
-				print("Error: \(error.localizedDescription)")
-			}
-		}
+//			}
+//		}) { (error) in
+//			if let error = error {
+//				print("Error: \(error.localizedDescription)")
+//			}
+//		}
 		
        
     }
