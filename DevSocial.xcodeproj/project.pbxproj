@@ -231,6 +231,7 @@
 		3E33CDC2242FFFFC00C8DE64 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3E4712D5247B7D7A00E2D985 /* Home */,
 				3EAE531324383A7500A708F6 /* General */,
 				3E0B0E0B243123C000F92618 /* Auth */,
 				3E5EC9832432C86500744959 /* Messaging */,
@@ -318,6 +319,14 @@
 			path = DevSocial;
 			sourceTree = "<group>";
 		};
+		3E4712D5247B7D7A00E2D985 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				AE00CBC8243856E600685F0C /* Post.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		3E5EC97E24328DBB00744959 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,7 +383,6 @@
 		3EAE531324383A7500A708F6 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				AE00CBC8243856E600685F0C /* Post.swift */,
 				3E33CDC7243001DF00C8DE64 /* Constants.swift */,
 				3E0B0E18243159FF00F92618 /* Alert.swift */,
 			);
