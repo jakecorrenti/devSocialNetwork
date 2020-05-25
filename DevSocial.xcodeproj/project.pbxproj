@@ -223,7 +223,6 @@
 				AE9216D624341C68002D6971 /* Home Cells */,
 				3E33CDD22430470500C8DE64 /* General */,
 				3E33CDD72430555C00C8DE64 /* Auth */,
-				AE35A61C246DC26C00FD5F0C /* UserCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -264,6 +263,7 @@
 		3E33CDD22430470500C8DE64 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				AE35A61C246DC26C00FD5F0C /* UserCell.swift */,
 				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
 				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
 				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
