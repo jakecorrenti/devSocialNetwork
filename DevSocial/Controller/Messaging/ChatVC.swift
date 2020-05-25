@@ -212,16 +212,7 @@ class ChatVC: UIViewController {
 	}
 	
 	private func sendNotificationToUser(for message: Message) {
-		FirebaseStorageContext.shared.getFCMToken(for: selectedUser, onError: { (error) in
-            if let error = error {
-                Alert.showBasicAlert(on: self, with: "Oh no!", message: error.localizedDescription)
-            }
-        }) { [weak self] (token) in
-			guard let self = self else { return }
-            if let token = token {
-				NotificationManager.shared.sendPushNotification(to: self.selectedUser, token: token, title: message.senderName, body: message.content)
-            }
-        }
+		NotificationManager.shared.sendPushNotification(to: selectedUser, title: message.senderName, body: message.content)
 	}
 
 	private func handleSendButtonState() {

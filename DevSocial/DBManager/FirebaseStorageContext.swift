@@ -64,12 +64,12 @@ class FirebaseStorageContext: StorageContext {
                 var users = [User]()
                 for document in snapshot!.documents where document.data()["id"] as? String != Auth.auth().currentUser?.uid {
                     users.append(User(
-                        username: document.data()["username"] as! String,
-                        email: document.data()["email"] as! String,
-                        dateCreated: Timestamp(),
-                        id: document.data()["id"] as! String,
-                        fcmTokens: document.data()["fcmTokens"] as! [String],
-                        headline: document.data()["headline"] as? String ?? "New User"
+                        username	: document.data()["username"] as! String,
+                        email		: document.data()["email"] as! String,
+                        dateCreated : Timestamp(),
+                        id		    : document.data()["id"] as! String,
+                        fcmTokens   : document.data()["fcmTokens"] as! [String],
+                        headline    : document.data()["headline"] as? String ?? "New User"
                     ))
                 }
                 onSuccess(users)
@@ -173,46 +173,18 @@ class FirebaseStorageContext: StorageContext {
             }
         }
     }
-    
-    func updateFCMToken(onError: @escaping (Error?) -> Void) {
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                onError(error)
-            } else if let result = result {
-                self.db.collection("users").getDocuments { (snapshot, error) in
-                    if let error = error {
-                        onError(error)
-                    } else {
-                        for document in snapshot!.documents {
-                            if document.data()["id"] as? String == Auth.auth().currentUser?.uid {
-                                document.reference.updateData([
-                                    "fcmToken" : result.token
-                                ]) { (error) in
-                                    if let error = error {
-                                        onError(error)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func getFCMToken(for user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping (String?) -> Void) {
-        self.db.collection("users").getDocuments { (snapshot, error) in
-            if let error = error {
-                onError(error)
-            } else {
-                for document in snapshot!.documents {
-                    if document.data()["id"] as? String == user.id {
-                        onSuccess(document.data()["fcmToken"] as? String)
-                    }
-                }
-            }
-        }
-    }
 	
-	func getAllFCMTokens(for user: User, onError: @escaping )
+	func getAllFCMTokens(for user: User, onError: @escaping (Error?) -> Void, onSuccess: @escaping ([String]) -> Void) {
+		db.collection("users").whereField("id", isEqualTo: user.id).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					let user = User(dictionary: userQuery.first!.data())
+					onSuccess(user!.fcmTokens)
+				}
+			}
+		}
+	}
 }
