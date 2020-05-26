@@ -74,8 +74,10 @@ class HomeVC: UITableViewController {
         
         extendedLayoutIncludesOpaqueBars = true
         
-        let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
-        navigationItem.rightBarButtonItem = messages
+		let messagesButton 	 = BadgeButton(type: .system)
+		messagesButton.image = UIImage(systemName: Images.messages)
+		messagesButton.addTarget(self, action: #selector(messagesButtonPressed), for: .touchUpInside)
+		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: messagesButton)
         
         let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPressed))
         navigationItem.leftBarButtonItem = newPost

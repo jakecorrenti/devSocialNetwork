@@ -425,4 +425,8 @@ final class MessagesManager {
 		})
 	}
 
+    func getNumberOfUnreadMessages(onSuccess: @escaping (Int) -> Void, onError: @escaping (Error?) -> Void) {
+
+    }
+
 }
