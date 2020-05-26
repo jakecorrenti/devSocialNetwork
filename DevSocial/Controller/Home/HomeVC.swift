@@ -35,6 +35,13 @@ class HomeVC: UITableViewController {
         button.addTarget(self, action: #selector(addPostButtonPressed), for: .touchUpInside)
         return button
     }()
+	
+	lazy var messagesButton: BadgeButton = {
+		let view   = BadgeButton(type: .system)
+		view.image = UIImage(systemName: Images.messages)
+		view.addTarget(self, action: #selector(messagesButtonPressed), for: .touchUpInside)
+		return view
+	}()
     
     // -----------------------------------------
     // MARK: Lifecycle
@@ -44,6 +51,7 @@ class HomeVC: UITableViewController {
         super.viewWillAppear(animated)
         
         loadData()
+		checkUnreadMessages()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,7 +64,6 @@ class HomeVC: UITableViewController {
         
         setupNavBar()
         setupUI()
-
     }
     
     // -----------------------------------------
@@ -73,9 +80,7 @@ class HomeVC: UITableViewController {
         self.navigationController?.navigationBar.isTranslucent = false
         
         extendedLayoutIncludesOpaqueBars = true
-        
-        let messages = UIBarButtonItem(image: UIImage(systemName: Images.messages), style: .plain, target: self, action: #selector(messagesButtonPressed))
-        navigationItem.rightBarButtonItem = messages
+		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: messagesButton)
         
         let newPost = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostButtonPressed))
         navigationItem.leftBarButtonItem = newPost
@@ -99,6 +104,21 @@ class HomeVC: UITableViewController {
         addPostButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
         addPostButton.layer.cornerRadius = 65/2
     }
+	
+	private func checkUnreadMessages() {
+		MessagesManager.shared.areUnreadMessagesPending(onSuccess: { [weak self] (unreadStatus) in
+			if unreadStatus {
+				self?.messagesButton.badge.isHidden = false
+			} else {
+				self?.messagesButton.badge.isHidden = true
+			}
+		}) { [weak self] (error) in
+			guard let self = self else { return }
+			if let error = error {
+				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+			}
+		}
+	}
     
     private func loadData() {
         let manager = FirebaseStorageContext()
