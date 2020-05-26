@@ -409,6 +409,7 @@ final class MessagesManager {
 						} else {
 							if !hiddenUsers.contains(Auth.auth().currentUser!.uid) {
 								messagedUsersIDs.append(user)
+
 							}
 						}
 					}

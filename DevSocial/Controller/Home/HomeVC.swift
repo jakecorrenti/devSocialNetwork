@@ -107,7 +107,6 @@ class HomeVC: UITableViewController {
 	
 	private func checkUnreadMessages() {
 		MessagesManager.shared.areUnreadMessagesPending(onSuccess: { [weak self] (unreadStatus) in
-			print(unreadStatus)
 			if unreadStatus {
 				self?.messagesButton.badge.isHidden = false
 			} else {
