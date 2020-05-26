@@ -24,11 +24,11 @@ class BadgeButton: UIButton {
     // MARK: Views
     // -----------------------------------------
 	
-	private lazy var badge: UIView = {
+	lazy var badge: UIView = {
 		let view = UIView()
 		view.isHidden = true 
 		view.backgroundColor = UIColor(named: ColorNames.destructiveRed)
-		view.layer.cornerRadius = 10
+		view.layer.cornerRadius = 7.5
 		return view
 	}()
 	
@@ -63,8 +63,8 @@ class BadgeButton: UIButton {
 		NSLayoutConstraint.activate([
 			badge.centerXAnchor.constraint(equalTo: trailingAnchor),
 			badge.centerYAnchor.constraint(equalTo: topAnchor),
-			badge.heightAnchor.constraint(equalToConstant: 20),
-			badge.widthAnchor.constraint(equalToConstant: 20)
+			badge.heightAnchor.constraint(equalToConstant: 15),
+			badge.widthAnchor.constraint(equalToConstant: 15)
 		])
 	}
 }

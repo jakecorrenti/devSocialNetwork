@@ -425,8 +425,26 @@ final class MessagesManager {
 		})
 	}
 
-    func getNumberOfUnreadMessages(onSuccess: @escaping (Int) -> Void, onError: @escaping (Error?) -> Void) {
-
+    /// determines if there is an unread message, and if it returns true, the badge for the messages icon will show
+    func areUnreadMessagesPending(onSuccess: @escaping (Bool) -> Void, onError: @escaping (Error?) -> Void) {
+		getMessagedUsers(onSuccess: { [weak self] (users, listener) in
+			users.forEach { user in
+				self?.getLastSentChat(with: user, onSuccess: { (message) in
+					if message?.senderID != Auth.auth().currentUser!.uid && !message!.wasRead {
+						listener.remove()
+						DispatchQueue.main.async {
+							onSuccess(true)
+						}
+					}
+				})
+			}
+			listener.remove()
+			onSuccess(false)
+		}) { (error) in
+			if let error = error {
+				onError(error)
+			}
+		}
     }
 
 }
