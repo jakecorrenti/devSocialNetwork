@@ -158,7 +158,6 @@ class ChatVC: UIViewController {
 			}
 		}) { [weak self] (messages, docReference, listener) in
 			guard let self 		   = self else { return }
-			if let currentListener = self.threadListener { currentListener.remove() }
 			self.messages          = messages
 			self.docReference      = docReference
 			self.threadListener    = listener
