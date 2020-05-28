@@ -13,7 +13,7 @@ import Firebase
 class FirebaseStorageContext: StorageContext {
     static let shared = FirebaseStorageContext()
     let db = Firestore.firestore()
-    
+	
     /// save the given user to Firestore
     func saveUser(user: User, onError: @escaping (Error?) -> Void) {
         db.collection("users").document(user.id).setData([

@@ -33,7 +33,6 @@ extension User {
 		let dateCreated    = dictionary["dateCreated"] as? Timestamp,
 		let id 			   = dictionary["id"] as? String,
 		let fcmTokens      = dictionary["fcmTokens"] as? [String] else { return nil }
-		// since the headline is not in the database, it would produce nil and not return the object 
 		
 		self.init(
 			username	: username,
