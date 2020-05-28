@@ -68,8 +68,7 @@ class FirebaseStorageContext: StorageContext {
                         email		: document.data()["email"] as! String,
                         dateCreated : Timestamp(),
                         id		    : document.data()["id"] as! String,
-                        fcmTokens   : document.data()["fcmTokens"] as! [String],
-                        headline    : document.data()["headline"] as? String ?? "New User"
+                        fcmTokens   : document.data()["fcmTokens"] as! [String]
                     ))
                 }
                 onSuccess(users)
@@ -91,66 +90,7 @@ class FirebaseStorageContext: StorageContext {
 			}
 		}
 	}
-    
-    func createPost(post: Post, onError: @escaping (_ error: Error?) -> Void, onSuccess: @escaping () -> Void) {
-                
-        db.collection("posts").document(post.uid).setData([
-            "title"       : post.title,
-            "type"        : post.type.rawValue,
-            "desc"        : post.desc ?? "",
-            "uid"         : post.uid,
-            "user"        : ["username"     :post.profile.username,
-                             "email"        :post.profile.email,
-                             "headline"     :post.profile.headline,
-                             "dateCreated"  :post.profile.dateCreated,
-                             "id"           :post.profile.id
-                            ],
-            "datePosted"  : post.datePosted,
-            "lastEdited"  : post.lastEdited ?? "",
-            "keywords"    : post.keywords
-        ]) { (error) in
-            if let error = error {
-                onError(error)
-            }
-        }
-        
-        onSuccess()
-    }
-    
-    func getConnectionPosts(onSuccess: @escaping (_ posts: [Post]) -> Void) {
-        db.collection("posts").getDocuments { (snapshot, error) in
-            if let error = error {
-                Alert.showBasicAlert(on: MyMessagesVC(), with: error.localizedDescription)
-            } else {
-                var posts = [Post]()
-                for document in snapshot!.documents {
-                    
-                    let results = document.data()
-                    
-                    if let user = results["user"] as? [String: Any] {
-                        posts.append(Post(
-                        title         : results["title"] as! String,
-                        type          : PostType(results["type"] as! String) ?? .empty,
-                        desc          : results["desc"] as? String ?? "",
-                        uid           : results["uid"] as! String,
-                        profile: User (
-										username        : user["username"] as? String ?? "",
-										email           : user["email"] as? String ?? "",
-										dateCreated     : user["dateCreated"] as! Timestamp,
-										id              : user["id"] as? String ?? "",
-										//MARK: - UPDATE POST MODELS TO NOT REQUIRE THIS
-										fcmTokens       : user["fcmTokens"] as? [String] ?? [String](),
-										headline        : user["headline"] as? String ?? "New User"
-                                      ),
-                        datePosted    : results["datePosted"] as! Timestamp,
-                        lastEdited    : results["lastEdited"] as? Timestamp ?? nil,
-                        keywords      : results["keywords"] as! [String]))
-                    }
-                }
-                onSuccess(posts)
-            }
-        }
-    }
+
   
     func checkUsernameExists(username: String, onError: @escaping (Error?) -> Void, nameExists: @escaping (Bool?) -> Void) {
         db.collection("usernames").document(username.lowercased()).getDocument { (document, error) in

@@ -15,7 +15,6 @@ struct User: Hashable {
     let dateCreated : Timestamp
     let id          : String
     var fcmTokens   : [String]
-    let headline    : String
 	var dictionary  : [String : Any] {
 		return [
 			"username"    : username,
@@ -41,8 +40,7 @@ extension User {
 			email		: email,
 			dateCreated : dateCreated,
 			id			: id,
-			fcmTokens   : fcmTokens,
-			headline    : ""
+			fcmTokens   : fcmTokens
 		)
 	}
 	

@@ -68,8 +68,7 @@ final class AuthManager {
 						email       : email,
 						dateCreated : Timestamp(),
 						id          : Auth.auth().currentUser!.uid,
-						fcmTokens   : [fcmToken],
-						headline    : ""
+						fcmTokens   : [fcmToken]
 					)
 					
 					Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
@@ -133,8 +132,7 @@ final class AuthManager {
 								email		: email,
 								dateCreated : Timestamp(),
 								id			: self.auth.currentUser!.uid,
-								fcmTokens	: [fcmToken],
-								headline	: ""
+								fcmTokens	: [fcmToken]
 							)
 							
 							storageContext.saveUser(user: user, onError: { (error) in
