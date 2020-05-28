@@ -45,7 +45,7 @@ class PagingVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
+		view.backgroundColor = .systemBackground
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
@@ -53,21 +53,20 @@ class PagingVC: UIViewController {
     private func setupPagingViews() {
         let login   = LoginVC()
         let signUp  = SignupVC()
-        let bgColor = UIColor(named: ColorNames.background)
         
         login.title  = "Login"
         signUp.title = "Sign up"
         
         pagingController 						        = PagingViewController(viewControllers: [login, signUp])
         pagingController.textColor 				        = .systemGray
-        pagingController.backgroundColor 		        = bgColor!
-        pagingController.selectedBackgroundColor        = bgColor!
+		pagingController.backgroundColor 		        = .systemBackground
+        pagingController.selectedBackgroundColor        = .systemBackground
         pagingController.selectedTextColor 	            = UIColor(named: ColorNames.mainColor)!
         pagingController.indicatorOptions 	 	        = .hidden
         pagingController.borderOptions 		 	        = .hidden
         pagingController.menuItemSize 		 	        = .fixed(width: 100, height: 25)
-        pagingController.menuBackgroundColor 	        = bgColor!
-        pagingController.collectionView.backgroundColor = bgColor
+        pagingController.menuBackgroundColor 	        = .systemBackground
+        pagingController.collectionView.backgroundColor = .systemBackground
     }
     
     private func setupUI() {

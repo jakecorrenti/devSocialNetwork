@@ -22,7 +22,7 @@ extension ChatVC: UITableViewDelegate {
         label.text = sectionDate == currentDate ? "Today" : sectionDate
         
         label.textAlignment = .center
-        label.backgroundColor = UIColor(named: ColorNames.background)
+        label.backgroundColor = .systemBackground
         label.textColor = .systemGray3
         return label
     }

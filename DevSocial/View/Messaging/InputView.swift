@@ -17,14 +17,14 @@ class InputView: UIView {
 	lazy var bgView: UIView = {
 		let view 			    = UIView()
 		view.layer.cornerRadius = 12
-		view.backgroundColor    = UIColor(named: ColorNames.accessory)
+		view.backgroundColor    = .secondarySystemBackground
 		return view
 	}()
 	
 	lazy var textView: UITextView = {
 		let view  			 = UITextView()
 		view.font 			 = .systemFont(ofSize: 15)
-		view.backgroundColor = UIColor(named: ColorNames.accessory)
+		view.backgroundColor = .secondarySystemBackground
 		return view
 	}()
 	

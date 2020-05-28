@@ -16,7 +16,7 @@ extension UIViewController {
 	func showLoadingView() {
         containerView = UIView(frame: view.bounds)
         view.addSubview(containerView)
-		containerView.backgroundColor = UIColor(named: ColorNames.background)
+		containerView.backgroundColor = .systemBackground
         containerView.alpha 		  = 0
         
         UIView.animate(withDuration: 0.25) {

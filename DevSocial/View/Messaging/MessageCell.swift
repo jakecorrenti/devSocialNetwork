@@ -23,7 +23,7 @@ class MessageCell: UITableViewCell {
     var message: Message! {
         didSet {
             self.contentLabel.text     = message.content
-            bubbleView.backgroundColor = message.senderID == Auth.auth().currentUser?.uid ? UIColor(named: ColorNames.mainColor) : UIColor(named: ColorNames.accessory)
+			bubbleView.backgroundColor = message.senderID == Auth.auth().currentUser?.uid ? UIColor(named: ColorNames.mainColor) : .secondarySystemBackground
             contentLabel.textColor     = message.senderID == Auth.auth().currentUser?.uid ? .white : UIColor(named: ColorNames.primaryTextColor)
             
             if message.senderID == Auth.auth().currentUser?.uid {

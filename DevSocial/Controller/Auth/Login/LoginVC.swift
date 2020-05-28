@@ -79,7 +79,7 @@ class LoginVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.backgroundColor = .systemBackground
         GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     

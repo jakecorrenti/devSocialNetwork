@@ -54,20 +54,11 @@
 		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB034124562F17001EC067 /* NewChat + Extension - Table View DataSource.swift */; };
 		AE00CBC9243856E600685F0C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBC8243856E600685F0C /* Post.swift */; };
-		AE00CBCC2438570400685F0C /* HomeRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBCA2438570400685F0C /* HomeRequestCell.swift */; };
-		AE00CBCD2438570400685F0C /* HomeSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBCB2438570400685F0C /* HomeSearchCell.swift */; };
 		AE00CBCF2438572600685F0C /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBCE2438572600685F0C /* HomeVC.swift */; };
 		AE00CBD12438576300685F0C /* SmileyStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBD02438576300685F0C /* SmileyStack.swift */; };
-		AE0CB7CD2444EFF20025FF2F /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0CB7CC2444EFF20025FF2F /* NewPostVC.swift */; };
 		AE15CF12244E123200316ADF /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */; };
-		AE15CF14244E4C6B00316ADF /* NewPostVC Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF13244E4C6B00316ADF /* NewPostVC Extension + UITableView.swift */; };
-		AE15CF17244E54B000316ADF /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF16244E54B000316ADF /* TextFieldCell.swift */; };
-		AE15CF19244E57BF00316ADF /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF18244E57BF00316ADF /* TextViewCell.swift */; };
-		AE35A61D246DC26C00FD5F0C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35A61C246DC26C00FD5F0C /* UserCell.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
 		AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB22454FA240000F47F /* Extension + Date.swift */; };
-		AE713AB5245520220000F47F /* NewKeywordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB4245520220000F47F /* NewKeywordsVC.swift */; };
-		AE713AB7245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB6245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift */; };
 		AEB726792432878B006923CA /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB726782432878B006923CA /* ExploreVC.swift */; };
 		AEB7267E24328803006923CA /* ActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB7267D24328803006923CA /* ActivityVC.swift */; };
 		AEB7268024328814006923CA /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB7267F24328814006923CA /* ProfileVC.swift */; };
@@ -127,20 +118,11 @@
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
 		87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSocial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE00CBC8243856E600685F0C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		AE00CBCA2438570400685F0C /* HomeRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRequestCell.swift; sourceTree = "<group>"; };
-		AE00CBCB2438570400685F0C /* HomeSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSearchCell.swift; sourceTree = "<group>"; };
 		AE00CBCE2438572600685F0C /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		AE00CBD02438576300685F0C /* SmileyStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmileyStack.swift; sourceTree = "<group>"; };
-		AE0CB7CC2444EFF20025FF2F /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
-		AE15CF13244E4C6B00316ADF /* NewPostVC Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPostVC Extension + UITableView.swift"; sourceTree = "<group>"; };
-		AE15CF16244E54B000316ADF /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
-		AE15CF18244E57BF00316ADF /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
-		AE35A61C246DC26C00FD5F0C /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		AE382E25242FF27700EED32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AE713AB22454FA240000F47F /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
-		AE713AB4245520220000F47F /* NewKeywordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKeywordsVC.swift; sourceTree = "<group>"; };
-		AE713AB6245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewKeywordsVC Extension + UITableView.swift"; sourceTree = "<group>"; };
 		AEB726782432878B006923CA /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
 		AEB7267D24328803006923CA /* ActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityVC.swift; sourceTree = "<group>"; };
 		AEB7267F24328814006923CA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -206,7 +188,6 @@
 		3E33CDC0242FFFEF00C8DE64 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				AE0CB7CB2444EFD90025FF2F /* Post */,
 				3E5EC97E24328DBB00744959 /* Messaging */,
 				3E0B0E1024314A0C00F92618 /* Home */,
 				AEB7267A243287E4006923CA /* Explore */,
@@ -220,9 +201,7 @@
 		3E33CDC1242FFFF700C8DE64 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AE15CF15244E527600316ADF /* Posts */,
 				3E5EC9882433ADB300744959 /* Messaging */,
-				AE9216D624341C68002D6971 /* Home Cells */,
 				3E33CDD22430470500C8DE64 /* General */,
 				3E33CDD72430555C00C8DE64 /* Auth */,
 			);
@@ -265,7 +244,6 @@
 		3E33CDD22430470500C8DE64 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				AE35A61C246DC26C00FD5F0C /* UserCell.swift */,
 				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
 				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
 				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
@@ -422,41 +400,12 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		AE0CB7CB2444EFD90025FF2F /* Post */ = {
-			isa = PBXGroup;
-			children = (
-				AE0CB7CC2444EFF20025FF2F /* NewPostVC.swift */,
-				AE15CF13244E4C6B00316ADF /* NewPostVC Extension + UITableView.swift */,
-				AE713AB4245520220000F47F /* NewKeywordsVC.swift */,
-				AE713AB6245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift */,
-			);
-			path = Post;
-			sourceTree = "<group>";
-		};
-		AE15CF15244E527600316ADF /* Posts */ = {
-			isa = PBXGroup;
-			children = (
-				AE15CF16244E54B000316ADF /* TextFieldCell.swift */,
-				AE15CF18244E57BF00316ADF /* TextViewCell.swift */,
-			);
-			path = Posts;
-			sourceTree = "<group>";
-		};
 		AE5E73D4243293370079393C /* Sign up */ = {
 			isa = PBXGroup;
 			children = (
 				3E33CDD02430241B00C8DE64 /* SignupVC.swift */,
 			);
 			path = "Sign up";
-			sourceTree = "<group>";
-		};
-		AE9216D624341C68002D6971 /* Home Cells */ = {
-			isa = PBXGroup;
-			children = (
-				AE00CBCA2438570400685F0C /* HomeRequestCell.swift */,
-				AE00CBCB2438570400685F0C /* HomeSearchCell.swift */,
-			);
-			path = "Home Cells";
 			sourceTree = "<group>";
 		};
 		AEB7267A243287E4006923CA /* Explore */ = {
@@ -648,21 +597,17 @@
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
 				3E5EC98E2433D0FB00744959 /* Message.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
-				AE35A61D246DC26C00FD5F0C /* UserCell.swift in Sources */,
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
 				3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */,
 				3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */,
 				3EA207A0243A8CDD00390B21 /* NotificationManager.swift in Sources */,
-				AE713AB7245520D40000F47F /* NewKeywordsVC Extension + UITableView.swift in Sources */,
 				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */,
 				3EDCEDCC24564AD300FF87E3 /* NewChat + Extension - TableView Delegate.swift in Sources */,
 				3E5EC98C2433D05A00744959 /* Chat.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
 				AE00CBC9243856E600685F0C /* Post.swift in Sources */,
-				AE0CB7CD2444EFF20025FF2F /* NewPostVC.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
-				AE15CF14244E4C6B00316ADF /* NewPostVC Extension + UITableView.swift in Sources */,
 				AEB7267E24328803006923CA /* ActivityVC.swift in Sources */,
 				AEB7268024328814006923CA /* ProfileVC.swift in Sources */,
 				AE15CF12244E123200316ADF /* CustomSegmentedControl.swift in Sources */,
@@ -676,10 +621,7 @@
 				3E1B9458246B6AAB00A179C9 /* Extension + UIViewController.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
 				3E5EC98A2433ADC100744959 /* InputView.swift in Sources */,
-				AE713AB5245520220000F47F /* NewKeywordsVC.swift in Sources */,
 				3E0B0E1224314A1C00F92618 /* TabController.swift in Sources */,
-				AE15CF19244E57BF00316ADF /* TextViewCell.swift in Sources */,
-				AE00CBCD2438570400685F0C /* HomeSearchCell.swift in Sources */,
 				3E8614C4245377880053F9A1 /* Chat + Extension - Table View Delegate.swift in Sources */,
 				3E2A6A3024553218008B64C0 /* NewChatVC.swift in Sources */,
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
@@ -691,12 +633,10 @@
 				3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */,
 				3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */,
 				AEB726792432878B006923CA /* ExploreVC.swift in Sources */,
-				AE15CF17244E54B000316ADF /* TextFieldCell.swift in Sources */,
 				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
 				3EC6E12224689FB20035C41D /* MyMessagesEmptyState.swift in Sources */,
 				3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */,
-				AE00CBCC2438570400685F0C /* HomeRequestCell.swift in Sources */,
 				3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 				3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */,

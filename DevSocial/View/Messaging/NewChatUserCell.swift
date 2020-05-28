@@ -21,14 +21,14 @@ class NewChatUserCell: UICollectionViewCell {
 
     lazy var cardBackgroundView: UIView = {
         let view                = UIView()
-        view.backgroundColor    = UIColor(named: ColorNames.accessory)
+        view.backgroundColor    = .secondarySystemBackground
         view.layer.cornerRadius = 12
         return view
     }()
 
     lazy var removeButton: UIButton = {
         let view                = UIButton(type: .system)
-        view.backgroundColor    = UIColor(named: ColorNames.destructiveRed)
+		view.backgroundColor    = .systemRed
         view.layer.cornerRadius = 12.5
         view.titleLabel?.font   = .boldSystemFont(ofSize: 11)
         view.setTitle("X", for: .normal)
