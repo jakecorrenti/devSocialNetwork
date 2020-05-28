@@ -21,7 +21,7 @@ class NewChatUserCell: UICollectionViewCell {
 
     lazy var cardBackgroundView: UIView = {
         let view                = UIView()
-        view.backgroundColor    = UIColor(named: ColorNames.accessory)
+        view.backgroundColor    = .secondarySystemBackground
         view.layer.cornerRadius = 12
         return view
     }()

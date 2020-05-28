@@ -16,7 +16,7 @@ extension ChatVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell             = tableView.dequeueReusableCell(withIdentifier: Cells.messageCell, for: indexPath) as! MessageCell
         cell.message         = messages[indexPath.section][indexPath.row]
-        cell.backgroundColor = UIColor(named: ColorNames.background)
+        cell.backgroundColor = .systemBackground
         cell.selectionStyle  = .none
 		
 		cell.avatarView.initialLabel.text = String(messages[indexPath.section][indexPath.row].senderName.first!)

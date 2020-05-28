@@ -27,16 +27,5 @@ class TabController: UITabBarController {
         profile.tabBarItem  = UITabBarItem(title: "Profile", image: UIImage(systemName: TabImages.profile), tag: 3)
         
         viewControllers     = [home, explore, activity, profile]
-        
-        updateFCMToken()
-    }
-    
-    private func updateFCMToken() {
-//        FirebaseStorageContext.shared.updateFCMToken { [weak self] (error) in
-//			guard let self = self else { return }
-//            if let _ = error {
-//                Alert.showBasicAlert(on: self, with: "Oh no!", message: "please restart your app, there was an error")
-//            }
-//        }
     }
 }

@@ -38,7 +38,7 @@ class NewChatVC: UIViewController {
 		let viewLayout 			   = UICollectionViewFlowLayout()
 		let view 	   			   = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
 		viewLayout.scrollDirection = .horizontal
-		view.backgroundColor 	   = UIColor(named: ColorNames.background)
+		view.backgroundColor 	   = .systemBackground
 		view.dataSource 		   = self
 		view.delegate 			   = self
 		viewLayout.minimumInteritemSpacing = 0
@@ -49,7 +49,7 @@ class NewChatVC: UIViewController {
 	
 	lazy var tableView: UITableView = {
 		let view 			 = UITableView()
-		view.backgroundColor = UIColor(named: ColorNames.background)
+		view.backgroundColor = .systemBackground
 		view.isHidden 		 = true
 		view.dataSource 	 = self
 		view.delegate	     = self
@@ -98,7 +98,7 @@ class NewChatVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-		view.backgroundColor 			  = UIColor(named: ColorNames.background)
+		view.backgroundColor 			  = .systemBackground
 		navigationItem.title 			  = "New chat"
 		navigationItem.backBarButtonItem  = UIBarButtonItem(title : "", style : .plain, target: self, action: nil)
 		nextButton						  = UIBarButtonItem(title : "Next", style : .done, target: self, action: #selector(nextButtonPressed))
@@ -106,8 +106,6 @@ class NewChatVC: UIViewController {
         navigationItem.searchController   = searchController
         definesPresentationContext        = true
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
-        self.navigationController?.navigationBar.isTranslucent = false
         extendedLayoutIncludesOpaqueBars = true
 		
 		nextButton.isEnabled			  = false

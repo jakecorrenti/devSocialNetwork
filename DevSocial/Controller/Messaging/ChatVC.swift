@@ -54,7 +54,7 @@ class ChatVC: UIViewController {
         view.estimatedRowHeight  = 100
         view.separatorStyle      = .none
         view.rowHeight 	         = UITableView.automaticDimension
-        view.backgroundColor     = UIColor(named: ColorNames.background)
+        view.backgroundColor     = .systemBackground
         view.register(MessageCell.self, forCellReuseIdentifier: Cells.messageCell)
         return view
     }()
@@ -100,11 +100,8 @@ class ChatVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.backgroundColor = .systemBackground
         navigationItem.title = selectedUser.username
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
-        self.navigationController?.navigationBar.isTranslucent = false
     }
     
     private func setupUI() {

@@ -33,7 +33,7 @@ class CustomTextField: UITextField {
     private func setupUI() {
         borderStyle = .roundedRect
         font = .systemFont(ofSize: 15)
-        backgroundColor = UIColor(named: ColorNames.background)
+        backgroundColor = .systemBackground
         delegate = self
     }
     

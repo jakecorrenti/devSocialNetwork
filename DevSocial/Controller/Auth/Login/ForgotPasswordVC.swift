@@ -89,7 +89,7 @@ class ForgotPasswordVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.backgroundColor = .systemBackground
         
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)

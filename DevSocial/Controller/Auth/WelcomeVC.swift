@@ -81,7 +81,7 @@ class WelcomeVC: UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
+		view.backgroundColor = .systemBackground
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
     }
     

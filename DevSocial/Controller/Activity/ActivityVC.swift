@@ -37,13 +37,11 @@ class ActivityVC : UIViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
-        self.navigationController?.navigationBar.isTranslucent = false
+		view.backgroundColor = .systemBackground
     }
     
     // TODO: update later
     private func setupUI() {
+		
     }
 }

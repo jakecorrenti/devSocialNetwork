@@ -70,11 +70,8 @@ class MyMessagesVC: UITableViewController {
     // -----------------------------------------
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor(named: ColorNames.background)
+        view.backgroundColor = .systemBackground
         navigationItem.title = "Messages"
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(named: ColorNames.accessory)
-        self.navigationController?.navigationBar.isTranslucent = false
         
         navigationItem.searchController  = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -87,7 +84,7 @@ class MyMessagesVC: UITableViewController {
     }
     
     private func setupUI() {
-        tableView.backgroundColor = UIColor(named: ColorNames.background)
+        tableView.backgroundColor = .systemBackground
         tableView.delegate 		  = self
         tableView.dataSource 	  = self
 		tableView.separatorStyle  = .none
@@ -172,7 +169,7 @@ extension MyMessagesVC {
         let cell		     = tableView.dequeueReusableCell(withIdentifier: Cells.messagedUserCell, for: indexPath) as! MessagedUserCell
 		let user 		     = isFiltering ? filteredUsers[indexPath.row] : users[indexPath.row]
 		cell.selectedUser    = user
-        cell.backgroundColor = UIColor(named: ColorNames.background)
+        cell.backgroundColor = .systemBackground
         return cell
     }
 }

@@ -59,7 +59,7 @@ class MessagedUserCell: UITableViewCell {
 		view.isHidden			= true
         view.backgroundColor 	= UIColor(named: ColorNames.mainColor)
         view.layer.cornerRadius = 7.5
-        view.layer.borderColor  = UIColor(named: ColorNames.background)?.cgColor
+        view.layer.borderColor  = UIColor.systemBackground.cgColor
         view.layer.borderWidth  = 2
         return view
     }()
