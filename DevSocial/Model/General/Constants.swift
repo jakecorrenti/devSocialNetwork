@@ -17,7 +17,6 @@ enum ColorNames {
     static let mainColor          = "mainColor"
     static let primaryTextColor   = "primaryTextColor"
     static let secondaryTextColor = "secondaryTextColor"
-	static let destructiveRed     = "destructiveRed"
 }
 
 enum Images {

@@ -28,7 +28,7 @@ class NewChatUserCell: UICollectionViewCell {
 
     lazy var removeButton: UIButton = {
         let view                = UIButton(type: .system)
-        view.backgroundColor    = UIColor(named: ColorNames.destructiveRed)
+		view.backgroundColor    = .systemRed
         view.layer.cornerRadius = 12.5
         view.titleLabel?.font   = .boldSystemFont(ofSize: 11)
         view.setTitle("X", for: .normal)

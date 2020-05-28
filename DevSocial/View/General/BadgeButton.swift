@@ -27,7 +27,7 @@ class BadgeButton: UIButton {
 	lazy var badge: UIView = {
 		let view = UIView()
 		view.isHidden = true 
-		view.backgroundColor = UIColor(named: ColorNames.destructiveRed)
+		view.backgroundColor = .systemRed
 		view.layer.cornerRadius = 7.5
 		return view
 	}()
