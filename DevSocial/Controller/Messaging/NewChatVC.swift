@@ -105,7 +105,7 @@ class NewChatVC: UIViewController {
         
         navigationItem.searchController   = searchController
         definesPresentationContext        = true
-        
+		navigationItem.hidesSearchBarWhenScrolling = false 
         extendedLayoutIncludesOpaqueBars = true
 		
 		nextButton.isEnabled			  = false

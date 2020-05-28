@@ -166,9 +166,9 @@ class ChatVC: UIViewController {
 
     private func createChat(handler: @escaping (_ docID: String) -> Void) {
 		MessagesManager.shared.createChat(with: selectedUser.id, onError: { [weak self] error in
-            if let error = error {
+            if let _ = error {
 				guard let self = self else { return }
-                Alert.showBasicAlert(on: self, with: error.localizedDescription)
+                Alert.showBasicAlert(on: self, with: "There was an error getting your chat started")
             }
         }, onSuccess: { docID in
             handler(docID)
@@ -177,9 +177,9 @@ class ChatVC: UIViewController {
 
 	private func save(message: Message, docID: String, handler: @escaping () -> Void) {
 		MessagesManager.shared.save(message: message, at: docID, onError: { [weak self] (error) in
-			if let error = error {
+			if let _ = error {
 				guard let self = self else { return }
-				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+				Alert.showBasicAlert(on: self, with: "There was an error sending your message")
 			}
 		}) {
 			handler()
@@ -188,9 +188,9 @@ class ChatVC: UIViewController {
 	
 	private func save(message: Message, docRef: DocumentReference, handler: @escaping () -> Void) {
 		MessagesManager.shared.save(message: message, at: docRef, onError: { [weak self] (error) in
-			if let error = error {
+			if let _ = error {
 				guard let self = self else { return }
-				Alert.showBasicAlert(on: self, with: error.localizedDescription)
+				Alert.showBasicAlert(on: self, with: "There was an error sending your message")
 			}
 		}) {
 			handler()
