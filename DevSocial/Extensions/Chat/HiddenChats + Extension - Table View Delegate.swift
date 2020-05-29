@@ -18,7 +18,7 @@ extension HiddenChatsVC : UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let unhideAction = UIContextualAction(style: .normal, title: "Unhide") { [weak self] (_, _, completionHandler) in
+		let unhideAction = UIContextualAction(style: .normal, title: "Recover") { [weak self] (_, _, completionHandler) in
 			guard let self = self else { return }
 			self.showLoadingView()
 			MessagesManager.shared.unhideChat(with: self.getHiddenUsers()[indexPath.row], at: self.getHiddenChatDocuments()[indexPath.row], onSuccess: { [weak self] in
