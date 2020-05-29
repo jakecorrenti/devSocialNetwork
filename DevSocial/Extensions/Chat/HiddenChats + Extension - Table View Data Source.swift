@@ -11,7 +11,7 @@ import UIKit
 extension HiddenChatsVC: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if getHiddenUsers().count == 0 {
-			tableView.setEmtpyHiddenChatsState()
+			tableView.setEmtpyState(image: UIImage(named: Images.hiddenChatsEmptyState), text: "You currently have no deleted chats to recover")
 		} else {
 			tableView.restoreState()
 		}

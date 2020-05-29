@@ -165,7 +165,7 @@ extension MyMessagesVC {
         }
 		
 		if users.count == 0 {
-			tableView.setEmptyMessagesState()
+			tableView.setEmtpyState(image: UIImage(named: Images.myMessagesEmptyState), text: "You currently have no messages. \n Press \'+' to create a chat.")
 		} else {
 			tableView.restoreState()
 		}

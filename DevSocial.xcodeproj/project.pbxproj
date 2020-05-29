@@ -47,7 +47,7 @@
 		3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530F2437D91500A708F6 /* NewMessageCell.swift */; };
 		3EAE53122438130000A708F6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE53112438130000A708F6 /* AvatarView.swift */; };
 		3EC6E120246899BB0035C41D /* Extension  + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC6E11F246899BB0035C41D /* Extension  + UITableView.swift */; };
-		3EC6E12224689FB20035C41D /* MyMessagesEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC6E12124689FB20035C41D /* MyMessagesEmptyState.swift */; };
+		3EC6E12224689FB20035C41D /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC6E12124689FB20035C41D /* EmptyStateView.swift */; };
 		3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */; };
 		3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC1E642435907000D014D8 /* MessageCell.swift */; };
 		3EDCEDC82456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCEDC72456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift */; };
@@ -111,7 +111,7 @@
 		3EAE530F2437D91500A708F6 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
 		3EAE53112438130000A708F6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		3EC6E11F246899BB0035C41D /* Extension  + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension  + UITableView.swift"; sourceTree = "<group>"; };
-		3EC6E12124689FB20035C41D /* MyMessagesEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessagesEmptyState.swift; sourceTree = "<group>"; };
+		3EC6E12124689FB20035C41D /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		3ECDD14F24352CD100ED04E9 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		3EDC1E642435907000D014D8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		3EDCEDC72456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChat + Extension - CollectionView DataSource.swift"; sourceTree = "<group>"; };
@@ -250,6 +250,7 @@
 		3E33CDD22430470500C8DE64 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				3EC6E12124689FB20035C41D /* EmptyStateView.swift */,
 				3E33CDCA2430075500C8DE64 /* GreenCapsuleButton.swift */,
 				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
 				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
@@ -342,7 +343,6 @@
 				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
 				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 				18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */,
-				3EC6E12124689FB20035C41D /* MyMessagesEmptyState.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -647,7 +647,7 @@
 				3E47DCDA248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift in Sources */,
 				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
-				3EC6E12224689FB20035C41D /* MyMessagesEmptyState.swift in Sources */,
+				3EC6E12224689FB20035C41D /* EmptyStateView.swift in Sources */,
 				3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */,
 				3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
