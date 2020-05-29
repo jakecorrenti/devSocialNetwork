@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HiddenChatsVC: UIViewController {
 	
@@ -15,6 +16,7 @@ class HiddenChatsVC: UIViewController {
     // -----------------------------------------
 	
 	private var hiddenUsers = [User]()
+	private var hiddenChatDocs = [DocumentSnapshot]()
 	
     // -----------------------------------------
     // MARK: Views
@@ -84,9 +86,10 @@ class HiddenChatsVC: UIViewController {
 	
 	private func getHiddenChatsWithUsers() {
 		showLoadingView()
-		MessagesManager.shared.getHiddenChatsWithUsers(onSuccess: { [weak self] (users) in
+		MessagesManager.shared.getHiddenChatsWithUsers(onSuccess: { [weak self] (users, documents) in
 			guard let self = self else { return }
 			self.hiddenUsers = users
+			self.hiddenChatDocs = documents
 			self.dismissLoadingView()
 			self.tableView.reloadData()
 		}) { [weak self] (error) in
@@ -99,6 +102,10 @@ class HiddenChatsVC: UIViewController {
 	
 	func getHiddenUsers() -> [User] {
 		return hiddenUsers
+	}
+	
+	func getHiddenChatDocuments() -> [DocumentSnapshot] {
+		return hiddenChatDocs
 	}
 	
 	@objc

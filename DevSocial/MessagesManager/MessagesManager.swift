@@ -449,21 +449,23 @@ final class MessagesManager {
     }
 	
 	/// retrieves the list of hidden chats the current user has
-	func getHiddenChatsWithUsers(onSuccess: @escaping ([User]) -> Void, onError: @escaping (Error?) -> Void) {
+	func getHiddenChatsWithUsers(onSuccess: @escaping ([User], [DocumentSnapshot]) -> Void, onError: @escaping (Error?) -> Void) {
 		db.collection("chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).getDocuments { (chatQuery, error) in
 			if let error = error {
 				onError(error)
 			} else {
 				guard let chats = chatQuery?.documents else { return }
 				var users = [String]()
-				chats.forEach { chat in
-					let chat = Chat(dictionary: chat.data())
+				var documents = [DocumentSnapshot]()
+				chats.forEach { chatDoc in
+					let chat = Chat(dictionary: chatDoc.data())
 					if (chat?.hidden.contains(Auth.auth().currentUser!.uid))! {
 						var user: String!
 						chat?.users.forEach { messagedUser in
 							if messagedUser != Auth.auth().currentUser?.uid { user = messagedUser }
 						}
 						users.append(user)
+						documents.append(chatDoc)
 					}
 				}
 				
@@ -476,7 +478,7 @@ final class MessagesManager {
 							}
 						}
 					}
-					onSuccess(userObjects)
+					onSuccess(userObjects, documents)
 				}
 			}
 		}
