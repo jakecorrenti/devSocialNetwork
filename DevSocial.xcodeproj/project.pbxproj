@@ -31,6 +31,9 @@
 		3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D84E3242FE06B00164981 /* SceneDelegate.swift */; };
 		3E3D84EB242FE06C00164981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EA242FE06C00164981 /* Assets.xcassets */; };
 		3E3D84EE242FE06C00164981 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E3D84EC242FE06C00164981 /* LaunchScreen.storyboard */; };
+		3E47DCD624805B9700EBEF64 /* HiddenChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */; };
+		3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */; };
+		3E47DCDA248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */; };
 		3E4EC6AB247CC414009EF9DC /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */; };
 		3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC97F243292FA00744959 /* MyMessagesVC.swift */; };
 		3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9812432C73B00744959 /* ChatVC.swift */; };
@@ -92,6 +95,9 @@
 		3E3D84EA242FE06C00164981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E3D84ED242FE06C00164981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E3D84EF242FE06C00164981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenChatsVC.swift; sourceTree = "<group>"; };
+		3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
+		3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
 		3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		3E5EC97F243292FA00744959 /* MyMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessagesVC.swift; sourceTree = "<group>"; };
 		3E5EC9812432C73B00744959 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -314,6 +320,7 @@
 				3E5EC97F243292FA00744959 /* MyMessagesVC.swift */,
 				3E5EC9812432C73B00744959 /* ChatVC.swift */,
 				3E2A6A2F24553218008B64C0 /* NewChatVC.swift */,
+				3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -349,6 +356,8 @@
 				3EDCEDC72456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift */,
 				3EDCEDC92456495000FF87E3 /* NewChat + Extension - CollectionView Delegates.swift */,
 				3EDCEDCB24564AD300FF87E3 /* NewChat + Extension - TableView Delegate.swift */,
+				3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */,
+				3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -608,6 +617,7 @@
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
 				AE00CBC9243856E600685F0C /* Post.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
+				3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */,
 				AEB7267E24328803006923CA /* ActivityVC.swift in Sources */,
 				AEB7268024328814006923CA /* ProfileVC.swift in Sources */,
 				AE15CF12244E123200316ADF /* CustomSegmentedControl.swift in Sources */,
@@ -633,6 +643,8 @@
 				3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */,
 				3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */,
 				AEB726792432878B006923CA /* ExploreVC.swift in Sources */,
+				3E47DCD624805B9700EBEF64 /* HiddenChatsVC.swift in Sources */,
+				3E47DCDA248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift in Sources */,
 				3E33CDD9243055A700C8DE64 /* SigninWithGoogleView.swift in Sources */,
 				3E33CDC8243001DF00C8DE64 /* Constants.swift in Sources */,
 				3EC6E12224689FB20035C41D /* MyMessagesEmptyState.swift in Sources */,

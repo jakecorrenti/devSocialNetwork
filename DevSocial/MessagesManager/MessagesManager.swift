@@ -320,7 +320,7 @@ final class MessagesManager {
 						onSuccess(true, document)
 					}
 				}
-				// this is still returning even when success is triggered
+				
 				if !escaped {
 					onSuccess(false, nil)
 				}
@@ -447,5 +447,39 @@ final class MessagesManager {
 			}
 		}
     }
+	
+	/// retrieves the list of hidden chats the current user has
+	func getHiddenChatsWithUsers(onSuccess: @escaping ([User]) -> Void, onError: @escaping (Error?) -> Void) {
+		db.collection("chats").whereField("users", arrayContains: Auth.auth().currentUser!.uid).getDocuments { (chatQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let chats = chatQuery?.documents else { return }
+				var users = [String]()
+				chats.forEach { chat in
+					let chat = Chat(dictionary: chat.data())
+					if (chat?.hidden.contains(Auth.auth().currentUser!.uid))! {
+						var user: String!
+						chat?.users.forEach { messagedUser in
+							if messagedUser != Auth.auth().currentUser?.uid { user = messagedUser }
+						}
+						users.append(user)
+					}
+				}
+				
+				FirebaseStorageContext.shared.getListOfAllUsers { allUsers in
+					var userObjects = [User]()
+					users.forEach { id in
+						allUsers.forEach { user in
+							if id == user.id {
+								userObjects.append(user)
+							}
+						}
+					}
+					onSuccess(userObjects)
+				}
+			}
+		}
+	}
 
 }

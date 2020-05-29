@@ -167,7 +167,7 @@ final class AuthManager {
     }
 	
 	/// parses Firestore for the user object that has the same ID as the current user and returns it as a User object
-	func getFirebaseUserAsUserObject(onSucess: @escaping (User) -> Void, onError: @escaping (Error?) -> Void) {
+	func getCurrentFirebaseUserAsUserObject(onSucess: @escaping (User) -> Void, onError: @escaping (Error?) -> Void) {
 		let db = Firestore.firestore()
 		db.collection("users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments { (userQuery, error) in
 			if let error = error {
@@ -177,6 +177,22 @@ final class AuthManager {
 				if userQuery.count == 1 {
 					let user = User(dictionary: userQuery.first!.data())
 					onSucess(user!)
+				}
+			}
+		}
+	}
+	
+	/// parses Firestore for the given user ID and returns their data as a User object
+	func getFirebaseUserIDAsUserObject(for id: String, onSuccess: @escaping (User) -> Void, onError: @escaping (Error?) -> Void) {
+		let db = Firestore.firestore()
+		db.collection("users").whereField("id", isEqualTo: id).getDocuments { (userQuery, error) in
+			if let error = error {
+				onError(error)
+			} else {
+				guard let userQuery = userQuery?.documents else { return }
+				if userQuery.count == 1 {
+					let user = User(dictionary: userQuery.first!.data())
+					onSuccess(user!)
 				}
 			}
 		}

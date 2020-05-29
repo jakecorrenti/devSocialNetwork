@@ -24,6 +24,7 @@ enum Images {
     static let messages          	= "paperplane"
     static let emptyProfileImage 	= "emptyProfileImage"
 	static let myMessagesEmptyState = "my_messages_empty_state"
+	static let trashcan		        = "trash"
 }
 
 // TODO: Update icons
