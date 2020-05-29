@@ -10,6 +10,11 @@ import UIKit
 
 extension HiddenChatsVC: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if getHiddenUsers().count == 0 {
+			tableView.setEmtpyHiddenChatsState()
+		} else {
+			tableView.restoreState()
+		}
 		return getHiddenUsers().count
 	}
 	
