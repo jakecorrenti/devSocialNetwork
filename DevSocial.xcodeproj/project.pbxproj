@@ -41,6 +41,7 @@
 		3E5EC98A2433ADC100744959 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9892433ADC100744959 /* InputView.swift */; };
 		3E5EC98C2433D05A00744959 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98B2433D05A00744959 /* Chat.swift */; };
 		3E5EC98E2433D0FB00744959 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC98D2433D0FB00744959 /* Message.swift */; };
+		3E6F8ECD2482C8E3003512FD /* Extension + UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F8ECC2482C8E3003512FD /* Extension + UIButton.swift */; };
 		3E8614C22453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */; };
 		3E8614C4245377880053F9A1 /* Chat + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */; };
 		3EA207A0243A8CDD00390B21 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2079F243A8CDD00390B21 /* NotificationManager.swift */; };
@@ -107,6 +108,7 @@
 		3E5EC9892433ADC100744959 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		3E5EC98B2433D05A00744959 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		3E5EC98D2433D0FB00744959 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3E6F8ECC2482C8E3003512FD /* Extension + UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIButton.swift"; sourceTree = "<group>"; };
 		3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
 		3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
 		3EA2079F243A8CDD00390B21 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				3EDCEDCD2456652600FF87E3 /* Extension + CollectionView.swift */,
 				3EC6E11F246899BB0035C41D /* Extension  + UITableView.swift */,
 				3E1B9457246B6AAB00A179C9 /* Extension + UIViewController.swift */,
+				3E6F8ECC2482C8E3003512FD /* Extension + UIButton.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */,
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
 				3E5EC98E2433D0FB00744959 /* Message.swift in Sources */,
+				3E6F8ECD2482C8E3003512FD /* Extension + UIButton.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
 				3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */,

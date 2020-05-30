@@ -230,9 +230,15 @@ class MyMessagesVC: UIViewController {
 		}
 	}
 
+	private func generateHapticFeedback() {
+		let generator = UIImpactFeedbackGenerator(style: .medium)
+		generator.impactOccurred()
+	}
 	
 	@objc
 	private func fabPressed() {
+		fab.pulsate()
+		generateHapticFeedback()
 		fabIsClicked = !fabIsClicked
 		if fabIsClicked {
 			fabSelected()
@@ -243,6 +249,7 @@ class MyMessagesVC: UIViewController {
     
     @objc
 	func addButtonPressed() {
+		generateHapticFeedback()
 		fabIsClicked = !fabIsClicked
 		fabDeselected { [weak self] in
 			self?.navigationController?.pushViewController(NewChatVC(), animated: true)
@@ -256,6 +263,7 @@ class MyMessagesVC: UIViewController {
 	
 	@objc
 	func showHiddenChatsVC() {
+		generateHapticFeedback()
 		fabIsClicked = !fabIsClicked
 		fabDeselected { [weak self] in
 			self?.present(UINavigationController(rootViewController: HiddenChatsVC()), animated: true, completion: nil)
