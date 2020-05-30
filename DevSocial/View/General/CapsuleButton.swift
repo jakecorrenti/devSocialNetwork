@@ -16,21 +16,15 @@ class CapsuleButton: UIButton {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		setupUI()
 	}
 	
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		setupUI()
 	}
 	
     // -----------------------------------------
     // MARK: Setup UI
     // -----------------------------------------
-	
-	private func setupUI() {
-		
-	}
 	
 	func configure(title: String, color: UIColor) {
 		setTitle(title, for: .normal)

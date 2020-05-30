@@ -209,7 +209,7 @@ class MyMessagesVC: UIViewController {
     }
 	
 	private func fabSelected() {
-		UIView.animate(withDuration: 0.75) {
+		UIView.animate(withDuration: 0.25) {
 			self.fab.transform = CGAffineTransform(rotationAngle: .pi * 0.75 )
 			self.deletedMessagesCapsuleButton.alpha = 1
 			self.deletedMessagesCapsuleButton.transform = CGAffineTransform(translationX: 0, y: -75)
@@ -219,7 +219,7 @@ class MyMessagesVC: UIViewController {
 	}
 	
 	private func fabDeselected() {
-		UIView.animate(withDuration: 0.75) {
+		UIView.animate(withDuration: 0.25) {
 			self.fab.transform = CGAffineTransform(rotationAngle: 0)
 			self.deletedMessagesCapsuleButton.alpha = 0
 			self.deletedMessagesCapsuleButton.transform = CGAffineTransform(translationX: 0, y: 0)
