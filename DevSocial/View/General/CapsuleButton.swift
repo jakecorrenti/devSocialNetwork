@@ -29,7 +29,7 @@ class CapsuleButton: UIButton {
 	func configure(title: String, color: UIColor) {
 		setTitle(title, for: .normal)
 		setTitleColor(color, for: .normal)
-		titleLabel?.font = .boldSystemFont(ofSize: 15)
+		titleLabel?.font = .boldSystemFont(ofSize: 17)
 		backgroundColor = color.withAlphaComponent(0.2)
 		let size = CGSize(width: frame.width, height: .infinity)
 		let estimatedSize = self.sizeThatFits(size)
