@@ -61,6 +61,7 @@ class MyMessagesVC: UIViewController {
 		let view = CapsuleButton(type: .system)
 		view.configure(title: "New chat", color: .systemGreen)
 		view.alpha = 0
+		view.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
 		return view
 	}()
 	
@@ -68,6 +69,7 @@ class MyMessagesVC: UIViewController {
 		let view = CapsuleButton(type: .system)
 		view.configure(title: "Deleted chats", color: .systemRed)
 		view.alpha = 0
+		view.addTarget(self, action: #selector(showHiddenChatsVC), for: .touchUpInside)
 		return view
 	}()
 	
@@ -112,10 +114,6 @@ class MyMessagesVC: UIViewController {
         extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext 	     = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        
-		let hiddenButton = UIBarButtonItem(image: UIImage(systemName: Images.trashcan), style: .plain, target: self, action: #selector(showHiddenChatsVC))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        navigationItem.rightBarButtonItems = [hiddenButton, addButton]
     }
     
     private func setupUI() {
@@ -143,7 +141,7 @@ class MyMessagesVC: UIViewController {
 		NSLayoutConstraint.activate([
 			fab.heightAnchor.constraint(equalToConstant: 60),
 			fab.widthAnchor.constraint(equalToConstant: 60),
-			fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+			fab.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 			fab.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
 		])
 	}
