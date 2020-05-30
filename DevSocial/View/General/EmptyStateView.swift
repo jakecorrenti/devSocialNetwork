@@ -1,5 +1,5 @@
 //
-//  MyMessagesEmptyState.swift
+//  EmptyStateView.swift
 //  DevSocial
 //
 //  Created by Jake Correnti on 5/10/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmtpyStateView: UIView {
+class EmptyStateView: UIView {
 	
     // -----------------------------------------
     // MARK: Views

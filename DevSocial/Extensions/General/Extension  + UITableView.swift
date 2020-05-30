@@ -10,14 +10,21 @@ import UIKit
 
 extension UITableView {
 	
-	func setEmptyState() {
-		let view = MyMessagesEmptyState(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
-		
-		view.sizeToFit()
-		self.backgroundView = view 
-	}
-	
 	func restoreState() {
 		self.backgroundView = nil
+	}
+	
+	func setEmtpyState(image: UIImage? = nil, text: String? = nil) {
+		let view = EmptyStateView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
+		if image != nil {
+			view.emptyStateImage.image = image
+		}
+		
+		if text != nil {
+			view.emptyStateText.text = text
+		}
+		
+		view.sizeToFit()
+		self.backgroundView = view
 	}
 }

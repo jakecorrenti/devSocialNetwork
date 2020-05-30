@@ -20,10 +20,12 @@ enum ColorNames {
 }
 
 enum Images {
-    static let welcomeImage      	= "WelcomeImage"
-    static let messages          	= "paperplane"
-    static let emptyProfileImage 	= "emptyProfileImage"
-	static let myMessagesEmptyState = "my_messages_empty_state"
+    static let welcomeImage      	 = "WelcomeImage"
+    static let messages          	 = "paperplane"
+    static let emptyProfileImage 	 = "emptyProfileImage"
+	static let myMessagesEmptyState  = "my_messages_empty_state"
+	static let trashcan 			 = "trash"
+	static let hiddenChatsEmptyState = "hidden_chats_empty_state"
 }
 
 // TODO: Update icons

@@ -79,8 +79,9 @@ class MyMessagesVC: UITableViewController {
         definesPresentationContext 	     = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         
+		let hiddenButton = UIBarButtonItem(image: UIImage(systemName: Images.trashcan), style: .plain, target: self, action: #selector(showHiddenChatsVC))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        navigationItem.rightBarButtonItem = addButton
+        navigationItem.rightBarButtonItems = [hiddenButton, addButton]
     }
     
     private func setupUI() {
@@ -140,12 +141,19 @@ class MyMessagesVC: UITableViewController {
     }
 
     
-    @objc func addButtonPressed() {
+    @objc
+	func addButtonPressed() {
         navigationController?.pushViewController(NewChatVC(), animated: true)
     }
 	
-	@objc func refreshControlActivated(_ sender: UIRefreshControl) {
+	@objc
+	func refreshControlActivated(_ sender: UIRefreshControl) {
 		getUsers()
+	}
+	
+	@objc
+	func showHiddenChatsVC() {
+		present(UINavigationController(rootViewController: HiddenChatsVC()), animated: true, completion: nil)
 	}
 }
 
@@ -157,7 +165,7 @@ extension MyMessagesVC {
         }
 		
 		if users.count == 0 {
-			tableView.setEmptyState()
+			tableView.setEmtpyState(image: UIImage(named: Images.myMessagesEmptyState), text: "You currently have no messages. \n Press \'+' to create a chat.")
 		} else {
 			tableView.restoreState()
 		}
