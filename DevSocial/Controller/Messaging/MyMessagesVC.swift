@@ -207,7 +207,8 @@ class MyMessagesVC: UIViewController {
     }
 	
 	private func fabSelected() {
-		UIView.animate(withDuration: 0.25) {
+		UIView.animate(withDuration: 0.25) { [weak self] in
+			guard let self = self else { return }
 			self.fab.transform = CGAffineTransform(rotationAngle: .pi * 0.75 )
 			self.deletedMessagesCapsuleButton.alpha = 1
 			self.deletedMessagesCapsuleButton.transform = CGAffineTransform(translationX: 0, y: -75)
@@ -216,13 +217,16 @@ class MyMessagesVC: UIViewController {
 		}
 	}
 	
-	private func fabDeselected() {
-		UIView.animate(withDuration: 0.25) {
+	private func fabDeselected(handler: @escaping () -> Void) {
+		UIView.animate(withDuration: 0.25, animations: { [weak self] in
+			guard let self = self else { return }
 			self.fab.transform = CGAffineTransform(rotationAngle: 0)
 			self.deletedMessagesCapsuleButton.alpha = 0
 			self.deletedMessagesCapsuleButton.transform = CGAffineTransform(translationX: 0, y: 0)
 			self.newChatCapsuleButton.alpha = 0
 			self.newChatCapsuleButton.transform = CGAffineTransform(translationX: 0, y: 0)
+		}) { (_) in
+			handler()
 		}
 	}
 
@@ -233,13 +237,16 @@ class MyMessagesVC: UIViewController {
 		if fabIsClicked {
 			fabSelected()
 		} else {
-			fabDeselected()
+			fabDeselected { }
 		}
 	}
     
     @objc
 	func addButtonPressed() {
-        navigationController?.pushViewController(NewChatVC(), animated: true)
+		fabIsClicked = !fabIsClicked
+		fabDeselected { [weak self] in
+			self?.navigationController?.pushViewController(NewChatVC(), animated: true)
+		}
     }
 	
 	@objc
@@ -249,7 +256,10 @@ class MyMessagesVC: UIViewController {
 	
 	@objc
 	func showHiddenChatsVC() {
-		present(UINavigationController(rootViewController: HiddenChatsVC()), animated: true, completion: nil)
+		fabIsClicked = !fabIsClicked
+		fabDeselected { [weak self] in
+			self?.present(UINavigationController(rootViewController: HiddenChatsVC()), animated: true, completion: nil)
+		}
 	}
 }
 
