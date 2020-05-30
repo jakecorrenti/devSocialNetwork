@@ -65,7 +65,10 @@ class HiddenChatsVC: UIViewController {
 		view.backgroundColor = .systemBackground
 		navigationItem.title = "Hidden chats"
 		
-		let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonPressed))
+		let doneCapsuleButton = CapsuleButton(type: .system)
+		doneCapsuleButton.configure(title: "Done", color: UIColor(named: ColorNames.mainColor)!)
+		let doneButton = UIBarButtonItem(customView: doneCapsuleButton)
+		doneCapsuleButton.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
 		navigationItem.rightBarButtonItem = doneButton
     }
     
