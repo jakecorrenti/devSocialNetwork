@@ -237,6 +237,7 @@ class MyMessagesVC: UIViewController {
 	
 	@objc
 	private func fabPressed() {
+		fab.pulsate()
 		generateHapticFeedback()
 		fabIsClicked = !fabIsClicked
 		if fabIsClicked {
