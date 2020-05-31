@@ -312,7 +312,9 @@ class ChatVC: UIViewController {
 	
 	@objc
 	func handleMessageLongPress(sender: UILongPressGestureRecognizer) {
+		let gesture = UIImpactFeedbackGenerator()
 		if sender.state == .began {
+			gesture.impactOccurred()
 			let longPressLocation = sender.location(in: tableView)
 			let indexPathSelected = tableView.indexPathForRow(at: longPressLocation)
 			
@@ -337,6 +339,7 @@ class ChatVC: UIViewController {
 					}
 					
 				}) {
+					gesture.impactOccurred()
 					sender.state = .ended
 					cell.bubbleView.backgroundColor = UIColor(named: ColorNames.mainColor)
 				}
