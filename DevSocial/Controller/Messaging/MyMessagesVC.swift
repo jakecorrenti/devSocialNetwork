@@ -50,8 +50,8 @@ class MyMessagesVC: UIViewController {
         return view
     }()
 	
-	lazy var fab: MyMessagesFAB = {
-		let view = MyMessagesFAB()
+	lazy var fab: FloatingActionButton = {
+		let view = FloatingActionButton()
 		view.layer.cornerRadius = 30
 		view.addTarget(self, action: #selector(fabPressed), for: .touchUpInside)
 		return view

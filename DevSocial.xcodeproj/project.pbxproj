@@ -34,7 +34,7 @@
 		3E47DCD624805B9700EBEF64 /* HiddenChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */; };
 		3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */; };
 		3E47DCDA248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */; };
-		3E4A63082481FC2100187B0C /* MyMessagesFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A63072481FC2100187B0C /* MyMessagesFAB.swift */; };
+		3E4A63082481FC2100187B0C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A63072481FC2100187B0C /* FloatingActionButton.swift */; };
 		3E4EC6AB247CC414009EF9DC /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */; };
 		3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC97F243292FA00744959 /* MyMessagesVC.swift */; };
 		3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9812432C73B00744959 /* ChatVC.swift */; };
@@ -101,7 +101,7 @@
 		3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenChatsVC.swift; sourceTree = "<group>"; };
 		3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
 		3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
-		3E4A63072481FC2100187B0C /* MyMessagesFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessagesFAB.swift; sourceTree = "<group>"; };
+		3E4A63072481FC2100187B0C /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		3E5EC97F243292FA00744959 /* MyMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessagesVC.swift; sourceTree = "<group>"; };
 		3E5EC9812432C73B00744959 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
 				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 				18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */,
-				3E4A63072481FC2100187B0C /* MyMessagesFAB.swift */,
+				3E4A63072481FC2100187B0C /* FloatingActionButton.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -637,7 +637,7 @@
 				3EDCEDCE2456652600FF87E3 /* Extension + CollectionView.swift in Sources */,
 				3EC6E120246899BB0035C41D /* Extension  + UITableView.swift in Sources */,
 				3EDCEDCA2456495000FF87E3 /* NewChat + Extension - CollectionView Delegates.swift in Sources */,
-				3E4A63082481FC2100187B0C /* MyMessagesFAB.swift in Sources */,
+				3E4A63082481FC2100187B0C /* FloatingActionButton.swift in Sources */,
 				3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */,
 				3E1B9458246B6AAB00A179C9 /* Extension + UIViewController.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
