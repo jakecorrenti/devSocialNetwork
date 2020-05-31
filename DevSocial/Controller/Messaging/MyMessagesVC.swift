@@ -51,7 +51,7 @@ class MyMessagesVC: UIViewController {
     }()
 	
 	lazy var fab: FloatingActionButton = {
-		let view = FloatingActionButton()
+		let view = FloatingActionButton(imageName: Images.plus)
 		view.layer.cornerRadius = 30
 		view.addTarget(self, action: #selector(fabPressed), for: .touchUpInside)
 		return view
@@ -59,7 +59,7 @@ class MyMessagesVC: UIViewController {
 	
 	lazy var newChatCapsuleButton: CapsuleButton = {
 		let view = CapsuleButton(type: .system)
-		view.configure(title: "New chat", color: .systemGreen)
+		view.configure(title: "New chat", color: UIColor(named: ColorNames.mainColor) as! UIColor )
 		view.alpha = 0
 		view.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
 		return view

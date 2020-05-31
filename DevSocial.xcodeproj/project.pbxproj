@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */; };
 		18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */; };
 		3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */; };
 		3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E04243120EE00F92618 /* AuthManager.swift */; };
@@ -34,7 +35,6 @@
 		3E47DCD624805B9700EBEF64 /* HiddenChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */; };
 		3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */; };
 		3E47DCDA248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */; };
-		3E4A63082481FC2100187B0C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A63072481FC2100187B0C /* FloatingActionButton.swift */; };
 		3E4EC6AB247CC414009EF9DC /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */; };
 		3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC97F243292FA00744959 /* MyMessagesVC.swift */; };
 		3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9812432C73B00744959 /* ChatVC.swift */; };
@@ -59,7 +59,7 @@
 		3EDCEDCE2456652600FF87E3 /* Extension + CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCEDCD2456652600FF87E3 /* Extension + CollectionView.swift */; };
 		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB034124562F17001EC067 /* NewChat + Extension - Table View DataSource.swift */; };
-		AE00CBC9243856E600685F0C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBC8243856E600685F0C /* Post.swift */; };
+		3EFE15C72484666300280230 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE15C62484666300280230 /* NewPostVC.swift */; };
 		AE00CBCF2438572600685F0C /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBCE2438572600685F0C /* HomeVC.swift */; };
 		AE00CBD12438576300685F0C /* SmileyStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBD02438576300685F0C /* SmileyStack.swift */; };
 		AE15CF12244E123200316ADF /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */; };
@@ -73,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatUserCell.swift; sourceTree = "<group>"; };
+		18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		3E0B0E04243120EE00F92618 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageContext.swift; sourceTree = "<group>"; };
@@ -101,7 +102,6 @@
 		3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenChatsVC.swift; sourceTree = "<group>"; };
 		3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
 		3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
-		3E4A63072481FC2100187B0C /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		3E5EC97F243292FA00744959 /* MyMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessagesVC.swift; sourceTree = "<group>"; };
 		3E5EC9812432C73B00744959 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -127,9 +127,9 @@
 		3EE6D7FA2431C25D003A5BFA /* DevSocial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevSocial.entitlements; sourceTree = "<group>"; };
 		3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC Extension + Apple Sign in.swift"; sourceTree = "<group>"; };
 		3EEB034124562F17001EC067 /* NewChat + Extension - Table View DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChat + Extension - Table View DataSource.swift"; sourceTree = "<group>"; };
+		3EFE15C62484666300280230 /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
 		87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSocial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE00CBC8243856E600685F0C /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		AE00CBCE2438572600685F0C /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		AE00CBD02438576300685F0C /* SmileyStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmileyStack.swift; sourceTree = "<group>"; };
 		AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
@@ -183,6 +183,7 @@
 			children = (
 				AE00CBCE2438572600685F0C /* HomeVC.swift */,
 				3E0B0E1124314A1C00F92618 /* TabController.swift */,
+				3EFE15C62484666300280230 /* NewPostVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -191,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				3EC6E11E246899960035C41D /* General */,
-				AEB99F382466119700A25A96 /* Explore */,
 				3E8614C0245376EF0053F9A1 /* Chat */,
 			);
 			path = Extensions;
@@ -223,7 +223,6 @@
 		3E33CDC2242FFFFC00C8DE64 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3E4712D5247B7D7A00E2D985 /* Home */,
 				3EAE531324383A7500A708F6 /* General */,
 				3E0B0E0B243123C000F92618 /* Auth */,
 				3E5EC9832432C86500744959 /* Messaging */,
@@ -265,6 +264,7 @@
 				AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */,
 				3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */,
 				3EACBB00248212AB00972478 /* CapsuleButton.swift */,
+				18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -314,14 +314,6 @@
 			path = DevSocial;
 			sourceTree = "<group>";
 		};
-		3E4712D5247B7D7A00E2D985 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				AE00CBC8243856E600685F0C /* Post.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
 		3E5EC97E24328DBB00744959 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,7 +342,6 @@
 				3EAE530D243781C700A708F6 /* MessagedUserCell.swift */,
 				3EAE530F2437D91500A708F6 /* NewMessageCell.swift */,
 				18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */,
-				3E4A63072481FC2100187B0C /* FloatingActionButton.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -448,13 +439,6 @@
 				AEB7267F24328814006923CA /* ProfileVC.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		AEB99F382466119700A25A96 /* Explore */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Explore;
 			sourceTree = "<group>";
 		};
 		DFFC860B8BD449767CB316A6 /* Frameworks */ = {
@@ -625,7 +609,6 @@
 				3EDCEDCC24564AD300FF87E3 /* NewChat + Extension - TableView Delegate.swift in Sources */,
 				3E5EC98C2433D05A00744959 /* Chat.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
-				AE00CBC9243856E600685F0C /* Post.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
 				3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */,
 				AEB7267E24328803006923CA /* ActivityVC.swift in Sources */,
@@ -637,7 +620,6 @@
 				3EDCEDCE2456652600FF87E3 /* Extension + CollectionView.swift in Sources */,
 				3EC6E120246899BB0035C41D /* Extension  + UITableView.swift in Sources */,
 				3EDCEDCA2456495000FF87E3 /* NewChat + Extension - CollectionView Delegates.swift in Sources */,
-				3E4A63082481FC2100187B0C /* FloatingActionButton.swift in Sources */,
 				3EDC1E652435907000D014D8 /* MessageCell.swift in Sources */,
 				3E1B9458246B6AAB00A179C9 /* Extension + UIViewController.swift in Sources */,
 				3E0B0E0D243123C900F92618 /* User.swift in Sources */,
@@ -664,7 +646,9 @@
 				3EAE53102437D91500A708F6 /* NewMessageCell.swift in Sources */,
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 				3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */,
+				3EFE15C72484666300280230 /* NewPostVC.swift in Sources */,
 				18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */,
+				18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

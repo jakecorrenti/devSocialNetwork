@@ -26,6 +26,9 @@ enum Images {
 	static let myMessagesEmptyState  = "my_messages_empty_state"
 	static let trashcan 			 = "trash"
 	static let hiddenChatsEmptyState = "hidden_chats_empty_state"
+    static let plus                  = "plus"
+    static let magnifyingGlass       = "magnifyingglass"
+    static let personPlus            = "person.badge.plus"
 }
 
 // TODO: Update icons
