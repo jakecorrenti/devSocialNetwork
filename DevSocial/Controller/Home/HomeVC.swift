@@ -208,7 +208,9 @@ class HomeVC: UIViewController {
 		generateHapticFeedback()
 		newSearchFAB.pulsate()
 		animateFabClosed { [weak self] in
-			self?.present(UINavigationController(rootViewController: NewPostVC()), animated: true, completion: nil)
+			let postVC = NewPostVC()
+			postVC.postType = .projectSearch
+			self?.present(UINavigationController(rootViewController: postVC), animated: true, completion: nil)
 		}
 	}
 	
@@ -218,7 +220,9 @@ class HomeVC: UIViewController {
 		generateHapticFeedback()
 		newRequestFAB.pulsate()
 		animateFabClosed { [weak self] in
-			self?.present(UINavigationController(rootViewController: NewPostVC()), animated: true, completion: nil)
+			let postVC = NewPostVC()
+			postVC.postType = .partnerSearch
+			self?.present(UINavigationController(rootViewController: postVC), animated: true, completion: nil)
 		}
 	}
     

@@ -1,21 +1,29 @@
 //
-//  NewPostVC.swift
+//  NewPartnerSearchVC.swift
 //  DevSocial
 //
-//  Created by Jake Correnti on 5/31/20.
+//  Created by Jake Correnti on 6/1/20.
 //  Copyright © 2020 Jake Correnti. All rights reserved.
 //
 
 import UIKit
 
-class NewPostVC: UIViewController {
+class NewPartnerSearchVC: UIViewController {
 	
     // -----------------------------------------
-    // MARK: Properties
+    // MARK: Views
     // -----------------------------------------
 	
-	var postType: PostType?
-	let newPartnerSearchVC = NewPartnerSearchVC()
+	lazy var scrollView: UIScrollView = {
+		let view = UIScrollView()
+		return view
+	}()
+	
+	lazy var titleTF: CustomTextField = {
+		let view = CustomTextField()
+		view.configure(placeholder: "Title...")
+		return view
+	}()
 	
     // -----------------------------------------
     // MARK: Lifecycle
@@ -49,23 +57,13 @@ class NewPostVC: UIViewController {
     }
     
     private func setupUI() {
-		guard postType != nil else { return }
-		if postType! == .partnerSearch {
-			constrainPartnerSearchVC()
-		} else {
-			
-		}
+		view.addSubview(scrollView)
     }
 	
-	private func constrainPartnerSearchVC() {
-		add(viewController: newPartnerSearchVC)
-		let partnerVC = newPartnerSearchVC.view!
-		partnerVC.translatesAutoresizingMaskIntoConstraints = false
+	private func constrainScrollView() {
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			partnerVC.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-			partnerVC.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			partnerVC.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			partnerVC.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+			
 		])
 	}
 }

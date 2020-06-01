@@ -13,6 +13,11 @@ enum ChatCreationState {
 	case existing 
 }
 
+enum PostType {
+	case projectSearch
+	case partnerSearch
+}
+
 enum ColorNames {
     static let mainColor          = "mainColor"
     static let primaryTextColor   = "primaryTextColor"

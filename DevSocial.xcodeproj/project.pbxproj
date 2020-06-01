@@ -17,6 +17,7 @@
 		3E0B0E1224314A1C00F92618 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E1124314A1C00F92618 /* TabController.swift */; };
 		3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E16243151F400F92618 /* Extension + String.swift */; };
 		3E0B0E19243159FF00F92618 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E18243159FF00F92618 /* Alert.swift */; };
+		3E12CE8E24854DE500EBC911 /* NewPartnerSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E12CE8D24854DE500EBC911 /* NewPartnerSearchVC.swift */; };
 		3E1B9458246B6AAB00A179C9 /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1B9457246B6AAB00A179C9 /* Extension + UIViewController.swift */; };
 		3E2A6A3024553218008B64C0 /* NewChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2A6A2F24553218008B64C0 /* NewChatVC.swift */; };
 		3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDC52430002200C8DE64 /* WelcomeVC.swift */; };
@@ -82,6 +83,7 @@
 		3E0B0E1124314A1C00F92618 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		3E0B0E16243151F400F92618 /* Extension + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + String.swift"; sourceTree = "<group>"; };
 		3E0B0E18243159FF00F92618 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		3E12CE8D24854DE500EBC911 /* NewPartnerSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPartnerSearchVC.swift; sourceTree = "<group>"; };
 		3E1B9457246B6AAB00A179C9 /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
 		3E2A6A2F24553218008B64C0 /* NewChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatVC.swift; sourceTree = "<group>"; };
 		3E33CDC52430002200C8DE64 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				AE00CBCE2438572600685F0C /* HomeVC.swift */,
 				3E0B0E1124314A1C00F92618 /* TabController.swift */,
 				3EFE15C62484666300280230 /* NewPostVC.swift */,
+				3E12CE8D24854DE500EBC911 /* NewPartnerSearchVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				3E3D84E2242FE06B00164981 /* AppDelegate.swift in Sources */,
 				3E3D84E4242FE06B00164981 /* SceneDelegate.swift in Sources */,
 				3EDCEDC82456486F00FF87E3 /* NewChat + Extension - CollectionView DataSource.swift in Sources */,
+				3E12CE8E24854DE500EBC911 /* NewPartnerSearchVC.swift in Sources */,
 				3EACBB01248212AB00972478 /* CapsuleButton.swift in Sources */,
 				3E4EC6AB247CC414009EF9DC /* BadgeButton.swift in Sources */,
 				3E33CDCB2430075500C8DE64 /* GreenCapsuleButton.swift in Sources */,
