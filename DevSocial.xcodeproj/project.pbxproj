@@ -18,6 +18,7 @@
 		3E0B0E17243151F400F92618 /* Extension + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E16243151F400F92618 /* Extension + String.swift */; };
 		3E0B0E19243159FF00F92618 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E18243159FF00F92618 /* Alert.swift */; };
 		3E12CE8E24854DE500EBC911 /* NewPartnerSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E12CE8D24854DE500EBC911 /* NewPartnerSearchVC.swift */; };
+		3E14AE3E2485A3F000E25743 /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E14AE3D2485A3F000E25743 /* TextViewCell.swift */; };
 		3E1B9458246B6AAB00A179C9 /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1B9457246B6AAB00A179C9 /* Extension + UIViewController.swift */; };
 		3E2A6A3024553218008B64C0 /* NewChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2A6A2F24553218008B64C0 /* NewChatVC.swift */; };
 		3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33CDC52430002200C8DE64 /* WelcomeVC.swift */; };
@@ -36,6 +37,8 @@
 		3E47DCD624805B9700EBEF64 /* HiddenChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */; };
 		3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */; };
 		3E47DCDA248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */; };
+		3E4CFA9B24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4CFA9A24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift */; };
+		3E4CFA9F2485971200598C59 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4CFA9E2485971200598C59 /* TextFieldCell.swift */; };
 		3E4EC6AB247CC414009EF9DC /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */; };
 		3E5EC980243292FA00744959 /* MyMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC97F243292FA00744959 /* MyMessagesVC.swift */; };
 		3E5EC9822432C73B00744959 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EC9812432C73B00744959 /* ChatVC.swift */; };
@@ -62,8 +65,6 @@
 		3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB034124562F17001EC067 /* NewChat + Extension - Table View DataSource.swift */; };
 		3EFE15C72484666300280230 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE15C62484666300280230 /* NewPostVC.swift */; };
 		AE00CBCF2438572600685F0C /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBCE2438572600685F0C /* HomeVC.swift */; };
-		AE00CBD12438576300685F0C /* SmileyStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBD02438576300685F0C /* SmileyStack.swift */; };
-		AE15CF12244E123200316ADF /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
 		AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE713AB22454FA240000F47F /* Extension + Date.swift */; };
 		AEB726792432878B006923CA /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB726782432878B006923CA /* ExploreVC.swift */; };
@@ -84,6 +85,7 @@
 		3E0B0E16243151F400F92618 /* Extension + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + String.swift"; sourceTree = "<group>"; };
 		3E0B0E18243159FF00F92618 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		3E12CE8D24854DE500EBC911 /* NewPartnerSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPartnerSearchVC.swift; sourceTree = "<group>"; };
+		3E14AE3D2485A3F000E25743 /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
 		3E1B9457246B6AAB00A179C9 /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
 		3E2A6A2F24553218008B64C0 /* NewChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatVC.swift; sourceTree = "<group>"; };
 		3E33CDC52430002200C8DE64 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -104,6 +106,8 @@
 		3E47DCD524805B9700EBEF64 /* HiddenChatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenChatsVC.swift; sourceTree = "<group>"; };
 		3E47DCD7248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
 		3E47DCD9248072DC00EBEF64 /* HiddenChats + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HiddenChats + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
+		3E4CFA9A24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPartnerSearch + Extension + UITableView Datasource.swift"; sourceTree = "<group>"; };
+		3E4CFA9E2485971200598C59 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		3E5EC97F243292FA00744959 /* MyMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessagesVC.swift; sourceTree = "<group>"; };
 		3E5EC9812432C73B00744959 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -133,8 +137,6 @@
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
 		87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSocial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE00CBCE2438572600685F0C /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
-		AE00CBD02438576300685F0C /* SmileyStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmileyStack.swift; sourceTree = "<group>"; };
-		AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		AE382E25242FF27700EED32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AE713AB22454FA240000F47F /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
 		AEB726782432878B006923CA /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		3E0B0E15243151E400F92618 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3E4CFA9924857B4D00598C59 /* Home */,
 				3EC6E11E246899960035C41D /* General */,
 				3E8614C0245376EF0053F9A1 /* Chat */,
 			);
@@ -216,6 +219,7 @@
 		3E33CDC1242FFFF700C8DE64 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3E4CFA9C248596E500598C59 /* Cells */,
 				3E5EC9882433ADB300744959 /* Messaging */,
 				3E33CDD22430470500C8DE64 /* General */,
 				3E33CDD72430555C00C8DE64 /* Auth */,
@@ -263,8 +267,6 @@
 				3E33CDD32430471800C8DE64 /* CustomTextField.swift */,
 				3E33CDD524304AC000C8DE64 /* TextFieldStack.swift */,
 				3EAE53112438130000A708F6 /* AvatarView.swift */,
-				AE00CBD02438576300685F0C /* SmileyStack.swift */,
-				AE15CF11244E123200316ADF /* CustomSegmentedControl.swift */,
 				3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */,
 				3EACBB00248212AB00972478 /* CapsuleButton.swift */,
 				18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */,
@@ -315,6 +317,31 @@
 				3E33CDC0242FFFEF00C8DE64 /* Controller */,
 			);
 			path = DevSocial;
+			sourceTree = "<group>";
+		};
+		3E4CFA9924857B4D00598C59 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				3E4CFA9A24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		3E4CFA9C248596E500598C59 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3E4CFA9D248596F000598C59 /* TableView */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		3E4CFA9D248596F000598C59 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				3E4CFA9E2485971200598C59 /* TextFieldCell.swift */,
+				3E14AE3D2485A3F000E25743 /* TextViewCell.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 		3E5EC97E24328DBB00744959 /* Messaging */ = {
@@ -597,12 +624,14 @@
 				3E33CDD12430241B00C8DE64 /* SignupVC.swift in Sources */,
 				AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */,
 				3E8614C22453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift in Sources */,
+				3E4CFA9F2485971200598C59 /* TextFieldCell.swift in Sources */,
 				3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */,
 				3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */,
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
 				3E5EC98E2433D0FB00744959 /* Message.swift in Sources */,
 				3E6F8ECD2482C8E3003512FD /* Extension + UIButton.swift in Sources */,
 				3E33CDC62430002200C8DE64 /* WelcomeVC.swift in Sources */,
+				3E4CFA9B24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift in Sources */,
 				3E0B0E19243159FF00F92618 /* Alert.swift in Sources */,
 				3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */,
 				3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */,
@@ -616,8 +645,6 @@
 				3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */,
 				AEB7267E24328803006923CA /* ActivityVC.swift in Sources */,
 				AEB7268024328814006923CA /* ProfileVC.swift in Sources */,
-				AE15CF12244E123200316ADF /* CustomSegmentedControl.swift in Sources */,
-				AE00CBD12438576300685F0C /* SmileyStack.swift in Sources */,
 				3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */,
 				AE00CBCF2438572600685F0C /* HomeVC.swift in Sources */,
 				3EDCEDCE2456652600FF87E3 /* Extension + CollectionView.swift in Sources */,
@@ -651,6 +678,7 @@
 				3E33CDD42430471800C8DE64 /* CustomTextField.swift in Sources */,
 				3ECDD15024352CD100ED04E9 /* MessagesManager.swift in Sources */,
 				3EFE15C72484666300280230 /* NewPostVC.swift in Sources */,
+				3E14AE3E2485A3F000E25743 /* TextViewCell.swift in Sources */,
 				18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */,
 				18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */,
 			);

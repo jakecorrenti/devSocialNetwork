@@ -16,7 +16,11 @@ class NewPartnerSearchVC: UIViewController {
 	
 	lazy var tableView: UITableView = {
 		let view = UITableView(frame: .zero, style: .insetGrouped)
-		view.backgroundColor = .red
+		view.backgroundColor = .systemBackground
+		view.dataSource = self
+		view.estimatedRowHeight = 65
+		view.rowHeight = UITableView.automaticDimension
+		view.register(TextFieldCell.self, forCellReuseIdentifier: Cells.textFieldCell)
 		return view
 	}()
 	
