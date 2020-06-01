@@ -19,7 +19,7 @@ extension NewPartnerSearchVC: UITableViewDataSource {
 			let cell = tableView.dequeueReusableCell(withIdentifier: Cells.textFieldCell, for: indexPath) as! TextFieldCell
 			cell.configure(placeholder: "Title...")
 			cell.backgroundColor = .secondarySystemBackground
-			cell.selectionStyle = .none 
+			cell.selectionStyle = .none
 			return cell
 		default:
 			return UITableViewCell()
