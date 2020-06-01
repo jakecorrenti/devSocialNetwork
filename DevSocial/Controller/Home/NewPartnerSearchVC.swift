@@ -14,14 +14,9 @@ class NewPartnerSearchVC: UIViewController {
     // MARK: Views
     // -----------------------------------------
 	
-	lazy var scrollView: UIScrollView = {
-		let view = UIScrollView()
-		return view
-	}()
-	
-	lazy var titleTF: CustomTextField = {
-		let view = CustomTextField()
-		view.configure(placeholder: "Title...")
+	lazy var tableView: UITableView = {
+		let view = UITableView(frame: .zero, style: .insetGrouped)
+		view.backgroundColor = .red
 		return view
 	}()
 	
@@ -57,13 +52,17 @@ class NewPartnerSearchVC: UIViewController {
     }
     
     private func setupUI() {
-		view.addSubview(scrollView)
+		view.addSubview(tableView)
+		constrainTableView()
     }
 	
-	private func constrainScrollView() {
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
+	private func constrainTableView() {
+		tableView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			
+			tableView.topAnchor.constraint(equalTo: view.topAnchor),
+			tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
 	}
 }
