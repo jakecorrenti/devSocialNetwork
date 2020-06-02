@@ -46,14 +46,19 @@ class NewPostVC: UIViewController {
     
     private func setupNavBar() {
 		view.backgroundColor = .systemBackground
+		let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
+		let shareButton = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(shareButtonPressed))
+		navigationItem.leftBarButtonItem = cancelButton
+		navigationItem.rightBarButtonItem = shareButton
     }
     
     private func setupUI() {
 		guard postType != nil else { return }
 		if postType! == .partnerSearch {
+			navigationItem.title = "New contributor"
 			constrainPartnerSearchVC()
 		} else {
-			
+			navigationItem.title = "New project"
 		}
     }
 	
@@ -67,5 +72,15 @@ class NewPostVC: UIViewController {
 			partnerVC.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			partnerVC.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
+	}
+	
+	@objc
+	private func cancelButtonPressed() {
+		dismiss(animated: true, completion: nil)
+	}
+	
+	@objc
+	private func shareButtonPressed() {
+		
 	}
 }

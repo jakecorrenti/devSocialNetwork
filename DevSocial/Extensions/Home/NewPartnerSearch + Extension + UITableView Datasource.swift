@@ -21,6 +21,11 @@ extension NewPartnerSearchVC: UITableViewDataSource {
 			cell.backgroundColor = .secondarySystemBackground
 			cell.selectionStyle = .none
 			return cell
+		case 1:
+			let cell = tableView.dequeueReusableCell(withIdentifier: Cells.textViewCell, for: indexPath) as! TextViewCell
+			cell.backgroundColor = .secondarySystemBackground
+			cell.selectionStyle = .none
+			return cell
 		default:
 			return UITableViewCell()
 		}

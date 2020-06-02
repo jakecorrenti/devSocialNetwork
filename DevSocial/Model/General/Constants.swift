@@ -53,6 +53,7 @@ enum Cells {
     static let postSearchCell   = "postSearchCellID"
     static let postRequestCell  = "postRequestCellID"
 	static let textFieldCell    = "textFieldCell"
+	static let textViewCell     = "textViewCell"
 }
 
 enum SmileyImages {

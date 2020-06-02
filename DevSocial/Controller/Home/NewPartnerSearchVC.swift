@@ -21,6 +21,7 @@ class NewPartnerSearchVC: UIViewController {
 		view.estimatedRowHeight = 65
 		view.rowHeight = UITableView.automaticDimension
 		view.register(TextFieldCell.self, forCellReuseIdentifier: Cells.textFieldCell)
+		view.register(TextViewCell.self, forCellReuseIdentifier: Cells.textViewCell)
 		return view
 	}()
 	
