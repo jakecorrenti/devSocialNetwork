@@ -17,7 +17,6 @@ extension NewPartnerSearchVC: UITableViewDataSource {
 		switch indexPath.section {
 		case 0:
 			let cell = tableView.dequeueReusableCell(withIdentifier: Cells.textFieldCell, for: indexPath) as! TextFieldCell
-			cell.configure(placeholder: "Title...")
 			cell.backgroundColor = .secondarySystemBackground
 			cell.selectionStyle = .none
 			return cell
@@ -25,6 +24,9 @@ extension NewPartnerSearchVC: UITableViewDataSource {
 			let cell = tableView.dequeueReusableCell(withIdentifier: Cells.textViewCell, for: indexPath) as! TextViewCell
 			cell.backgroundColor = .secondarySystemBackground
 			cell.selectionStyle = .none
+			return cell
+		case 2:
+			let cell = tableView.dequeueReusableCell(withIdentifier: Cells.embeddedCollectionViewCell, for: indexPath) as! EmbeddedCollectionViewCell
 			return cell
 		default:
 			return UITableViewCell()

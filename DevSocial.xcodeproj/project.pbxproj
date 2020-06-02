@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */; };
+		18CED5C608B4650D9C30EA92 /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CED2E4511A408444BA1A6E /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift */; };
+		18CEDDED3776E7BEA5C11579 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */; };
 		18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */; };
 		3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */; };
 		3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E04243120EE00F92618 /* AuthManager.swift */; };
@@ -63,6 +65,7 @@
 		3EDCEDCE2456652600FF87E3 /* Extension + CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCEDCD2456652600FF87E3 /* Extension + CollectionView.swift */; };
 		3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */; };
 		3EEB034224562F17001EC067 /* NewChat + Extension - Table View DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB034124562F17001EC067 /* NewChat + Extension - Table View DataSource.swift */; };
+		3EF48B15248704B3001AE43B /* EmbeddedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF48B14248704B3001AE43B /* EmbeddedCollectionViewCell.swift */; };
 		3EFE15C72484666300280230 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE15C62484666300280230 /* NewPostVC.swift */; };
 		AE00CBCF2438572600685F0C /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE00CBCE2438572600685F0C /* HomeVC.swift */; };
 		AE382E26242FF27700EED32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE382E25242FF27700EED32C /* GoogleService-Info.plist */; };
@@ -74,8 +77,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18CED2E4511A408444BA1A6E /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift"; sourceTree = "<group>"; };
 		18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatUserCell.swift; sourceTree = "<group>"; };
 		18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
+		18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift"; sourceTree = "<group>"; };
 		3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		3E0B0E04243120EE00F92618 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageContext.swift; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 		3EE6D7FA2431C25D003A5BFA /* DevSocial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevSocial.entitlements; sourceTree = "<group>"; };
 		3EE6D7FB2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC Extension + Apple Sign in.swift"; sourceTree = "<group>"; };
 		3EEB034124562F17001EC067 /* NewChat + Extension - Table View DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChat + Extension - Table View DataSource.swift"; sourceTree = "<group>"; };
+		3EF48B14248704B3001AE43B /* EmbeddedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EFE15C62484666300280230 /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		4ED06CFDC266AADBBFC453F9 /* Pods-DevSocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSocial.release.xcconfig"; path = "Target Support Files/Pods-DevSocial/Pods-DevSocial.release.xcconfig"; sourceTree = "<group>"; };
 		87BE1186628FE3016D040A48 /* Pods_DevSocial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSocial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -323,6 +329,8 @@
 			isa = PBXGroup;
 			children = (
 				3E4CFA9A24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift */,
+				18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */,
+				18CED2E4511A408444BA1A6E /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -340,6 +348,7 @@
 			children = (
 				3E4CFA9E2485971200598C59 /* TextFieldCell.swift */,
 				3E14AE3D2485A3F000E25743 /* TextViewCell.swift */,
+				3EF48B14248704B3001AE43B /* EmbeddedCollectionViewCell.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -625,6 +634,7 @@
 				AE713AB32454FA240000F47F /* Extension + Date.swift in Sources */,
 				3E8614C22453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift in Sources */,
 				3E4CFA9F2485971200598C59 /* TextFieldCell.swift in Sources */,
+				3EF48B15248704B3001AE43B /* EmbeddedCollectionViewCell.swift in Sources */,
 				3E0B0E0A2431239A00F92618 /* StorageContext.swift in Sources */,
 				3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */,
 				3E33CDCD2430237300C8DE64 /* PagingVC.swift in Sources */,
@@ -681,6 +691,8 @@
 				3E14AE3E2485A3F000E25743 /* TextViewCell.swift in Sources */,
 				18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */,
 				18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */,
+				18CEDDED3776E7BEA5C11579 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift in Sources */,
+				18CED5C608B4650D9C30EA92 /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
