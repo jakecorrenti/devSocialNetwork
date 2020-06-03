@@ -49,7 +49,6 @@ class CustomTableViewHeader: UIView {
     
     private func setupUI() {
 		[titleLabel, actionButton].forEach { addSubview($0) }
-		
 		constrainTitleLabel()
 		constrainActionButton()
     }

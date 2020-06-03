@@ -17,4 +17,8 @@ extension NewPartnerSearchVC: UITableViewDelegate {
 		
 		return hv
     }
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 45
+	}
 }
