@@ -7,7 +7,14 @@ import UIKit
 
 extension NewPartnerSearchVC: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-        return nil
+		
+		let hv = CustomTableViewHeader()
+		if section >= 2 {
+			hv.configure(title: sectionLabels[section], buttonTitle: "Add")
+		} else {
+			hv.configure(title: sectionLabels[section])
+		}
+		
+		return hv
     }
 }

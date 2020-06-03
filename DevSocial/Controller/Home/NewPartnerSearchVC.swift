@@ -29,6 +29,14 @@ class NewPartnerSearchVC: UIViewController {
 		"MySQL",
 		"PostgreSQL"
 	]
+	
+	var sectionLabels = [
+		"Title",
+		"Description",
+		"Technologies",
+		"Contributors",
+		"Tags"
+	]
 
 	// -----------------------------------------
     // MARK: Views
@@ -41,6 +49,7 @@ class NewPartnerSearchVC: UIViewController {
 		view.delegate = self
 		view.estimatedRowHeight = 65
 		view.keyboardDismissMode = .onDrag
+		view.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 24))
 		view.rowHeight = UITableView.automaticDimension
 		view.register(TextFieldCell.self, forCellReuseIdentifier: Cells.textFieldCell)
 		view.register(TextViewCell.self, forCellReuseIdentifier: Cells.textViewCell)

@@ -52,6 +52,7 @@
 		3E6F8ECD2482C8E3003512FD /* Extension + UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F8ECC2482C8E3003512FD /* Extension + UIButton.swift */; };
 		3E8614C22453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */; };
 		3E8614C4245377880053F9A1 /* Chat + Extension - Table View Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */; };
+		3E8EE8B524874A900051F709 /* CustomTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8EE8B424874A900051F709 /* CustomTableViewHeader.swift */; };
 		3EA207A0243A8CDD00390B21 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2079F243A8CDD00390B21 /* NotificationManager.swift */; };
 		3EACBB01248212AB00972478 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EACBB00248212AB00972478 /* CapsuleButton.swift */; };
 		3EAE530E243781C700A708F6 /* MessagedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE530D243781C700A708F6 /* MessagedUserCell.swift */; };
@@ -126,6 +127,7 @@
 		3E6F8ECC2482C8E3003512FD /* Extension + UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIButton.swift"; sourceTree = "<group>"; };
 		3E8614C12453770F0053F9A1 /* Chat + Extension - Table View Data Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat + Extension - Table View Data Source.swift"; sourceTree = "<group>"; };
 		3E8614C3245377880053F9A1 /* Chat + Extension - Table View Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat + Extension - Table View Delegate.swift"; sourceTree = "<group>"; };
+		3E8EE8B424874A900051F709 /* CustomTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewHeader.swift; sourceTree = "<group>"; };
 		3EA2079F243A8CDD00390B21 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3EACBB00248212AB00972478 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		3EAE530D243781C700A708F6 /* MessagedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagedUserCell.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				3E4EC6AA247CC414009EF9DC /* BadgeButton.swift */,
 				3EACBB00248212AB00972478 /* CapsuleButton.swift */,
 				18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */,
+				3E8EE8B424874A900051F709 /* CustomTableViewHeader.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				3EDCEDCC24564AD300FF87E3 /* NewChat + Extension - TableView Delegate.swift in Sources */,
 				3E5EC98C2433D05A00744959 /* Chat.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
+				3E8EE8B524874A900051F709 /* CustomTableViewHeader.swift in Sources */,
 				3E33CDD624304AC000C8DE64 /* TextFieldStack.swift in Sources */,
 				3E47DCD8248071AC00EBEF64 /* HiddenChats + Extension - Table View Data Source.swift in Sources */,
 				AEB7267E24328803006923CA /* ActivityVC.swift in Sources */,

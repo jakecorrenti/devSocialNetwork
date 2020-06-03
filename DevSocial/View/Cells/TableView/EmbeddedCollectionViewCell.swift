@@ -47,7 +47,7 @@ class EmbeddedCollectionViewCell: UITableViewCell {
 		addSubview(collectionView)
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			collectionView.topAnchor.constraint(equalTo: topAnchor),
+			collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
 			collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
