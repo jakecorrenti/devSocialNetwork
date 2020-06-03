@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */; };
+		18CED30F0ABFAD99C32E3252 /* CapsuleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CED8EEEB9501F399B37E38 /* CapsuleCell.swift */; };
 		18CED5C608B4650D9C30EA92 /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CED2E4511A408444BA1A6E /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift */; };
+		18CEDD658585D710027F5C29 /* NewPartnerSearch + Extension - UITableView Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDBB7FEBD000B47CCEE50 /* NewPartnerSearch + Extension - UITableView Delegate.swift */; };
 		18CEDDED3776E7BEA5C11579 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */; };
 		18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */; };
 		3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */; };
@@ -78,7 +80,9 @@
 
 /* Begin PBXFileReference section */
 		18CED2E4511A408444BA1A6E /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift"; sourceTree = "<group>"; };
+		18CED8EEEB9501F399B37E38 /* CapsuleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CapsuleCell.swift; sourceTree = "<group>"; };
 		18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatUserCell.swift; sourceTree = "<group>"; };
+		18CEDBB7FEBD000B47CCEE50 /* NewPartnerSearch + Extension - UITableView Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewPartnerSearch + Extension - UITableView Delegate.swift"; sourceTree = "<group>"; };
 		18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift"; sourceTree = "<group>"; };
 		3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
@@ -163,6 +167,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18CEDD9E56DE35A79CC2A285 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				18CED8EEEB9501F399B37E38 /* CapsuleCell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		3E0B0E03243120DA00F92618 /* AuthManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +343,7 @@
 				3E4CFA9A24857B6700598C59 /* NewPartnerSearch + Extension + UITableView Datasource.swift */,
 				18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */,
 				18CED2E4511A408444BA1A6E /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift */,
+				18CEDBB7FEBD000B47CCEE50 /* NewPartnerSearch + Extension - UITableView Delegate.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -339,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				3E4CFA9D248596F000598C59 /* TableView */,
+				18CEDD9E56DE35A79CC2A285 /* CollectionView */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -693,6 +707,8 @@
 				18CED0E8D6F0FCCE87D0237C /* FloatingActionButton.swift in Sources */,
 				18CEDDED3776E7BEA5C11579 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift in Sources */,
 				18CED5C608B4650D9C30EA92 /* EmbeddedCollectionViewCell + Extension - UICollectionView Delegate.swift in Sources */,
+				18CED30F0ABFAD99C32E3252 /* CapsuleCell.swift in Sources */,
+				18CEDD658585D710027F5C29 /* NewPartnerSearch + Extension - UITableView Delegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

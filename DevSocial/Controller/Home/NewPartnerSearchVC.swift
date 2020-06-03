@@ -9,8 +9,28 @@
 import UIKit
 
 class NewPartnerSearchVC: UIViewController {
-	
-    // -----------------------------------------
+
+	// -----------------------------------------
+	// MARK: Properties
+	// -----------------------------------------
+
+	static var testData = [
+		"ios development", 
+		"swift",
+		"android",
+		"ios",
+		"xcode",
+		"android studio",
+		"kotlin",
+		"trello",
+		"git",
+		"atlassian",
+		"mongoDB",
+		"MySQL",
+		"PostgreSQL"
+	]
+
+	// -----------------------------------------
     // MARK: Views
     // -----------------------------------------
 	
@@ -18,7 +38,9 @@ class NewPartnerSearchVC: UIViewController {
 		let view = UITableView(frame: .zero, style: .insetGrouped)
 		view.backgroundColor = .systemBackground
 		view.dataSource = self
+		view.delegate = self
 		view.estimatedRowHeight = 65
+		view.keyboardDismissMode = .onDrag
 		view.rowHeight = UITableView.automaticDimension
 		view.register(TextFieldCell.self, forCellReuseIdentifier: Cells.textFieldCell)
 		view.register(TextViewCell.self, forCellReuseIdentifier: Cells.textViewCell)
@@ -70,5 +92,9 @@ class NewPartnerSearchVC: UIViewController {
 			tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
+	}
+
+	static func getTestData() -> [String] {
+		return testData
 	}
 }

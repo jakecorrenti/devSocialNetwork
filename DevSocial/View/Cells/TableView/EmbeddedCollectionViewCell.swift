@@ -17,10 +17,11 @@ class EmbeddedCollectionViewCell: UITableViewCell {
 	lazy var collectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
 		let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-		view.backgroundColor = .purple
+		view.backgroundColor = .systemBackground
 		view.dataSource = self
 		view.delegate = self
-		view.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Cells.defaultCell)
+		layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+		view.register(CapsuleCell.self, forCellWithReuseIdentifier: Cells.capsuleCell)
 		return view
 	}()
 	
@@ -50,7 +51,7 @@ class EmbeddedCollectionViewCell: UITableViewCell {
 			collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-			collectionView.heightAnchor.constraint(equalToConstant: 100)
+			collectionView.heightAnchor.constraint(equalToConstant: 125)
 		])
     }
 }

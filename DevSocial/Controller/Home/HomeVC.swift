@@ -210,6 +210,7 @@ class HomeVC: UIViewController {
 		animateFabClosed { [weak self] in
 			let postVC = NewPostVC()
 			postVC.postType = .projectSearch
+			postVC.isModalInPresentation = true
 			self?.present(UINavigationController(rootViewController: postVC), animated: true, completion: nil)
 		}
 	}
@@ -221,6 +222,7 @@ class HomeVC: UIViewController {
 		newRequestFAB.pulsate()
 		animateFabClosed { [weak self] in
 			let postVC = NewPostVC()
+			postVC.isModalInPresentation = true
 			postVC.postType = .partnerSearch
 			self?.present(UINavigationController(rootViewController: postVC), animated: true, completion: nil)
 		}
