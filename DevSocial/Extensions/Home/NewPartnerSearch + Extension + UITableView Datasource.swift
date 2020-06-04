@@ -28,7 +28,8 @@ extension NewPartnerSearchVC: UITableViewDataSource {
 		case 2:
 			let cell = tableView.dequeueReusableCell(withIdentifier: Cells.embeddedCollectionViewCell, for: indexPath) as! EmbeddedCollectionViewCell
 			cell.backgroundColor = .systemBackground
-			cell.selectionStyle = .none 
+			cell.selectionStyle = .none
+			cell.data = technologies
 			return cell
 		default:
 			return UITableViewCell()

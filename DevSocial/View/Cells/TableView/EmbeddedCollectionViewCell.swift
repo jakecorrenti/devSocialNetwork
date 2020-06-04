@@ -9,6 +9,12 @@
 import UIKit
 
 class EmbeddedCollectionViewCell: UITableViewCell {
+
+	var data: [Any]! {
+		didSet  {
+
+		}
+	}
 	
     // -----------------------------------------
     // MARK: Views

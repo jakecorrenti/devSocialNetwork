@@ -14,7 +14,7 @@ extension EmbeddedCollectionViewCell: UICollectionViewDelegateFlowLayout {
 
         //Where elements_count is the count of all your items in that
         //Collection view...
-        let cellCount = NewPartnerSearchVC.getTestData().count
+        let cellCount = data.count
 
         //If the cell count is zero, there is no point in calculating anything.
         if cellCount > 0 {

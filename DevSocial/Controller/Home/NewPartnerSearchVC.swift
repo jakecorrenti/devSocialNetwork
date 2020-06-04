@@ -14,21 +14,7 @@ class NewPartnerSearchVC: UIViewController {
 	// MARK: Properties
 	// -----------------------------------------
 
-	static var testData = [
-		"ios development", 
-		"swift",
-		"android",
-		"ios",
-		"xcode",
-		"android studio",
-		"kotlin",
-		"trello",
-		"git",
-		"atlassian",
-		"mongoDB",
-		"MySQL",
-		"PostgreSQL"
-	]
+	public var technologies = [String]()
 	
 	var sectionLabels = [
 		"Title",
@@ -103,7 +89,39 @@ class NewPartnerSearchVC: UIViewController {
 		])
 	}
 
-	static func getTestData() -> [String] {
-		return testData
+	private func addNewTechnologyCell() {
+		let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! EmbeddedCollectionViewCell
+		cell.data.append(technologies.last!)
+		cell.collectionView.insertItems(at: [IndexPath(row: cell.data.count - 1, section: 0)])
+		if cell.data.count > 1 {
+			cell.collectionView.scrollToItem(at: IndexPath(row: cell.data.count - 1, section: 0), at: .bottom, animated: true)
+		}
+	}
+
+
+	@objc
+	func showTechnologyAlert() {
+		Alert.showTextFieldAlert(on: self, title: "Add a technology you're using", onCancelPressed: { [weak self] in 
+			guard let self = self else { return }
+			self.dismiss(animated: true)
+		}, onAddPressed: { [weak self] technology in
+			guard technology != nil else { return }
+			let technologyNoWhitespace = technology?.trimmingCharacters(in: .whitespacesAndNewlines)
+			if technologyNoWhitespace != "" {
+				guard let self = self else { return }
+				self.technologies.append(technology ?? "")
+				self.addNewTechnologyCell()
+			}
+		})
+	}
+
+	@objc
+	func showContributorAlert() {
+		print("CONTRIBUTORS")
+	}
+
+	@objc
+	func showTagAlert() {
+		print("TAGS")
 	}
 }

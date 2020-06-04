@@ -42,4 +42,18 @@ struct Alert {
         [deleteAction, cancelAction].forEach { alertController.addAction($0) }
         vc.present(alertController, animated: true)
 	}
+
+    static func showTextFieldAlert(on vc: UIViewController, title: String, onCancelPressed: @escaping () -> Void, onAddPressed: @escaping (String?) -> Void) {
+        let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        ac.addTextField()
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let addAction = UIAlertAction(title: "Add", style: .default) { [unowned ac] _ in
+            onAddPressed(ac.textFields![0].text)
+        }
+
+        [cancelAction, addAction].forEach { ac.addAction($0) }
+        vc.present(ac, animated: true)
+    }
+
 }
