@@ -45,7 +45,9 @@ struct Alert {
 
     static func showTextFieldAlert(on vc: UIViewController, title: String, onCancelPressed: @escaping () -> Void, onAddPressed: @escaping (String?) -> Void) {
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        ac.addTextField()
+        ac.addTextField { textField in
+            textField.autocorrectionType = .yes
+        }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let addAction = UIAlertAction(title: "Add", style: .default) { [unowned ac] _ in
