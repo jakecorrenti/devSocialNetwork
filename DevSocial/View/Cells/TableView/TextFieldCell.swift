@@ -16,6 +16,7 @@ class TextFieldCell: UITableViewCell {
 	
 	lazy var textField: UITextField = {
 		let view = UITextField()
+		view.delegate = self
 		return view
 	}()
 	
@@ -58,3 +59,10 @@ class TextFieldCell: UITableViewCell {
 	}
 }
 
+extension TextFieldCell: UITextFieldDelegate {
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
+}

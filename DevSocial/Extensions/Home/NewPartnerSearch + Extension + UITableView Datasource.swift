@@ -30,6 +30,7 @@ extension NewPartnerSearchVC: UITableViewDataSource {
 			cell.backgroundColor = .systemBackground
 			cell.selectionStyle = .none
 			cell.data = technologies
+			cell.cellSelectionDelegate = self
 			return cell
 		default:
 			return UITableViewCell()

@@ -46,8 +46,10 @@ class NewPostVC: UIViewController {
     
     private func setupNavBar() {
 		view.backgroundColor = .systemBackground
-		let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
-		let shareButton = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(shareButtonPressed))
+		let navButtonConfiguration = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium, scale: .large)
+		let cancelButton = UIBarButtonItem(image: UIImage(systemName: Images.xbutton, withConfiguration: navButtonConfiguration), style: .plain, target: self, action: #selector(cancelButtonPressed))
+		cancelButton.tintColor = UIColor.gray
+		let shareButton = UIBarButtonItem(image: UIImage(systemName: Images.share, withConfiguration: navButtonConfiguration), style: .done, target: self, action: #selector(shareButtonPressed))
 		navigationItem.leftBarButtonItem = cancelButton
 		navigationItem.rightBarButtonItem = shareButton
     }

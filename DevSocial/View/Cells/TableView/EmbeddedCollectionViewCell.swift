@@ -9,12 +9,18 @@
 import UIKit
 
 class EmbeddedCollectionViewCell: UITableViewCell {
+	
+    // -----------------------------------------
+    // MARK: Properties
+    // -----------------------------------------
 
 	var data: [Any]! {
 		didSet  {
 
 		}
 	}
+	
+	var cellSelectionDelegate: NewPostCapsuleCellSelectionDelegate!
 	
     // -----------------------------------------
     // MARK: Views

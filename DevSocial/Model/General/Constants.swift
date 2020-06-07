@@ -34,6 +34,8 @@ enum Images {
     static let plus                  = "plus"
     static let magnifyingGlass       = "magnifyingglass"
     static let personPlus            = "person.badge.plus"
+	static let xbutton    		     = "xmark.circle.fill"
+	static let share     			 = "arrowshape.turn.up.right.fill"
 }
 
 enum TabImages {

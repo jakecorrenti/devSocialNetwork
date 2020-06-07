@@ -6,7 +6,15 @@
 import UIKit
 
 extension EmbeddedCollectionViewCell: UICollectionViewDelegate {
-
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath) as! CapsuleCell
+		
+		//MARK: - Change the color from white to a lighter gray so that light mode users can actually see the cell when it is selected 
+		cell.contentLabel.textColor = .white
+		cell.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+		
+		cellSelectionDelegate.handleCellSelected(indexPath: indexPath, collectionView: collectionView)
+	}
 }
 
 extension EmbeddedCollectionViewCell: UICollectionViewDelegateFlowLayout {
@@ -26,7 +34,7 @@ extension EmbeddedCollectionViewCell: UICollectionViewDelegateFlowLayout {
 
             if (totalCellWidth < contentWidth) {
                 //If the number of cells that exists take up less room than the
-                //collection view width... then there is an actual point to centering them.
+                //collection view width... then there is an actual point to centering them.j
 
                 //Calculate the right amount of padding to center the cells.
                 let padding = (contentWidth - totalCellWidth) / 2.0

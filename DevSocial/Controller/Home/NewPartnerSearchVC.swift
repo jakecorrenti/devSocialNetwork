@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol NewPostCapsuleCellSelectionDelegate {
+	func handleCellSelected(indexPath: IndexPath, collectionView: UICollectionView)
+}
+
 class NewPartnerSearchVC: UIViewController {
 
 	// -----------------------------------------
@@ -98,7 +102,6 @@ class NewPartnerSearchVC: UIViewController {
 		}
 	}
 
-
 	@objc
 	func showTechnologyAlert() {
 		Alert.showTextFieldAlert(on: self, title: "Add a technology you're using", onCancelPressed: { [weak self] in 
@@ -123,5 +126,18 @@ class NewPartnerSearchVC: UIViewController {
 	@objc
 	func showTagAlert() {
 		print("TAGS")
+	}
+}
+
+extension NewPartnerSearchVC: NewPostCapsuleCellSelectionDelegate {
+	func handleCellSelected(indexPath: IndexPath, collectionView: UICollectionView) {
+		Alert.showDeleteConfirmation(on: self, onDeleteSelected: { [weak self] in
+			guard let self = self else { return }
+			
+		}) {
+			let cell = collectionView.cellForItem(at: indexPath) as! CapsuleCell
+			cell.backgroundColor = UIColor(named: ColorNames.mainColor)?.withAlphaComponent(0.2)
+			cell.contentLabel.textColor = UIColor(named: ColorNames.mainColor)
+		}
 	}
 }

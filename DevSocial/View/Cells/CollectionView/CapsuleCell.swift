@@ -28,7 +28,7 @@ class CapsuleCell: UICollectionViewCell {
         view.font = .boldSystemFont(ofSize: 13)
         return view
     }()
-
+    
     // -----------------------------------------
     // MARK: Initialization
     // -----------------------------------------
