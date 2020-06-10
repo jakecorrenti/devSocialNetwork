@@ -9,7 +9,7 @@
 import UIKit
 
 protocol NewPostCapsuleCellSelectionDelegate {
-	func handleCellSelected(indexPath: IndexPath, collectionView: UICollectionView)
+	func handleCellSelected(indexPath: IndexPath, collectionView: UICollectionView, embeddedCVCell: EmbeddedCollectionViewCell)
 }
 
 class NewPartnerSearchVC: UIViewController {
@@ -62,7 +62,7 @@ class NewPartnerSearchVC: UIViewController {
         
         tabBarController?.tabBar.isHidden = false
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,10 +130,12 @@ class NewPartnerSearchVC: UIViewController {
 }
 
 extension NewPartnerSearchVC: NewPostCapsuleCellSelectionDelegate {
-	func handleCellSelected(indexPath: IndexPath, collectionView: UICollectionView) {
-		Alert.showDeleteConfirmation(on: self, onDeleteSelected: { [weak self] in
-			guard let self = self else { return }
-			
+	func handleCellSelected(indexPath: IndexPath, collectionView: UICollectionView, embeddedCVCell: EmbeddedCollectionViewCell) {
+		Alert.showDeleteConfirmation(on: self, onDeleteSelected: {
+			let cellAtIndexSelected = collectionView.cellForItem(at: indexPath) as! CapsuleCell
+			cellAtIndexSelected.contentLabel.textColor = UIColor(named: ColorNames.mainColor)
+			embeddedCVCell.data.remove(at: indexPath.row)
+			collectionView.deleteItems(at: [indexPath])
 		}) {
 			let cell = collectionView.cellForItem(at: indexPath) as! CapsuleCell
 			cell.backgroundColor = UIColor(named: ColorNames.mainColor)?.withAlphaComponent(0.2)

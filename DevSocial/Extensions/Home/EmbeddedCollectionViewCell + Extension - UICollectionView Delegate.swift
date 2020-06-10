@@ -8,12 +8,11 @@ import UIKit
 extension EmbeddedCollectionViewCell: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let cell = collectionView.cellForItem(at: indexPath) as! CapsuleCell
-		
-		//MARK: - Change the color from white to a lighter gray so that light mode users can actually see the cell when it is selected 
+
 		cell.contentLabel.textColor = .lightGray
 		cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
 		
-		cellSelectionDelegate.handleCellSelected(indexPath: indexPath, collectionView: collectionView)
+		cellSelectionDelegate.handleCellSelected(indexPath: indexPath, collectionView: collectionView, embeddedCVCell: self)
 	}
 }
 
