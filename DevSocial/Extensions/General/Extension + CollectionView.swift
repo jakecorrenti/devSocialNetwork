@@ -9,17 +9,17 @@
 import UIKit
 
 extension UICollectionView {
-	
-	func setEmptyState() {
+
+	func setEmptyState(text: String) {
 		let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height))
-		
-		messageLabel.text = "No user(s) selected \n Search for users to create a chat"
+
+		messageLabel.text = text
 		messageLabel.textAlignment = .center
-		
+
 		messageLabel.sizeToFit()
 		self.backgroundView = messageLabel
 	}
-	
+
 	func restorePopulatedState() {
 		self.backgroundView = nil
 	}

@@ -13,6 +13,11 @@ enum ChatCreationState {
 	case existing 
 }
 
+enum PostType {
+	case projectSearch
+	case partnerSearch
+}
+
 enum ColorNames {
     static let mainColor          = "mainColor"
     static let primaryTextColor   = "primaryTextColor"
@@ -26,9 +31,13 @@ enum Images {
 	static let myMessagesEmptyState  = "my_messages_empty_state"
 	static let trashcan 			 = "trash"
 	static let hiddenChatsEmptyState = "hidden_chats_empty_state"
+    static let plus                  = "plus"
+    static let magnifyingGlass       = "magnifyingglass"
+    static let personPlus            = "person.badge.plus"
+	static let xbutton    		     = "xmark.circle.fill"
+	static let share     			 = "arrowshape.turn.up.right.fill"
 }
 
-// TODO: Update icons
 enum TabImages {
     static let home     = "house"
     static let explore  = "house"
@@ -37,13 +46,17 @@ enum TabImages {
 }
 
 enum Cells {
-    static let defaultCell      = "defaultCellID"
-    static let messageCell      = "messageCellID"
-    static let messagedUserCell = "messagedUserCellID"
-    static let newMessageCell   = "newMessageCellID"
-    static let userCell         = "userCellID"
-    static let postSearchCell   = "postSearchCellID"
-    static let postRequestCell  = "postRequestCellID"
+    static let defaultCell                = "defaultCellID"
+    static let messageCell                = "messageCellID"
+    static let messagedUserCell           = "messagedUserCellID"
+    static let newMessageCell             = "newMessageCellID"
+    static let userCell                   = "userCellID"
+    static let postSearchCell             = "postSearchCellID"
+    static let postRequestCell            = "postRequestCellID"
+	static let textFieldCell              = "textFieldCellID"
+	static let textViewCell               = "textViewCellID"
+	static let embeddedCollectionViewCell = "embeddedCollectionViewCellID"
+    static let capsuleCell                = "capsuleCellID"
 }
 
 enum SmileyImages {

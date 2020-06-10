@@ -41,4 +41,17 @@ extension UIViewController {
             containerView.removeFromSuperview()
         }
     }
+	
+	func add(viewController: UIViewController) {
+		addChild(viewController)
+		view.addSubview(viewController.view)
+		viewController.didMove(toParent: self)
+	}
+	
+	func removeChildVC() {
+		guard parent != nil else { return }
+		willMove(toParent: nil)
+        view.removeFromSuperview()
+        removeFromParent()
+	}
 }

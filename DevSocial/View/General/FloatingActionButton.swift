@@ -25,6 +25,16 @@ class FloatingActionButton: UIButton {
 		
 		setupUI()
 	}
+
+	convenience init(imageName: String, pointSize: CGFloat = 25) {
+		self.init(frame: .zero)
+
+		let symbolConfig = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .bold, scale: .medium)
+		let image = UIImage(systemName: imageName,  withConfiguration: symbolConfig)
+		image?.withTintColor(.white, renderingMode: .alwaysTemplate)
+		setImage(image, for: .normal)
+		setupUI()
+	}
 	
     // -----------------------------------------
     // MARK: Setup UI
@@ -32,10 +42,6 @@ class FloatingActionButton: UIButton {
 	
 	private func setupUI() {
 		backgroundColor = UIColor(named: ColorNames.mainColor)
-		let symbolConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .medium)
-		let image = UIImage(systemName: "plus",  withConfiguration: symbolConfig)
 		imageView?.tintColor = .white
-		image?.withTintColor(.white, renderingMode: .alwaysTemplate)
-		setImage(image, for: .normal)
 	}
 }
