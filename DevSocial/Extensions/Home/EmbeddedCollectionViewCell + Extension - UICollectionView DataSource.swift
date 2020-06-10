@@ -7,6 +7,7 @@ import UIKit
 
 extension EmbeddedCollectionViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        data.count == 0 ? collectionView.setEmptyState(text: "No data currently added") : collectionView.restorePopulatedState()
         return data.count
     }
 

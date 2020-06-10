@@ -12,7 +12,7 @@ extension NewChatVC: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		
 		if selectedUsers.count == 0 {
-			collectionView.setEmptyState()
+			collectionView.setEmptyState(text: "No user selected")
 		} else {
 			collectionView.restorePopulatedState()
 		}

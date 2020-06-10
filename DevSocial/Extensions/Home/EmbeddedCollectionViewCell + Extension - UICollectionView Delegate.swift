@@ -10,8 +10,8 @@ extension EmbeddedCollectionViewCell: UICollectionViewDelegate {
 		let cell = collectionView.cellForItem(at: indexPath) as! CapsuleCell
 		
 		//MARK: - Change the color from white to a lighter gray so that light mode users can actually see the cell when it is selected 
-		cell.contentLabel.textColor = .white
-		cell.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+		cell.contentLabel.textColor = .lightGray
+		cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
 		
 		cellSelectionDelegate.handleCellSelected(indexPath: indexPath, collectionView: collectionView)
 	}
