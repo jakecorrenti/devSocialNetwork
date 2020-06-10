@@ -19,6 +19,7 @@ class NewPartnerSearchVC: UIViewController {
 	// -----------------------------------------
 
 	public var technologies = [String]()
+	public var contributors = [String]()
 	
 	var sectionLabels = [
 		"Title",
@@ -101,6 +102,15 @@ class NewPartnerSearchVC: UIViewController {
 			cell.collectionView.scrollToItem(at: IndexPath(row: cell.data.count - 1, section: 0), at: .bottom, animated: true)
 		}
 	}
+	
+	private func addNewContributorCell() {
+		let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! EmbeddedCollectionViewCell
+		cell.data.append(contributors.last!)
+		cell.collectionView.insertItems(at: [IndexPath(row: cell.data.count - 1, section: 0)])
+		if cell.data.count > 1 {
+			cell.collectionView.scrollToItem(at: IndexPath(row: cell.data.count - 1, section: 0), at: .bottom, animated: true)
+		}
+	}
 
 	@objc
 	func showTechnologyAlert() {
@@ -120,7 +130,12 @@ class NewPartnerSearchVC: UIViewController {
 
 	@objc
 	func showContributorAlert() {
-		print("CONTRIBUTORS")
+		/*
+			* modally present a new table view
+			* enable the user to search for another user on the app that is considered a contributor
+			* if there is no user on the app that has that username, let them add it anyways, but it will not be connected to anyone's account
+		*/
+		present(UINavigationController(rootViewController: NewContributorSearchVC()), animated: true, completion: nil)
 	}
 
 	@objc

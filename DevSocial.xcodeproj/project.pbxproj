@@ -13,6 +13,7 @@
 		18CEDD658585D710027F5C29 /* NewPartnerSearch + Extension - UITableView Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDBB7FEBD000B47CCEE50 /* NewPartnerSearch + Extension - UITableView Delegate.swift */; };
 		18CEDDED3776E7BEA5C11579 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */; };
 		18CEDE0CEA297971A0324763 /* NewChatUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEDB9758DB31FFE58972E1 /* NewChatUserCell.swift */; };
+		3E02EE082491524900DFDD60 /* NewContributorSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E02EE072491524900DFDD60 /* NewContributorSearchVC.swift */; };
 		3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */; };
 		3E0B0E05243120EE00F92618 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E04243120EE00F92618 /* AuthManager.swift */; };
 		3E0B0E082431237300F92618 /* FirebaseStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */; };
@@ -86,6 +87,7 @@
 		18CEDBB7FEBD000B47CCEE50 /* NewPartnerSearch + Extension - UITableView Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewPartnerSearch + Extension - UITableView Delegate.swift"; sourceTree = "<group>"; };
 		18CEDBFF775835BB7352A6BC /* FloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		18CEDC603086A25D9BCB25C7 /* EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmbeddedCollectionViewCell + Extension - UICollectionView DataSource.swift"; sourceTree = "<group>"; };
+		3E02EE072491524900DFDD60 /* NewContributorSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContributorSearchVC.swift; sourceTree = "<group>"; };
 		3E046C2D243277F000DBB15D /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		3E0B0E04243120EE00F92618 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		3E0B0E072431237300F92618 /* FirebaseStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageContext.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				3E0B0E1124314A1C00F92618 /* TabController.swift */,
 				3EFE15C62484666300280230 /* NewPostVC.swift */,
 				3E12CE8D24854DE500EBC911 /* NewPartnerSearchVC.swift */,
+				3E02EE072491524900DFDD60 /* NewContributorSearchVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				3EA207A0243A8CDD00390B21 /* NotificationManager.swift in Sources */,
 				3EE6D7FC2431C5CB003A5BFA /* LoginVC Extension + Apple Sign in.swift in Sources */,
 				3E046C2E243277F000DBB15D /* ForgotPasswordVC.swift in Sources */,
+				3E02EE082491524900DFDD60 /* NewContributorSearchVC.swift in Sources */,
 				3EDCEDCC24564AD300FF87E3 /* NewChat + Extension - TableView Delegate.swift in Sources */,
 				3E5EC98C2433D05A00744959 /* Chat.swift in Sources */,
 				3E33CDCF243023EE00C8DE64 /* LoginVC.swift in Sources */,
